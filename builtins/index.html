@@ -1,0 +1,2691 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="An functional, C-like programming language for solving Advent of Code puzzles.">
+      
+      
+        <meta name="author" content="Edd Mann">
+      
+      
+      
+        <link rel="prev" href="../language/">
+      
+      
+        <link rel="next" href="../runner/">
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.14">
+    
+    
+      
+        <title>Builtins - santa-lang</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.85bb2934.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#builtin-functions" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="santa-lang" class="md-header__button md-logo" aria-label="santa-lang" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            santa-lang
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Builtins
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/eddmann/santa-lang-rs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="santa-lang" class="md-nav__button md-logo" aria-label="santa-lang" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    santa-lang
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/eddmann/santa-lang-rs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../language/" class="md-nav__link">
+        Language
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Builtins
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Builtins
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#collection" class="md-nav__link">
+    Collection
+  </a>
+  
+    <nav class="md-nav" aria-label="Collection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#list" class="md-nav__link">
+    list
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set" class="md-nav__link">
+    set
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dict" class="md-nav__link">
+    dict
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get" class="md-nav__link">
+    get
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#size" class="md-nav__link">
+    size
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#push" class="md-nav__link">
+    push
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assoc" class="md-nav__link">
+    assoc
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update" class="md-nav__link">
+    update
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update_d" class="md-nav__link">
+    update_d
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#map" class="md-nav__link">
+    map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter" class="md-nav__link">
+    filter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#each" class="md-nav__link">
+    each
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reduce" class="md-nav__link">
+    reduce
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold" class="md-nav__link">
+    fold
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold_s" class="md-nav__link">
+    fold_s
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find" class="md-nav__link">
+    find
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scan" class="md-nav__link">
+    scan
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flat_map" class="md-nav__link">
+    flat_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter_map" class="md-nav__link">
+    filter_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find_map" class="md-nav__link">
+    find_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#count" class="md-nav__link">
+    count
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zip" class="md-nav__link">
+    zip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sum" class="md-nav__link">
+    sum
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#max" class="md-nav__link">
+    max
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#min" class="md-nav__link">
+    min
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skip" class="md-nav__link">
+    skip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#take" class="md-nav__link">
+    take
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sort" class="md-nav__link">
+    sort
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reverse" class="md-nav__link">
+    reverse
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#repeat" class="md-nav__link">
+    repeat
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cycle" class="md-nav__link">
+    cycle
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iterate" class="md-nav__link">
+    iterate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keys" class="md-nav__link">
+    keys
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#values" class="md-nav__link">
+    values
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#first" class="md-nav__link">
+    first
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#second" class="md-nav__link">
+    second
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rest" class="md-nav__link">
+    rest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#union" class="md-nav__link">
+    union
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#intersection" class="md-nav__link">
+    intersection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rotate" class="md-nav__link">
+    rotate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chunk" class="md-nav__link">
+    chunk
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combinations" class="md-nav__link">
+    combinations
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#includes" class="md-nav__link">
+    includes?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#excludes" class="md-nav__link">
+    excludes?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#any" class="md-nav__link">
+    any?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#all" class="md-nav__link">
+    all?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#math" class="md-nav__link">
+    Math
+  </a>
+  
+    <nav class="md-nav" aria-label="Math">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#abs" class="md-nav__link">
+    abs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vec_add" class="md-nav__link">
+    vec_add
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signum" class="md-nav__link">
+    signum
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bitwise" class="md-nav__link">
+    Bitwise
+  </a>
+  
+    <nav class="md-nav" aria-label="Bitwise">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bit_and" class="md-nav__link">
+    bit_and
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bit_or" class="md-nav__link">
+    bit_or
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bit_xor" class="md-nav__link">
+    bit_xor
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bit_shift_left" class="md-nav__link">
+    bit_shift_left
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bit_shift_right" class="md-nav__link">
+    bit_shift_right
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#string" class="md-nav__link">
+    String
+  </a>
+  
+    <nav class="md-nav" aria-label="String">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#int" class="md-nav__link">
+    int
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ints" class="md-nav__link">
+    ints
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lines" class="md-nav__link">
+    lines
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#split" class="md-nav__link">
+    split
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regex_match" class="md-nav__link">
+    regex_match
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regex_match_all" class="md-nav__link">
+    regex_match_all
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#miscellaneous" class="md-nav__link">
+    Miscellaneous
+  </a>
+  
+    <nav class="md-nav" aria-label="Miscellaneous">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#range" class="md-nav__link">
+    range
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#id" class="md-nav__link">
+    id
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memoize" class="md-nav__link">
+    memoize
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evaluate" class="md-nav__link">
+    evaluate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type" class="md-nav__link">
+    type
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../runner/" class="md-nav__link">
+        Runner
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          Runtimes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Runtimes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli/" class="md-nav__link">
+        CLI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../web/" class="md-nav__link">
+        Web
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lambda/" class="md-nav__link">
+        Lambda
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../php-ext/" class="md-nav__link">
+        PHP Extension
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/" class="md-nav__link">
+        Examples
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#collection" class="md-nav__link">
+    Collection
+  </a>
+  
+    <nav class="md-nav" aria-label="Collection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#list" class="md-nav__link">
+    list
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set" class="md-nav__link">
+    set
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dict" class="md-nav__link">
+    dict
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get" class="md-nav__link">
+    get
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#size" class="md-nav__link">
+    size
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#push" class="md-nav__link">
+    push
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assoc" class="md-nav__link">
+    assoc
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update" class="md-nav__link">
+    update
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update_d" class="md-nav__link">
+    update_d
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#map" class="md-nav__link">
+    map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter" class="md-nav__link">
+    filter
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#each" class="md-nav__link">
+    each
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reduce" class="md-nav__link">
+    reduce
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold" class="md-nav__link">
+    fold
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fold_s" class="md-nav__link">
+    fold_s
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find" class="md-nav__link">
+    find
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scan" class="md-nav__link">
+    scan
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flat_map" class="md-nav__link">
+    flat_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#filter_map" class="md-nav__link">
+    filter_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#find_map" class="md-nav__link">
+    find_map
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#count" class="md-nav__link">
+    count
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zip" class="md-nav__link">
+    zip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sum" class="md-nav__link">
+    sum
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#max" class="md-nav__link">
+    max
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#min" class="md-nav__link">
+    min
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#skip" class="md-nav__link">
+    skip
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#take" class="md-nav__link">
+    take
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sort" class="md-nav__link">
+    sort
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reverse" class="md-nav__link">
+    reverse
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#repeat" class="md-nav__link">
+    repeat
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cycle" class="md-nav__link">
+    cycle
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iterate" class="md-nav__link">
+    iterate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keys" class="md-nav__link">
+    keys
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#values" class="md-nav__link">
+    values
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#first" class="md-nav__link">
+    first
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#second" class="md-nav__link">
+    second
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rest" class="md-nav__link">
+    rest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#union" class="md-nav__link">
+    union
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#intersection" class="md-nav__link">
+    intersection
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rotate" class="md-nav__link">
+    rotate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chunk" class="md-nav__link">
+    chunk
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#combinations" class="md-nav__link">
+    combinations
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#includes" class="md-nav__link">
+    includes?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#excludes" class="md-nav__link">
+    excludes?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#any" class="md-nav__link">
+    any?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#all" class="md-nav__link">
+    all?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#math" class="md-nav__link">
+    Math
+  </a>
+  
+    <nav class="md-nav" aria-label="Math">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#abs" class="md-nav__link">
+    abs
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vec_add" class="md-nav__link">
+    vec_add
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signum" class="md-nav__link">
+    signum
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bitwise" class="md-nav__link">
+    Bitwise
+  </a>
+  
+    <nav class="md-nav" aria-label="Bitwise">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bit_and" class="md-nav__link">
+    bit_and
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bit_or" class="md-nav__link">
+    bit_or
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bit_xor" class="md-nav__link">
+    bit_xor
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bit_shift_left" class="md-nav__link">
+    bit_shift_left
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bit_shift_right" class="md-nav__link">
+    bit_shift_right
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#string" class="md-nav__link">
+    String
+  </a>
+  
+    <nav class="md-nav" aria-label="String">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#int" class="md-nav__link">
+    int
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ints" class="md-nav__link">
+    ints
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lines" class="md-nav__link">
+    lines
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#split" class="md-nav__link">
+    split
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regex_match" class="md-nav__link">
+    regex_match
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regex_match_all" class="md-nav__link">
+    regex_match_all
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#miscellaneous" class="md-nav__link">
+    Miscellaneous
+  </a>
+  
+    <nav class="md-nav" aria-label="Miscellaneous">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#range" class="md-nav__link">
+    range
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#id" class="md-nav__link">
+    id
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memoize" class="md-nav__link">
+    memoize
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evaluate" class="md-nav__link">
+    evaluate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type" class="md-nav__link">
+    type
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="builtin-functions">Builtin Functions</h1>
+<p>The language trys to follow Python's <em>batteries included</em> motto, where-by all desired functionality is included out of the box.
+This is achieved by the inclusion of many different builtin functions, allowing you tackle many general-purpose and Advent of Code specific problems.
+The following builtin functions are available in <strong>all</strong> runtimes:</p>
+<h2 id="collection">Collection</h2>
+<h3 id="list">list</h3>
+<pre class="highlight"><code>list(value)</code></pre>
+<p>Return the List representation of the given value.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:6"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><input id="__tabbed_1_5" name="__tabbed_1" type="radio" /><input id="__tabbed_1_6" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">List</label><label for="__tabbed_1_2">Set</label><label for="__tabbed_1_3">Dictionary</label><label for="__tabbed_1_4">String</label><label for="__tabbed_1_5">Exclusive Range</label><label for="__tabbed_1_6">Inclusive Range</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">list([1, 2, 3])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">list({1, 2, 3})</code></pre>
+</div>
+<div class="tabbed-block">
+<p>Ouput is a List of List tuples <code>[key, value]</code>.</p>
+<pre class="highlight"><code class="language-santa">list(#{1: 2, 3: 4})</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">list("ab")</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">list(1..5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">list(1..=5)</code></pre>
+</div>
+</div>
+</div>
+<h3 id="set">set</h3>
+<pre class="highlight"><code>set(value)</code></pre>
+<p>Return the Set representation of the given value.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:5"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><input id="__tabbed_2_4" name="__tabbed_2" type="radio" /><input id="__tabbed_2_5" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">List</label><label for="__tabbed_2_2">Set</label><label for="__tabbed_2_3">String</label><label for="__tabbed_2_4">Exclusive Range</label><label for="__tabbed_2_5">Inclusive Range</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">set([1, 2, 3])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">set({1, 2, 3})</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">set("ab")</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">set(1..5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">set(1..=5)</code></pre>
+</div>
+</div>
+</div>
+<h3 id="dict">dict</h3>
+<pre class="highlight"><code>dict(value)</code></pre>
+<p>Return the Dictionary representation of the given value.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">List</label><label for="__tabbed_3_2">Dictionary</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>Input is a List of List tuples <code>[key, value]</code>.</p>
+<pre class="highlight"><code class="language-santa">dict([[1, 2], [3, 4]])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">dict(#{1: 2, 3: 4})</code></pre>
+</div>
+</div>
+</div>
+<h3 id="get">get</h3>
+<pre class="highlight"><code>get(index, collection)</code></pre>
+<p>Get an element within a collection following the <a href="../language/#indexing">indexing</a> rules.
+If an element can not be found at that index then <code>nil</code> is returned.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:7"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><input id="__tabbed_4_3" name="__tabbed_4" type="radio" /><input id="__tabbed_4_4" name="__tabbed_4" type="radio" /><input id="__tabbed_4_5" name="__tabbed_4" type="radio" /><input id="__tabbed_4_6" name="__tabbed_4" type="radio" /><input id="__tabbed_4_7" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">List</label><label for="__tabbed_4_2">Set</label><label for="__tabbed_4_3">Dictionary</label><label for="__tabbed_4_4">String</label><label for="__tabbed_4_5">Exclusive Range</label><label for="__tabbed_4_6">Inclusive Range</label><label for="__tabbed_4_7">Unbounded Range</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">get(1, [1, 2])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">get(1, {1, 2})</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">get(1, #{1: 2, 3: 4})</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">get(1, "ab")</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">get(1, 1..5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">get(1, 1..=5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">get(1, 0..)</code></pre>
+</div>
+</div>
+</div>
+<h3 id="size">size</h3>
+<pre class="highlight"><code>size(collection)</code></pre>
+<p>Get the size of a collection.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:6"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><input id="__tabbed_5_3" name="__tabbed_5" type="radio" /><input id="__tabbed_5_4" name="__tabbed_5" type="radio" /><input id="__tabbed_5_5" name="__tabbed_5" type="radio" /><input id="__tabbed_5_6" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">List</label><label for="__tabbed_5_2">Set</label><label for="__tabbed_5_3">Dictionary</label><label for="__tabbed_5_4">String</label><label for="__tabbed_5_5">Exclusive Range</label><label for="__tabbed_5_6">Inclusive Range</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">size([1, 2])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">size({1, 2})</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">size(#{1: 2, 3: 4})</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">size("ab")</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">size(1..5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">size(1..=5)</code></pre>
+</div>
+</div>
+</div>
+<h3 id="push">push</h3>
+<pre class="highlight"><code>push(value, collection)</code></pre>
+<p>Add a new value to a collection.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><div class="tabbed-labels"><label for="__tabbed_6_1">List</label><label for="__tabbed_6_2">Set</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>The value is appended to the end of the List.</p>
+<pre class="highlight"><code class="language-santa">push(3, [1, 2])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">push(3, {1, 2})</code></pre>
+</div>
+</div>
+</div>
+<h3 id="assoc">assoc</h3>
+<pre class="highlight"><code>assoc(key, value, collection)</code></pre>
+<p>Associate the provided key/index with the given value in a collection.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><div class="tabbed-labels"><label for="__tabbed_7_1">List</label><label for="__tabbed_7_2">Dictionary</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">assoc(0, 3, [1, 2])</code></pre>
+<p>If the index is not already present <code>nil</code> values are inserted up to the given index.</p>
+<pre class="highlight"><code class="language-santa">assoc(1, 1, [])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">assoc(1, 1, #{1: 2, 3: 4})</code></pre>
+<pre class="highlight"><code class="language-santa">assoc(0, 1, #{1: 2, 3: 4})</code></pre>
+</div>
+</div>
+</div>
+<h3 id="update">update</h3>
+<pre class="highlight"><code>update(key, updater, collection)</code></pre>
+<p>Update the given index/key of a collection using the supplied pure <code>updater</code> function.
+The <code>updater</code> function is supplied the current value at the given index/key, if not present <code>nil</code> is supplied.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="8:2"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><input id="__tabbed_8_2" name="__tabbed_8" type="radio" /><div class="tabbed-labels"><label for="__tabbed_8_1">List</label><label for="__tabbed_8_2">Dictionary</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">update(0, _ + 1, [1, 2])</code></pre>
+<p>If the index is not already present <code>nil</code> values are inserted up to the given index.</p>
+<pre class="highlight"><code class="language-santa">update(1, || 1, [])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">update(0, || 1, #{})</code></pre>
+<pre class="highlight"><code class="language-santa">update(1, _ + 1, #{1: 2, 3: 4})</code></pre>
+</div>
+</div>
+</div>
+<h3 id="update_d">update_d</h3>
+<pre class="highlight"><code>update_d(key, default, updater, collection)</code></pre>
+<p>Update the given index/key of a collection using the supplied pure <code>updater</code> function.
+The <code>updater</code> function is supplied the current value at the given index/key, if not present the <em>default</em> value is supplied.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="9:2"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><input id="__tabbed_9_2" name="__tabbed_9" type="radio" /><div class="tabbed-labels"><label for="__tabbed_9_1">List</label><label for="__tabbed_9_2">Dictionary</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">update_d(0, 0, _ + 1, [1, 2])</code></pre>
+<p>If the index is not already present <code>nil</code> values are inserted up to the given index.</p>
+<pre class="highlight"><code class="language-santa">update_d(1, 0, _ + 1, [])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">update_d(0, 0, _ + 1, #{})</code></pre>
+<pre class="highlight"><code class="language-santa">update_d(1, 0, _ + 1, #{1: 2, 3: 4})</code></pre>
+</div>
+</div>
+</div>
+<h3 id="map">map</h3>
+<pre class="highlight"><code>map(mapper, collection)</code></pre>
+<p>Return a collection with a pure <code>mapper</code> function applied over each element within the given collection.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="10:4"><input checked="checked" id="__tabbed_10_1" name="__tabbed_10" type="radio" /><input id="__tabbed_10_2" name="__tabbed_10" type="radio" /><input id="__tabbed_10_3" name="__tabbed_10" type="radio" /><input id="__tabbed_10_4" name="__tabbed_10" type="radio" /><div class="tabbed-labels"><label for="__tabbed_10_1">List</label><label for="__tabbed_10_2">Set</label><label for="__tabbed_10_3">Dictionary</label><label for="__tabbed_10_4">String</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">map(_ + 1, [1, 2])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">map(_ + 1, {1, 2})</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">map(_ + 1, #{1: 2, 3: 4})</code></pre>
+<p>The <code>mapper</code> function is suppled both the value and key in the context of a Dictionary.</p>
+<pre class="highlight"><code class="language-santa">map(|_, k| k + 1, #{1: 2, 3: 4})</code></pre>
+</div>
+<div class="tabbed-block">
+<p>Each character is considered an element within the mapping.
+The returned collection is a List.</p>
+<pre class="highlight"><code class="language-santa">map(_ * 2, "ab")</code></pre>
+</div>
+</div>
+</div>
+<p>Lazy Sequences return another Lazy Sequence, which when resolved will lazily apply the required mapping.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="11:4"><input checked="checked" id="__tabbed_11_1" name="__tabbed_11" type="radio" /><input id="__tabbed_11_2" name="__tabbed_11" type="radio" /><input id="__tabbed_11_3" name="__tabbed_11" type="radio" /><input id="__tabbed_11_4" name="__tabbed_11" type="radio" /><div class="tabbed-labels"><label for="__tabbed_11_1">Exclusive Range</label><label for="__tabbed_11_2">Inclusive Range</label><label for="__tabbed_11_3">Unbounded Range</label><label for="__tabbed_11_4">Lazy Sequence</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">map(_ + 1, 1..5) |&gt; list</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">map(_ + 1, 1..=5) |&gt; list</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">map(_ + 1, 0..) |&gt; take(3)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">map(_ + 1, repeat(1)) |&gt; take(3)</code></pre>
+</div>
+</div>
+</div>
+<h3 id="filter">filter</h3>
+<pre class="highlight"><code>filter(predicate, collection)</code></pre>
+<p>Return a collection based on a pure <code>predicate</code> function holding <a href="../language/#truthy-semantics">truthy</a> for the given element in a collection.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="12:4"><input checked="checked" id="__tabbed_12_1" name="__tabbed_12" type="radio" /><input id="__tabbed_12_2" name="__tabbed_12" type="radio" /><input id="__tabbed_12_3" name="__tabbed_12" type="radio" /><input id="__tabbed_12_4" name="__tabbed_12" type="radio" /><div class="tabbed-labels"><label for="__tabbed_12_1">List</label><label for="__tabbed_12_2">Set</label><label for="__tabbed_12_3">Dictionary</label><label for="__tabbed_12_4">String</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">filter(_ == 1, [1, 2])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">filter(_ == 1, {1, 2})</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">filter(_ == 2, #{1: 2, 3: 4})</code></pre>
+<p>The <code>predicate</code> function is suppled both the value and key in the context of a Dictionary.</p>
+<pre class="highlight"><code class="language-santa">filter(|_, k| k == 3, #{1: 2, 3: 4})</code></pre>
+</div>
+<div class="tabbed-block">
+<p>Each character is considered an element within the predicate.
+The returned collection is a List.</p>
+<pre class="highlight"><code class="language-santa">filter(_ == "a", "ab")</code></pre>
+</div>
+</div>
+</div>
+<p>Lazy Sequences return another Lazy Sequence, which when resolved will lazily apply the required filter.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="13:4"><input checked="checked" id="__tabbed_13_1" name="__tabbed_13" type="radio" /><input id="__tabbed_13_2" name="__tabbed_13" type="radio" /><input id="__tabbed_13_3" name="__tabbed_13" type="radio" /><input id="__tabbed_13_4" name="__tabbed_13" type="radio" /><div class="tabbed-labels"><label for="__tabbed_13_1">Exclusive Range</label><label for="__tabbed_13_2">Inclusive Range</label><label for="__tabbed_13_3">Unbounded Range</label><label for="__tabbed_13_4">Lazy Sequence</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">filter(_ % 2, 1..5) |&gt; list</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">filter(_ % 2, 1..=5) |&gt; list</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">filter(_ % 2, 0..) |&gt; take(3)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">filter(_ != 2, cycle([1, 2, 3])) |&gt; take(3)</code></pre>
+</div>
+</div>
+</div>
+<h3 id="each">each</h3>
+<pre class="highlight"><code>each(side_effect, collection)</code></pre>
+<p>Apply a side-effecting function over each element in the given collection.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="14:4"><input checked="checked" id="__tabbed_14_1" name="__tabbed_14" type="radio" /><input id="__tabbed_14_2" name="__tabbed_14" type="radio" /><input id="__tabbed_14_3" name="__tabbed_14" type="radio" /><input id="__tabbed_14_4" name="__tabbed_14" type="radio" /><div class="tabbed-labels"><label for="__tabbed_14_1">List</label><label for="__tabbed_14_2">Set</label><label for="__tabbed_14_3">Dictionary</label><label for="__tabbed_14_4">String</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">let mut acc = 0;
+each(|v| acc = acc + v, [1, 2]);
+acc;</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">let mut acc = 0;
+each(|v| acc = acc + v, {1, 2});
+acc;</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">let mut acc = 0;
+each(|v| acc = acc + v, #{1: 2, 3: 4});
+acc;</code></pre>
+<p>The <code>predicate</code> function is suppled both the value and key in the context of a Dictionary.</p>
+<pre class="highlight"><code class="language-santa">let mut acc = 0;
+each(|_, k| acc = ac + k, #{1: 2, 3: 4});
+acc;</code></pre>
+</div>
+<div class="tabbed-block">
+<p>Each character is considered an element within the iteration.
+The returned collection is a List.</p>
+<pre class="highlight"><code class="language-santa">let mut acc = 0;
+each(|_| acc = acc + 1, "ab");
+acc;</code></pre>
+</div>
+</div>
+</div>
+<p>The function can <code>break</code> which will terminate the collection iteration early.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="15:4"><input checked="checked" id="__tabbed_15_1" name="__tabbed_15" type="radio" /><input id="__tabbed_15_2" name="__tabbed_15" type="radio" /><input id="__tabbed_15_3" name="__tabbed_15" type="radio" /><input id="__tabbed_15_4" name="__tabbed_15" type="radio" /><div class="tabbed-labels"><label for="__tabbed_15_1">Exclusive Range</label><label for="__tabbed_15_2">Inclusive Range</label><label for="__tabbed_15_3">Unbounded Range</label><label for="__tabbed_15_4">Lazy Sequence</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">let mut acc = 0;
+each(|v| acc = acc + v, 1..5);
+acc;</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">let mut acc = 0;
+each(|v| acc = acc + v, 1..=5);
+acc;</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">let mut acc = 0;
+0.. |&gt; each |v| {
+  if v == 10 { break nil } else { acc = acc + v }
+};
+acc;</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">let mut acc = 0;
+iterate(_ + 1, 1) |&gt; each |v| {
+  if v == 10 { break nil } else { acc = acc + v }
+};
+acc;</code></pre>
+</div>
+</div>
+</div>
+<h3 id="reduce">reduce</h3>
+<pre class="highlight"><code>reduce(reducer, collection)</code></pre>
+<p>Apply a pure <code>reducer</code> function over a given collection.
+The initial accumulator value supplied upon first iteration is the first element in the collection.
+If the collection is empty then an error is thrown.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="16:4"><input checked="checked" id="__tabbed_16_1" name="__tabbed_16" type="radio" /><input id="__tabbed_16_2" name="__tabbed_16" type="radio" /><input id="__tabbed_16_3" name="__tabbed_16" type="radio" /><input id="__tabbed_16_4" name="__tabbed_16" type="radio" /><div class="tabbed-labels"><label for="__tabbed_16_1">List</label><label for="__tabbed_16_2">Set</label><label for="__tabbed_16_3">Dictionary</label><label for="__tabbed_16_4">String</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">reduce(+, [1, 2])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">reduce(+, {1, 2})</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">reduce(+, #{1: 2, 3: 4})</code></pre>
+<p>The <code>reducer</code> function is suppled both the value and key in the context of a Dictionary.</p>
+<pre class="highlight"><code class="language-santa">reduce(|acc, _, k| acc + k, #{1: 2, 3: 4})</code></pre>
+</div>
+<div class="tabbed-block">
+<p>Each character is considered an element within the reduction.
+The returned collection is a List.</p>
+<pre class="highlight"><code class="language-santa">reduce(|acc, ch| ch + acc, "ab")</code></pre>
+</div>
+</div>
+</div>
+<p>The function can <code>break</code> which will terminate the collection iteration early.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="17:4"><input checked="checked" id="__tabbed_17_1" name="__tabbed_17" type="radio" /><input id="__tabbed_17_2" name="__tabbed_17" type="radio" /><input id="__tabbed_17_3" name="__tabbed_17" type="radio" /><input id="__tabbed_17_4" name="__tabbed_17" type="radio" /><div class="tabbed-labels"><label for="__tabbed_17_1">Exclusive Range</label><label for="__tabbed_17_2">Inclusive Range</label><label for="__tabbed_17_3">Unbounded Range</label><label for="__tabbed_17_4">Lazy Sequence</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">reduce(+, 1..5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">reduce(+, 1..=5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">0.. |&gt; reduce |acc, v| {
+  if v == 10 { break acc } else { acc + v }
+}</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">iterate(_ + 1, 1) |&gt; reduce |acc, v| {
+  if v == 10 { break acc } else { acc + v }
+}</code></pre>
+</div>
+</div>
+</div>
+<h3 id="fold">fold</h3>
+<pre class="highlight"><code>fold(initial, folder, collection)</code></pre>
+<p>Apply a pure <code>folder</code> function over a given collection.
+The initial fold receives the first element and the <em>initial value</em> supplied.
+If the collection is empty then the <em>initial value</em> is returned.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="18:4"><input checked="checked" id="__tabbed_18_1" name="__tabbed_18" type="radio" /><input id="__tabbed_18_2" name="__tabbed_18" type="radio" /><input id="__tabbed_18_3" name="__tabbed_18" type="radio" /><input id="__tabbed_18_4" name="__tabbed_18" type="radio" /><div class="tabbed-labels"><label for="__tabbed_18_1">List</label><label for="__tabbed_18_2">Set</label><label for="__tabbed_18_3">Dictionary</label><label for="__tabbed_18_4">String</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">fold(0, +, [1, 2])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">fold(0, +, {1, 2})</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">fold(0, +, #{1: 2, 3: 4})</code></pre>
+<p>The <code>folder</code> function is suppled both the value and key in the context of a Dictionary.</p>
+<pre class="highlight"><code class="language-santa">fold(0, |acc, _, k| acc + k, #{1: 2, 3: 4})</code></pre>
+</div>
+<div class="tabbed-block">
+<p>Each character is considered an element within the fold.
+The returned collection is a List.</p>
+<pre class="highlight"><code class="language-santa">fold(0, _ + 1, "ab")</code></pre>
+</div>
+</div>
+</div>
+<p>The function can <code>break</code> which will terminate the collection iteration early.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="19:4"><input checked="checked" id="__tabbed_19_1" name="__tabbed_19" type="radio" /><input id="__tabbed_19_2" name="__tabbed_19" type="radio" /><input id="__tabbed_19_3" name="__tabbed_19" type="radio" /><input id="__tabbed_19_4" name="__tabbed_19" type="radio" /><div class="tabbed-labels"><label for="__tabbed_19_1">Exclusive Range</label><label for="__tabbed_19_2">Inclusive Range</label><label for="__tabbed_19_3">Unbounded Range</label><label for="__tabbed_19_4">Lazy Sequence</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">fold(0, +, 1..5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">fold(0, +, 1..=5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">0.. |&gt; fold (0) |acc, v| {
+  if v == 10 { break acc } else { acc + v }
+}</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">iterate(_ + 1, 1) |&gt; fold (0) |acc, v| {
+  if v == 10 { break acc } else { acc + v }
+}</code></pre>
+</div>
+</div>
+</div>
+<h3 id="fold_s">fold_s</h3>
+<pre class="highlight"><code>fold_s(initial, folder, collection)</code></pre>
+<p>Apply a pure <code>folder</code> function over a given collection, with optional state which is passed along throughout the fold.
+The accumulated value is a List comprising of the first element being the resulting <em>folded</em> value, and other elements being <em>state</em> you wish to pass on to the next iteration.
+Upon completion, the extra state is discarded and the folded value is returned.
+If the collection is empty then the <em>initial value</em> is returned.</p>
+<pre class="highlight"><code class="language-santa">50..100 |&gt; fold_s(
+  [0, 0, 0],
+  |[acc, x, y], val| [acc + x * y * val, val, val / 2]
+)</code></pre>
+<h3 id="find">find</h3>
+<pre class="highlight"><code>find(predicate, collection)</code></pre>
+<p>Apply a pure <code>predicate</code> function over a given collection, returning the first element where the predicate holds <a href="../language/#truthy-semantics">truthy</a>.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="20:8"><input checked="checked" id="__tabbed_20_1" name="__tabbed_20" type="radio" /><input id="__tabbed_20_2" name="__tabbed_20" type="radio" /><input id="__tabbed_20_3" name="__tabbed_20" type="radio" /><input id="__tabbed_20_4" name="__tabbed_20" type="radio" /><input id="__tabbed_20_5" name="__tabbed_20" type="radio" /><input id="__tabbed_20_6" name="__tabbed_20" type="radio" /><input id="__tabbed_20_7" name="__tabbed_20" type="radio" /><input id="__tabbed_20_8" name="__tabbed_20" type="radio" /><div class="tabbed-labels"><label for="__tabbed_20_1">List</label><label for="__tabbed_20_2">Set</label><label for="__tabbed_20_3">Dictionary</label><label for="__tabbed_20_4">String</label><label for="__tabbed_20_5">Exclusive Range</label><label for="__tabbed_20_6">Inclusive Range</label><label for="__tabbed_20_7">Unbounded Range</label><label for="__tabbed_20_8">Lazy Sequence</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">find(_ % 2, [1, 2])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">find(_ % 2, {1, 2})</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">find(_ % 2, #{1: 2, 3: 4})</code></pre>
+<p>The <code>predicate</code> function is suppled both the value and key in the context of a Dictionary.</p>
+<pre class="highlight"><code class="language-santa">find(|_, k| k % 2, #{1: 2, 3: 4})</code></pre>
+</div>
+<div class="tabbed-block">
+<p>Each character is considered an element within the predicate.
+The returned collection is a List.</p>
+<pre class="highlight"><code class="language-santa">find(_ == "b", "ab")</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">find(_ % 2, 1..5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">find(_ % 2, 1..=5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">find(_ % 2, 0..)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">find(_ % 2, iterate(_ + 1, 1))</code></pre>
+</div>
+</div>
+</div>
+<h3 id="scan">scan</h3>
+<pre class="highlight"><code>scan(initial, folder, collection)</code></pre>
+<p>Return a collection which includes the result of each iteration of folding a pure <code>folder</code> function over each element within the given collection.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="21:6"><input checked="checked" id="__tabbed_21_1" name="__tabbed_21" type="radio" /><input id="__tabbed_21_2" name="__tabbed_21" type="radio" /><input id="__tabbed_21_3" name="__tabbed_21" type="radio" /><input id="__tabbed_21_4" name="__tabbed_21" type="radio" /><input id="__tabbed_21_5" name="__tabbed_21" type="radio" /><input id="__tabbed_21_6" name="__tabbed_21" type="radio" /><div class="tabbed-labels"><label for="__tabbed_21_1">List</label><label for="__tabbed_21_2">Set</label><label for="__tabbed_21_3">Dictionary</label><label for="__tabbed_21_4">String</label><label for="__tabbed_21_5">Exclusive Range</label><label for="__tabbed_21_6">Inclusive Range</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">scan(0, +, [1, 2])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">scan(0, +, {1, 2})</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">scan(0, +, #{1: 2, 3: 4})</code></pre>
+<p>The <code>folder</code> function is suppled both the value and key in the context of a Dictionary.</p>
+<pre class="highlight"><code class="language-santa">scan(0, |acc, _, k| acc + k, #{1: 2, 3: 4})</code></pre>
+</div>
+<div class="tabbed-block">
+<p>Each character is considered an element within the fold.
+The returned collection is a List.</p>
+<pre class="highlight"><code class="language-santa">scan("", +, "ab")</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">scan(0, +, 1..5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">scan(0, +, 1..=5)</code></pre>
+</div>
+</div>
+</div>
+<h3 id="flat_map">flat_map</h3>
+<pre class="highlight"><code>flat_map(mapper, collection)</code></pre>
+<p>Apply a pure <code>mapper</code> function over a given collection with the resulting <em>mapped</em> List results being flattened into a single List.</p>
+<pre class="highlight"><code class="language-santa">flat_map(_ * 2, [[1, 2], [3, 4]])</code></pre>
+<h3 id="filter_map">filter_map</h3>
+<pre class="highlight"><code>filter_map(mapper, collection)</code></pre>
+<p>Apply a pure <code>mapper</code> function over a given collection and filter out the mapped values based on them being <a href="../language/#truthy-semantics">truthy</a>.
+This is a convenience function (inspired by <a href="https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.filter_map">Rust</a>) for the common place <code>map(..) |&gt; filter(..)</code> pattern.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="22:8"><input checked="checked" id="__tabbed_22_1" name="__tabbed_22" type="radio" /><input id="__tabbed_22_2" name="__tabbed_22" type="radio" /><input id="__tabbed_22_3" name="__tabbed_22" type="radio" /><input id="__tabbed_22_4" name="__tabbed_22" type="radio" /><input id="__tabbed_22_5" name="__tabbed_22" type="radio" /><input id="__tabbed_22_6" name="__tabbed_22" type="radio" /><input id="__tabbed_22_7" name="__tabbed_22" type="radio" /><input id="__tabbed_22_8" name="__tabbed_22" type="radio" /><div class="tabbed-labels"><label for="__tabbed_22_1">List</label><label for="__tabbed_22_2">Set</label><label for="__tabbed_22_3">Dictionary</label><label for="__tabbed_22_4">String</label><label for="__tabbed_22_5">Exclusive Range</label><label for="__tabbed_22_6">Inclusive Range</label><label for="__tabbed_22_7">Unbounded Range</label><label for="__tabbed_22_8">Lazy Sequence</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">[1, 2, 3, 4] |&gt; filter_map(|v| if v % 2 { v * 2 })</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">{1, 2, 3, 4} |&gt; filter_map(|v| if v % 2 { v * 2 })</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">#{1: 2, 3: 4} |&gt; filter_map(|v| if v != 2 { v * 2 })</code></pre>
+<p>The <code>mapper</code> function is suppled both the value and key in the context of a Dictionary.</p>
+<pre class="highlight"><code class="language-santa">#{1: 2, 3: 4} |&gt; filter_map(|_, k| if k != 1 { k * 2 })</code></pre>
+</div>
+<div class="tabbed-block">
+<p>Each character is considered an element within the mapping.
+The returned collection is a List.</p>
+<pre class="highlight"><code class="language-santa">"ab" |&gt; filter_map(|v| if v != "a" { v * 2 })</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">1..5
+  |&gt; filter_map(|v| if v % 2 { v * 2 })
+  |&gt; list</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">1..=5
+  |&gt; filter_map(|v| if v % 2 { v * 2 })
+  |&gt; list</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">1..
+  |&gt; filter_map(|v| if v % 2 { v * 2 })
+  |&gt; take(3)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">iterate(_ + 1, 1)
+  |&gt; filter_map(|v| if v % 2 { v * 2 })
+  |&gt; take(3)</code></pre>
+</div>
+</div>
+</div>
+<h3 id="find_map">find_map</h3>
+<pre class="highlight"><code>find_map(mapper, collection)</code></pre>
+<p>Apply a pure <code>mapper</code> function over a given collection and find the first mapped element where the value returned is <a href="../language/#truthy-semantics">truthy</a>.
+This is a convenience function (inspired by <a href="https://doc.rust-lang.org/std/iter/trait.Iterator.html#method.filter_map">Rust</a>) for the common place <code>map(..) |&gt; find(..)</code> pattern.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="23:8"><input checked="checked" id="__tabbed_23_1" name="__tabbed_23" type="radio" /><input id="__tabbed_23_2" name="__tabbed_23" type="radio" /><input id="__tabbed_23_3" name="__tabbed_23" type="radio" /><input id="__tabbed_23_4" name="__tabbed_23" type="radio" /><input id="__tabbed_23_5" name="__tabbed_23" type="radio" /><input id="__tabbed_23_6" name="__tabbed_23" type="radio" /><input id="__tabbed_23_7" name="__tabbed_23" type="radio" /><input id="__tabbed_23_8" name="__tabbed_23" type="radio" /><div class="tabbed-labels"><label for="__tabbed_23_1">List</label><label for="__tabbed_23_2">Set</label><label for="__tabbed_23_3">Dictionary</label><label for="__tabbed_23_4">String</label><label for="__tabbed_23_5">Exclusive Range</label><label for="__tabbed_23_6">Inclusive Range</label><label for="__tabbed_23_7">Unbounded Range</label><label for="__tabbed_23_8">Lazy Sequence</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">[1, 2] |&gt; find_map(|v| if v % 2 { v * 2 })</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">{1, 2} |&gt; find_map(|v| if v % 2 { v * 2 })</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">#{1: 2, 3: 4} |&gt; find_map(|v| if v != 2 { v * 2 })</code></pre>
+<p>The <code>mapper</code> function is suppled both the value and key in the context of a Dictionary.</p>
+<pre class="highlight"><code class="language-santa">#{1: 2, 3: 4} |&gt; find_map(|_, k| if k != 1 { k * 2 })</code></pre>
+</div>
+<div class="tabbed-block">
+<p>Each character is considered an element within the mapping.
+The returned collection is a List.</p>
+<pre class="highlight"><code class="language-santa">"ab" |&gt; find_map(|v| if v != "a" { v * 2 })</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">1..5 |&gt; find_map(|v| if v % 2 { v * 2 })</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">1..=5 |&gt; find_map(|v| if v % 2 { v * 2 })</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">1.. |&gt; find_map(|v| if v % 2 { v * 2 })</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">iterate(_ + 1, 1)
+  |&gt; find_map(|v| if v % 2 { v * 2 })</code></pre>
+</div>
+</div>
+</div>
+<h3 id="count">count</h3>
+<pre class="highlight"><code>count(predicate, collection)</code></pre>
+<p>Count the total number of elements where the pure <code>predicate</code> function holds <a href="../language/#truthy-semantics">truthy</a>.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="24:6"><input checked="checked" id="__tabbed_24_1" name="__tabbed_24" type="radio" /><input id="__tabbed_24_2" name="__tabbed_24" type="radio" /><input id="__tabbed_24_3" name="__tabbed_24" type="radio" /><input id="__tabbed_24_4" name="__tabbed_24" type="radio" /><input id="__tabbed_24_5" name="__tabbed_24" type="radio" /><input id="__tabbed_24_6" name="__tabbed_24" type="radio" /><div class="tabbed-labels"><label for="__tabbed_24_1">List</label><label for="__tabbed_24_2">Set</label><label for="__tabbed_24_3">Dictionary</label><label for="__tabbed_24_4">String</label><label for="__tabbed_24_5">Exclusive Range</label><label for="__tabbed_24_6">Inclusive Range</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">count(_ % 2, [1, 2, 3, 4])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">count(_ % 2, {1, 2, 3, 4})</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">count(_ % 2, #{1: 2, 3: 4})</code></pre>
+<p>The <code>predicate</code> function is suppled both the value and key in the context of a Dictionary.</p>
+<pre class="highlight"><code class="language-santa">count(|_, k| k % 2, #{1: 2, 3: 4})</code></pre>
+</div>
+<div class="tabbed-block">
+<p>Each character is considered an element within the predicate.
+The returned collection is a List.</p>
+<pre class="highlight"><code class="language-santa">count(_ == "a", "ab")</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">count(_ % 2, 1..5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">count(_ % 2, 1..=5)</code></pre>
+</div>
+</div>
+</div>
+<h3 id="zip">zip</h3>
+<pre class="highlight"><code>zip(collection, ..collections)</code></pre>
+<p>Takes any number of iterables as an argument and aggregates them together producing a List/Lazy Sequence of List tuples.
+Each List tuple contains elements of all iterables occurring at the same position, stopping when the shortest iterables is exhausted.</p>
+<pre class="highlight"><code class="language-santa">zip(0.., "abc", [1.5, 2.5, 3.5])</code></pre>
+<pre class="highlight"><code class="language-santa">zip(0.., "abcdef", [1.5, 2.5, 3.5])</code></pre>
+<p>If any of the iterables have a finite size then a List is returned, else a Lazy Sequence is produced.</p>
+<pre class="highlight"><code class="language-santa">zip(0.., 1..) |&gt; take(3)</code></pre>
+<h3 id="sum">sum</h3>
+<pre class="highlight"><code>sum(collection)</code></pre>
+<p>Sum all the Integer elements within a collection.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="25:5"><input checked="checked" id="__tabbed_25_1" name="__tabbed_25" type="radio" /><input id="__tabbed_25_2" name="__tabbed_25" type="radio" /><input id="__tabbed_25_3" name="__tabbed_25" type="radio" /><input id="__tabbed_25_4" name="__tabbed_25" type="radio" /><input id="__tabbed_25_5" name="__tabbed_25" type="radio" /><div class="tabbed-labels"><label for="__tabbed_25_1">List</label><label for="__tabbed_25_2">Set</label><label for="__tabbed_25_3">Dictionary</label><label for="__tabbed_25_4">Exclusive Range</label><label for="__tabbed_25_5">Inclusive Range</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">sum([1, 2])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">sum({1, 2})</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">sum(#{1: 2, 3: 4})</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">sum(1..5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">sum(1..=5)</code></pre>
+</div>
+</div>
+</div>
+<h3 id="max">max</h3>
+<pre class="highlight"><code>max(..values)</code></pre>
+<p>Find the largest (maximum) element within a collection.
+The collections can be supplied as a single argument List (containing multiple collections), or as a multi-arity function call.</p>
+<pre class="highlight"><code class="language-santa">max(1, 2) == max([1, 2])</code></pre>
+<div class="tabbed-set tabbed-alternate" data-tabs="26:5"><input checked="checked" id="__tabbed_26_1" name="__tabbed_26" type="radio" /><input id="__tabbed_26_2" name="__tabbed_26" type="radio" /><input id="__tabbed_26_3" name="__tabbed_26" type="radio" /><input id="__tabbed_26_4" name="__tabbed_26" type="radio" /><input id="__tabbed_26_5" name="__tabbed_26" type="radio" /><div class="tabbed-labels"><label for="__tabbed_26_1">List</label><label for="__tabbed_26_2">Set</label><label for="__tabbed_26_3">Dictionary</label><label for="__tabbed_26_4">Exclusive Range</label><label for="__tabbed_26_5">Inclusive Range</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">max([1, 2])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">max({1, 2})</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">max(#{1: 2, 3: 4})</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">max(1..5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">max(1..=5)</code></pre>
+</div>
+</div>
+</div>
+<h3 id="min">min</h3>
+<pre class="highlight"><code>min(..values)</code></pre>
+<p>Find the smallest (minimum) element within a collection.
+The collections can be supplied as a single argument List (containing multiple collections), or as a multi-arity function call.</p>
+<pre class="highlight"><code class="language-santa">min(1, 2) == min([1, 2])</code></pre>
+<div class="tabbed-set tabbed-alternate" data-tabs="27:5"><input checked="checked" id="__tabbed_27_1" name="__tabbed_27" type="radio" /><input id="__tabbed_27_2" name="__tabbed_27" type="radio" /><input id="__tabbed_27_3" name="__tabbed_27" type="radio" /><input id="__tabbed_27_4" name="__tabbed_27" type="radio" /><input id="__tabbed_27_5" name="__tabbed_27" type="radio" /><div class="tabbed-labels"><label for="__tabbed_27_1">List</label><label for="__tabbed_27_2">Set</label><label for="__tabbed_27_3">Dictionary</label><label for="__tabbed_27_4">Exclusive Range</label><label for="__tabbed_27_5">Inclusive Range</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">min([1, 2])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">min({1, 2})</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">min(#{1: 2, 3: 4})</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">min(1..5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">min(1..=5)</code></pre>
+</div>
+</div>
+</div>
+<h3 id="skip">skip</h3>
+<pre class="highlight"><code>skip(total, collection)</code></pre>
+<p>Skip a number of elements within a collection.
+If the collection is a Lazy Sequence the skip is applied when the collection is lazily resolved.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="28:6"><input checked="checked" id="__tabbed_28_1" name="__tabbed_28" type="radio" /><input id="__tabbed_28_2" name="__tabbed_28" type="radio" /><input id="__tabbed_28_3" name="__tabbed_28" type="radio" /><input id="__tabbed_28_4" name="__tabbed_28" type="radio" /><input id="__tabbed_28_5" name="__tabbed_28" type="radio" /><input id="__tabbed_28_6" name="__tabbed_28" type="radio" /><div class="tabbed-labels"><label for="__tabbed_28_1">List</label><label for="__tabbed_28_2">Set</label><label for="__tabbed_28_3">Exclusive Range</label><label for="__tabbed_28_4">Inclusive Range</label><label for="__tabbed_28_5">Unbounded Range</label><label for="__tabbed_28_6">Lazy Sequence</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">skip(1, [1, 2, 3])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">skip(1, {1, 2, 3})</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">skip(2, 1..5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">skip(2, 1..=5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">skip(2, 1..) |&gt; take(3)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">skip(2, iterate(_ + 1, 1)) |&gt; take(3)</code></pre>
+</div>
+</div>
+</div>
+<h3 id="take">take</h3>
+<pre class="highlight"><code>take(total, collection)</code></pre>
+<p>Take a number of elements from a collection.
+If the collection is a Lazy Sequence then the collection is resolved with any outstanding operations (<code>map</code>, <code>skip</code> etc.) being applied.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="29:6"><input checked="checked" id="__tabbed_29_1" name="__tabbed_29" type="radio" /><input id="__tabbed_29_2" name="__tabbed_29" type="radio" /><input id="__tabbed_29_3" name="__tabbed_29" type="radio" /><input id="__tabbed_29_4" name="__tabbed_29" type="radio" /><input id="__tabbed_29_5" name="__tabbed_29" type="radio" /><input id="__tabbed_29_6" name="__tabbed_29" type="radio" /><div class="tabbed-labels"><label for="__tabbed_29_1">List</label><label for="__tabbed_29_2">Set</label><label for="__tabbed_29_3">Exclusive Range</label><label for="__tabbed_29_4">Inclusive Range</label><label for="__tabbed_29_5">Unbounded Range</label><label for="__tabbed_29_6">Lazy Sequence</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">take(2, [1, 2, 3])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">take(2, {1, 2, 3})</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">take(2, 1..5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">take(2, 1..=5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">take(2, 1..)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">take(2, iterate(_ + 1, 1))</code></pre>
+</div>
+</div>
+</div>
+<h3 id="sort">sort</h3>
+<pre class="highlight"><code>sort(comparator, collection)</code></pre>
+<p>Sort the collection based on a supplied pure <code>comparator</code> function.
+The comparator function accepts two values (a, b) from the collection and can either return:</p>
+<p>An Boolean value, with <code>false</code> signifying <em>a &lt; b</em> and <code>true</code> signifying <em>a &gt; b</em>.</p>
+<pre class="highlight"><code class="language-santa">sort(&gt;, [3, 2, 1])</code></pre>
+<p>An Integer value, with a negative value signifying <em>a &lt; b</em>, zero signifying <em>a == b</em>, and a positive value signifying <em>a &gt; b</em>.</p>
+<pre class="highlight"><code class="language-santa">sort(-, [3, 2, 1])</code></pre>
+<h3 id="reverse">reverse</h3>
+<pre class="highlight"><code>reverse(collection)</code></pre>
+<p>Reverse the order of a given List collection.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="30:4"><input checked="checked" id="__tabbed_30_1" name="__tabbed_30" type="radio" /><input id="__tabbed_30_2" name="__tabbed_30" type="radio" /><input id="__tabbed_30_3" name="__tabbed_30" type="radio" /><input id="__tabbed_30_4" name="__tabbed_30" type="radio" /><div class="tabbed-labels"><label for="__tabbed_30_1">List</label><label for="__tabbed_30_2">String</label><label for="__tabbed_30_3">Exclusive Range</label><label for="__tabbed_30_4">Inclusive Range</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">reverse([1, 2, 3])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">reverse("abc")</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">reverse(1..5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">reverse(1..=5)</code></pre>
+</div>
+</div>
+</div>
+<h3 id="repeat">repeat</h3>
+<pre class="highlight"><code>repeat(value)</code></pre>
+<p>Generate a Lazy Sequence which repeats the provided value indefinitely.</p>
+<pre class="highlight"><code class="language-santa">repeat(1) |&gt; take(3)</code></pre>
+<h3 id="cycle">cycle</h3>
+<pre class="highlight"><code>cycle(list)</code></pre>
+<p>Generate a Lazy Sequence which cycles through each element in a List indefinitely, looping back to the start once exhausted.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="31:2"><input checked="checked" id="__tabbed_31_1" name="__tabbed_31" type="radio" /><input id="__tabbed_31_2" name="__tabbed_31" type="radio" /><div class="tabbed-labels"><label for="__tabbed_31_1">List</label><label for="__tabbed_31_2">String</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">cycle([1, 2, 3]) |&gt; take(4)</code></pre>
+</div>
+<div class="tabbed-block">
+<p>Each character is considered an element within the Lazy Sequence.</p>
+<pre class="highlight"><code class="language-santa">cycle("abc") |&gt; take(4)</code></pre>
+</div>
+</div>
+</div>
+<h3 id="iterate">iterate</h3>
+<pre class="highlight"><code>iterate(generator, initial)</code></pre>
+<p>Generate a Lazy Sequence which supplies a provided pure <code>generator</code> function with the previous result (starting with an initial value) to produce the next value in the sequence.</p>
+<pre class="highlight"><code class="language-santa">iterate(|[a, b]| [b, a + b], [0, 1])
+  |&gt; skip(9)
+  |&gt; take(1)</code></pre>
+<pre class="highlight"><code class="language-santa">iterate(_ * 2, 1) |&gt; take(5)</code></pre>
+<h3 id="keys">keys</h3>
+<pre class="highlight"><code>keys(dictionary)</code></pre>
+<p>Return the keys in a given Dictionary as a List.</p>
+<pre class="highlight"><code class="language-santa">keys(#{1: 2, 3: 4})</code></pre>
+<h3 id="values">values</h3>
+<pre class="highlight"><code>values(dictionary)</code></pre>
+<p>Return the values in a given Dictionary as a List.</p>
+<pre class="highlight"><code class="language-santa">values(#{1: 2, 3: 4})</code></pre>
+<h3 id="first">first</h3>
+<pre class="highlight"><code>first(collection)</code></pre>
+<p>Return the first element within the collection (aka <em>head</em>).
+If the collection is empty then <code>nil</code> is returned.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="32:7"><input checked="checked" id="__tabbed_32_1" name="__tabbed_32" type="radio" /><input id="__tabbed_32_2" name="__tabbed_32" type="radio" /><input id="__tabbed_32_3" name="__tabbed_32" type="radio" /><input id="__tabbed_32_4" name="__tabbed_32" type="radio" /><input id="__tabbed_32_5" name="__tabbed_32" type="radio" /><input id="__tabbed_32_6" name="__tabbed_32" type="radio" /><input id="__tabbed_32_7" name="__tabbed_32" type="radio" /><div class="tabbed-labels"><label for="__tabbed_32_1">List</label><label for="__tabbed_32_2">Set</label><label for="__tabbed_32_3">String</label><label for="__tabbed_32_4">Exclusive Range</label><label for="__tabbed_32_5">Inclusive Range</label><label for="__tabbed_32_6">Unbounded Range</label><label for="__tabbed_32_7">Lazy Sequence</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">first([1, 2])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">first({1, 2})</code></pre>
+</div>
+<div class="tabbed-block">
+<p>Each character is considered an element.</p>
+<pre class="highlight"><code class="language-santa">first("ab")</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">first(1..5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">first(1..=5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">first(1..)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">first(iterate(_ + 1, 1))</code></pre>
+</div>
+</div>
+</div>
+<h3 id="second">second</h3>
+<pre class="highlight"><code>second(collection)</code></pre>
+<p>Return the second element within the collection.
+If the collection does not contain a second element then <code>nil</code> is returned.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="33:7"><input checked="checked" id="__tabbed_33_1" name="__tabbed_33" type="radio" /><input id="__tabbed_33_2" name="__tabbed_33" type="radio" /><input id="__tabbed_33_3" name="__tabbed_33" type="radio" /><input id="__tabbed_33_4" name="__tabbed_33" type="radio" /><input id="__tabbed_33_5" name="__tabbed_33" type="radio" /><input id="__tabbed_33_6" name="__tabbed_33" type="radio" /><input id="__tabbed_33_7" name="__tabbed_33" type="radio" /><div class="tabbed-labels"><label for="__tabbed_33_1">List</label><label for="__tabbed_33_2">Set</label><label for="__tabbed_33_3">String</label><label for="__tabbed_33_4">Exclusive Range</label><label for="__tabbed_33_5">Inclusive Range</label><label for="__tabbed_33_6">Unbounded Range</label><label for="__tabbed_33_7">Lazy Sequence</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">second([1, 2])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">second({1, 2})</code></pre>
+</div>
+<div class="tabbed-block">
+<p>Each character is considered an element.</p>
+<pre class="highlight"><code class="language-santa">second("ab")</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">second(1..5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">second(1..=5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">second(1..)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">second(iterate(_ + 1, 1))</code></pre>
+</div>
+</div>
+</div>
+<h3 id="rest">rest</h3>
+<pre class="highlight"><code>rest(collection)</code></pre>
+<p>Return the collection with the first element omitted (aka <em>tail</em>).
+If the collection does not have more than one element then an empty List is returned.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="34:7"><input checked="checked" id="__tabbed_34_1" name="__tabbed_34" type="radio" /><input id="__tabbed_34_2" name="__tabbed_34" type="radio" /><input id="__tabbed_34_3" name="__tabbed_34" type="radio" /><input id="__tabbed_34_4" name="__tabbed_34" type="radio" /><input id="__tabbed_34_5" name="__tabbed_34" type="radio" /><input id="__tabbed_34_6" name="__tabbed_34" type="radio" /><input id="__tabbed_34_7" name="__tabbed_34" type="radio" /><div class="tabbed-labels"><label for="__tabbed_34_1">List</label><label for="__tabbed_34_2">Set</label><label for="__tabbed_34_3">String</label><label for="__tabbed_34_4">Exclusive Range</label><label for="__tabbed_34_5">Inclusive Range</label><label for="__tabbed_34_6">Unbounded Range</label><label for="__tabbed_34_7">Lazy Sequence</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">rest([1, 2])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">rest({1, 2})</code></pre>
+</div>
+<div class="tabbed-block">
+<p>Each character is considered an element.</p>
+<pre class="highlight"><code class="language-santa">rest("ab")</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">rest(1..5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">rest(1..=5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">rest(1..)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">rest(iterate(_ + 1, 1))</code></pre>
+</div>
+</div>
+</div>
+<h3 id="union">union</h3>
+<pre class="highlight"><code>union(..values)</code></pre>
+<p>Return the elements (as a Set) which are found in <em>any</em> of the provided collections.
+The collections can be supplied as a single argument List (containing multiple collections), or as a multi-arity function call.</p>
+<pre class="highlight"><code class="language-santa">union([{1, 2}, [2, 3], 1..4, "abc"])</code></pre>
+<pre class="highlight"><code class="language-santa">union({1, 2}, [2, 3], 1..4, "abc")</code></pre>
+<h3 id="intersection">intersection</h3>
+<pre class="highlight"><code>intersection(..values)</code></pre>
+<p>Return the elements (as a Set) which are found in <em>all</em> the provided collections.
+The collections can be supplied as a single argument List (containing multiple collections), or as a multi-arity function call.</p>
+<pre class="highlight"><code class="language-santa">intersection([{1, 2}, [2, 3], 1..4])</code></pre>
+<pre class="highlight"><code class="language-santa">intersection({1, 2}, [2, 3], 1..4)</code></pre>
+<h3 id="rotate">rotate</h3>
+<pre class="highlight"><code>rotate(steps, collection)</code></pre>
+<p>Rotate a given List a number of steps.
+If the step number is <em>positive</em> the rotation proceed forward, with the last item moving to the start of the List.
+If the step number is <em>negative</em> the rotation will go backwards, with the first item moving to the end of the List.</p>
+<pre class="highlight"><code class="language-santa">rotate(1, [1, 2, 3])</code></pre>
+<pre class="highlight"><code class="language-santa">rotate(-1, [1, 2, 3])</code></pre>
+<h3 id="chunk">chunk</h3>
+<pre class="highlight"><code>chunk(size, collection)</code></pre>
+<p>Split a List into chunks based on a given size.
+If the List size is not divisible by the chunk size then the last chunk will contain fewer than the desired elements.</p>
+<pre class="highlight"><code class="language-santa">chunk(2, [1, 2, 3])</code></pre>
+<pre class="highlight"><code class="language-santa">chunk(2, [1, 2, 3, 4])</code></pre>
+<h3 id="combinations">combinations</h3>
+<pre class="highlight"><code>combinations(size, collection)</code></pre>
+<p>Generate a Lazy Sequence which produces all the possible combinations of a desired number of elements from within a List.</p>
+<pre class="highlight"><code class="language-santa">combinations(2, [1, 2, 3, 4, 5]) |&gt; list</code></pre>
+<pre class="highlight"><code class="language-santa">combinations(3, [1, 2, 3, 4, 5]) |&gt; find(|x| sum(x) == 10)</code></pre>
+<h3 id="includes">includes?</h3>
+<pre class="highlight"><code>includes?(collection, value)</code></pre>
+<p>Predicate to assert if a value is present within a given collection, based on <a href="../language/#operators">equality</a> rules.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="35:7"><input checked="checked" id="__tabbed_35_1" name="__tabbed_35" type="radio" /><input id="__tabbed_35_2" name="__tabbed_35" type="radio" /><input id="__tabbed_35_3" name="__tabbed_35" type="radio" /><input id="__tabbed_35_4" name="__tabbed_35" type="radio" /><input id="__tabbed_35_5" name="__tabbed_35" type="radio" /><input id="__tabbed_35_6" name="__tabbed_35" type="radio" /><input id="__tabbed_35_7" name="__tabbed_35" type="radio" /><div class="tabbed-labels"><label for="__tabbed_35_1">List</label><label for="__tabbed_35_2">Set</label><label for="__tabbed_35_3">String</label><label for="__tabbed_35_4">Exclusive Range</label><label for="__tabbed_35_5">Inclusive Range</label><label for="__tabbed_35_6">Unbounded Range</label><label for="__tabbed_35_7">Lazy Sequence</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">includes?([1, 2], 1)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">includes?({1, 2}, 1)</code></pre>
+</div>
+<div class="tabbed-block">
+<p>Each character is considered an element.</p>
+<pre class="highlight"><code class="language-santa">includes?("ab", "a")</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">includes?(1..5, 1)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">includes?(1..=5, 1)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">includes?(1.., 5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">includes?(iterate(_ + 1, 1), 5)</code></pre>
+</div>
+</div>
+</div>
+<h3 id="excludes">excludes?</h3>
+<pre class="highlight"><code>excludes?(collection, value)</code></pre>
+<p>Predicate to assert if a value is not present within a given collection, based on <a href="../language/#operators">equality</a> rules.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="36:5"><input checked="checked" id="__tabbed_36_1" name="__tabbed_36" type="radio" /><input id="__tabbed_36_2" name="__tabbed_36" type="radio" /><input id="__tabbed_36_3" name="__tabbed_36" type="radio" /><input id="__tabbed_36_4" name="__tabbed_36" type="radio" /><input id="__tabbed_36_5" name="__tabbed_36" type="radio" /><div class="tabbed-labels"><label for="__tabbed_36_1">List</label><label for="__tabbed_36_2">Set</label><label for="__tabbed_36_3">String</label><label for="__tabbed_36_4">Exclusive Range</label><label for="__tabbed_36_5">Inclusive Range</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">excludes?([1, 2], 3)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">excludes?({1, 2}, 3)</code></pre>
+</div>
+<div class="tabbed-block">
+<p>Each character is considered an element.</p>
+<pre class="highlight"><code class="language-santa">excludes?("ab", "c")</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">excludes?(1..5, 6)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">excludes?(1..=5, 6)</code></pre>
+</div>
+</div>
+</div>
+<h3 id="any">any?</h3>
+<pre class="highlight"><code>any?(predicate, collection)</code></pre>
+<p>Predicate to assert if any value within the collection holds <a href="../language/#truthy-semantics">truthy</a> based on the supplied pure <code>predicate</code> function.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="37:7"><input checked="checked" id="__tabbed_37_1" name="__tabbed_37" type="radio" /><input id="__tabbed_37_2" name="__tabbed_37" type="radio" /><input id="__tabbed_37_3" name="__tabbed_37" type="radio" /><input id="__tabbed_37_4" name="__tabbed_37" type="radio" /><input id="__tabbed_37_5" name="__tabbed_37" type="radio" /><input id="__tabbed_37_6" name="__tabbed_37" type="radio" /><input id="__tabbed_37_7" name="__tabbed_37" type="radio" /><div class="tabbed-labels"><label for="__tabbed_37_1">List</label><label for="__tabbed_37_2">Set</label><label for="__tabbed_37_3">String</label><label for="__tabbed_37_4">Exclusive Range</label><label for="__tabbed_37_5">Inclusive Range</label><label for="__tabbed_37_6">Unbounded Range</label><label for="__tabbed_37_7">Lazy Sequence</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">any?(_ == 1, [1, 2])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">any?(_ == 1, {1, 2})</code></pre>
+</div>
+<div class="tabbed-block">
+<p>Each character is considered an element.</p>
+<pre class="highlight"><code class="language-santa">any?(_ == "a", "ab")</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">any?(_ == 1, 1..5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">any?(_ == 1, 1..=5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">any?(_ == 1, 1..)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">any?(_ == 1, iterate(_ + 1, 1))</code></pre>
+</div>
+</div>
+</div>
+<h3 id="all">all?</h3>
+<pre class="highlight"><code>all?(predicate, collection)</code></pre>
+<p>Predicate to assert if all values within the collection hold <a href="../language/#truthy-semantics">truthy</a> based on the supplied pure <code>predicate</code> function.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="38:5"><input checked="checked" id="__tabbed_38_1" name="__tabbed_38" type="radio" /><input id="__tabbed_38_2" name="__tabbed_38" type="radio" /><input id="__tabbed_38_3" name="__tabbed_38" type="radio" /><input id="__tabbed_38_4" name="__tabbed_38" type="radio" /><input id="__tabbed_38_5" name="__tabbed_38" type="radio" /><div class="tabbed-labels"><label for="__tabbed_38_1">List</label><label for="__tabbed_38_2">Set</label><label for="__tabbed_38_3">String</label><label for="__tabbed_38_4">Exclusive Range</label><label for="__tabbed_38_5">Inclusive Range</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">all?(_ &gt; 0, [1, 2])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">all?(_ &gt; 0, {1, 2})</code></pre>
+</div>
+<div class="tabbed-block">
+<p>Each character is considered an element.</p>
+<pre class="highlight"><code class="language-santa">all?(_ != "c", "ab")</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">all?(_ &gt; 0, 1..5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">all?(_ &gt; 0, 1..=5)</code></pre>
+</div>
+</div>
+</div>
+<h2 id="math">Math</h2>
+<h3 id="abs">abs</h3>
+<pre class="highlight"><code>abs(value)</code></pre>
+<p>Return the absolute value of a number.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="39:2"><input checked="checked" id="__tabbed_39_1" name="__tabbed_39" type="radio" /><input id="__tabbed_39_2" name="__tabbed_39" type="radio" /><div class="tabbed-labels"><label for="__tabbed_39_1">Integer</label><label for="__tabbed_39_2">Decimal</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">abs(-1)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">abs(-1.5)</code></pre>
+</div>
+</div>
+</div>
+<h3 id="vec_add">vec_add</h3>
+<pre class="highlight"><code>vec_add(a, b)</code></pre>
+<p>Sum two Lists together using Vector addition.
+The resulting List will contain results up to the shortest List's size.</p>
+<pre class="highlight"><code class="language-santa">vec_add([1, 2], [3, 4])</code></pre>
+<pre class="highlight"><code class="language-santa">vec_add([1, 2, 3], [4, 5, 6])</code></pre>
+<h3 id="signum">signum</h3>
+<pre class="highlight"><code>signum(value)</code></pre>
+<p>Return the sign (<code>-1, 0, 1</code>) for the given number.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="40:2"><input checked="checked" id="__tabbed_40_1" name="__tabbed_40" type="radio" /><input id="__tabbed_40_2" name="__tabbed_40" type="radio" /><div class="tabbed-labels"><label for="__tabbed_40_1">Integer</label><label for="__tabbed_40_2">Decimal</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">signum(5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">signum(-5.5)</code></pre>
+</div>
+</div>
+</div>
+<h2 id="bitwise">Bitwise</h2>
+<h3 id="bit_and">bit_and</h3>
+<pre class="highlight"><code>bit_and(a, b)</code></pre>
+<p>Return an Integer whose binary representation has a 1 in each bit position for which the corresponding bits of both operands are 1.</p>
+<pre class="highlight"><code class="language-santa">bit_and(9, 11) // 1001 &amp; 1011</code></pre>
+<h3 id="bit_or">bit_or</h3>
+<pre class="highlight"><code>bit_or(a, b)</code></pre>
+<p>Return an Integer whose binary representation has a 1 in each bit position for which the corresponding bits of either or both operands are 1.</p>
+<pre class="highlight"><code class="language-santa">bit_or(9, 11) // 1001 | 1011</code></pre>
+<h3 id="bit_xor">bit_xor</h3>
+<pre class="highlight"><code>bit_xor(a, b)</code></pre>
+<p>Return an Integer whose binary representation has a 1 in each bit position for which the corresponding bits of either but not both operands are 1.</p>
+<pre class="highlight"><code class="language-santa">bit_xor(9, 11) // 1001 ^ 1011</code></pre>
+<h3 id="bit_shift_left">bit_shift_left</h3>
+<pre class="highlight"><code>bit_shift_left(value, shift)</code></pre>
+<p>Return an Integer whose binary representation is the first operand shifted by the specified number of bits to the left.</p>
+<pre class="highlight"><code class="language-santa">bit_shift_left(1, 3)</code></pre>
+<h3 id="bit_shift_right">bit_shift_right</h3>
+<pre class="highlight"><code>bit_shift_right(value, shift)</code></pre>
+<p>Return an Integer whose binary representation is the first operand shifted by the specified number of bits to the right.</p>
+<pre class="highlight"><code class="language-santa">bit_shift_right(64, 3)</code></pre>
+<h2 id="string">String</h2>
+<h3 id="int">int</h3>
+<pre class="highlight"><code>int(value)</code></pre>
+<p>Attempt to parse the provided value into an Integer representation.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="41:4"><input checked="checked" id="__tabbed_41_1" name="__tabbed_41" type="radio" /><input id="__tabbed_41_2" name="__tabbed_41" type="radio" /><input id="__tabbed_41_3" name="__tabbed_41" type="radio" /><input id="__tabbed_41_4" name="__tabbed_41" type="radio" /><div class="tabbed-labels"><label for="__tabbed_41_1">Integer</label><label for="__tabbed_41_2">Decimal</label><label for="__tabbed_41_3">String</label><label for="__tabbed_41_4">Boolean</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">int(5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">int(-5.5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">int("5")</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">int(true)</code></pre>
+</div>
+</div>
+</div>
+<p>Upon failure to parse the value the Integer <code>0</code> is returned.</p>
+<pre class="highlight"><code class="language-santa">int("invalid")</code></pre>
+<h3 id="ints">ints</h3>
+<pre class="highlight"><code>ints(value)</code></pre>
+<p>Return all parseable Integer values (as per <a href="#int"><code>int</code></a>) from a String value as a List.
+If no Integers are found and empty List is returned.</p>
+<pre class="highlight"><code class="language-santa">ints("1,2,3")</code></pre>
+<pre class="highlight"><code class="language-santa">ints("15a20b35")</code></pre>
+<h3 id="lines">lines</h3>
+<pre class="highlight"><code>lines(value)</code></pre>
+<p>Split a given String into a List of Strings, seperated on new lines <code>\n</code>.</p>
+<pre class="highlight"><code class="language-santa">lines("a\nb\nc")</code></pre>
+<h3 id="split">split</h3>
+<pre class="highlight"><code>split(seperator, value)</code></pre>
+<p>Split a given String into a List of Strings, seperated based on the provided value.</p>
+<pre class="highlight"><code class="language-santa">split("-", "a-b-c")</code></pre>
+<h3 id="regex_match">regex_match</h3>
+<pre class="highlight"><code>regex_match(pattern, value)</code></pre>
+<p>Match and capture values from a subject String based on a provided Regular Expression.
+Captured values are returned as a List of Strings.
+If no match/capture can be found an empty List is returned.</p>
+<pre class="highlight"><code class="language-santa">regex_match("name: (\\w+), age: (\\d+)", "name: Bob, age: 30")</code></pre>
+<h3 id="regex_match_all">regex_match_all</h3>
+<pre class="highlight"><code>regex_match_all(pattern, value)</code></pre>
+<p>Match and capture <em>all</em> occurrences from a subject String based on a provided Regular Expression.
+Captured values are returned as a List of Strings.
+If no match/capture can be found an empty List is returned.</p>
+<pre class="highlight"><code class="language-santa">regex_match_all("\\w+: \\w+", "name: Bob, age: 30")</code></pre>
+<h2 id="miscellaneous">Miscellaneous</h2>
+<h3 id="range">range</h3>
+<pre class="highlight"><code>range(from, to, step)</code></pre>
+<p>Generate an <a href="../language/#inclusive-range">Inclusive Range</a> using a custom step value (not the default +1, -1).</p>
+<pre class="highlight"><code class="language-santa">range(1, 10, 2) |&gt; list</code></pre>
+<h3 id="id">id</h3>
+<pre class="highlight"><code>id(value)</code></pre>
+<p>Return the value passed in as an argument.</p>
+<pre class="highlight"><code class="language-santa">id(5)</code></pre>
+<h3 id="memoize">memoize</h3>
+<pre class="highlight"><code>memoize(function)</code></pre>
+<p>Return a function which wraps a given pure function <a href="../language/#memoization">memoizing</a> invocation calls for performance.
+This is a trade-off between space and time complexity.</p>
+<pre class="highlight"><code class="language-santa">let fibonacci = memoize |n| {
+  if (n &gt; 1) {
+    fibonacci(n - 1) + fibonacci(n - 2)
+  } else {
+    n
+  }
+};
+fibonacci(30)</code></pre>
+<h3 id="evaluate">evaluate</h3>
+<pre class="highlight"><code>evaluate(source)</code></pre>
+<p>Evaluates the provided String expression within a sandbox <em>santa-lang</em> interpreter.</p>
+<pre class="highlight"><code class="language-santa">evaluate("1.. |&gt; filter(_ % 2) |&gt; take(3)")</code></pre>
+<h3 id="type">type</h3>
+<pre class="highlight"><code>type(value)</code></pre>
+<p>Return the type of the given value as a String.</p>
+<pre class="highlight"><code class="language-santa">type(1)</code></pre>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.sections", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.b4d07000.min.js"></script>
+      
+        <script src="../assets/santa_lang.js"></script>
+      
+        <script src="../assets/runner.js"></script>
+      
+    
+  </body>
+</html>
