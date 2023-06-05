@@ -1,10 +1,15 @@
-IMAGE = squidfunk/mkdocs-material:9.1.14
+MKDOCS_IMAGE = squidfunk/mkdocs-material:9.1.14
+NODE_IMAGE = node:18.16.0-alpine3.18
 DOCKER = docker run --rm -v $(PWD):/docs -w /docs
 
 .PHONY: serve
-serve:
-	@$(DOCKER) -it -p 8000:8000 $(IMAGE)
+serve: build/runner
+	@$(DOCKER) -it -p 8000:8000 $(MKDOCS_IMAGE)
 
 .PHONY: build
-build:
-	@$(DOCKER) $(IMAGE) build --clean --site-dir site --verbose
+build: build/runner
+	@$(DOCKER) $(MKDOCS_IMAGE) build --clean --site-dir site --verbose
+
+.PHONY: build/runner
+build/runner:
+	@$(DOCKER) -e SANTA_LANG_NPM_TOKEN -w /docs/runner $(NODE_IMAGE) sh -c "yarn && yarn build"

@@ -20,7 +20,6 @@ nav:
       - PHP Extension: php-ext.md
   - Examples: examples.md
 extra_javascript:
-  - assets/santa_lang.js
   - assets/runner.js
 markdown_extensions:
   - pymdownx.superfences

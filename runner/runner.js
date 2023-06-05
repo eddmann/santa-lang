@@ -1,3 +1,5 @@
+import { evaluate } from '@eddmann/santa-lang-wasm';
+
 /**
  * Replace code snippet copy functionality with runner
  */
@@ -10,34 +12,30 @@ style.innerHTML = `
 `;
 document.head.appendChild(style);
 
-document.addEventListener('DOMContentLoaded', () => {
-  wasm_bindgen('/santa-lang-rs/assets/santa_lang_bg.wasm').then(() => {
-    [].forEach.call(document.querySelectorAll('.md-clipboard.md-icon'), el => {
-      const source = document.querySelector(el.dataset.clipboardTarget);
+[].forEach.call(document.querySelectorAll('.md-clipboard.md-icon'), (el) => {
+  const source = document.querySelector(el.dataset.clipboardTarget);
 
-      if (!source.classList.contains('language-santa')) {
-        el.remove();
-        return;
-      }
+  if (!source.classList.contains('language-santa')) {
+    el.remove();
+    return;
+  }
 
-      source.addEventListener('dblclick', () => {
-        source.contentEditable = true;
-      });
+  source.addEventListener('dblclick', () => {
+    source.contentEditable = true;
+  });
 
-      el.addEventListener('click', e => {
-        e.preventDefault();
-        e.stopPropagation();
+  el.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
 
-        source.parentNode.nextSibling?.remove();
-        const result = document.createElement('pre');
-        source.parentNode.after(result);
+    source.parentNode.nextSibling?.remove();
+    const result = document.createElement('pre');
+    source.parentNode.after(result);
 
-        try {
-          result.innerHTML = `<code>${wasm_bindgen.evaluate(source.innerText, {})}</code>`;
-        } catch (error) {
-          result.innerHTML = `<code>${error.message}</code>`;
-        }
-      });
-    });
+    try {
+      result.innerHTML = `<code>${evaluate(source.innerText)}</code>`;
+    } catch (error) {
+      result.innerHTML = `<code>${error.message}</code>`;
+    }
   });
 });

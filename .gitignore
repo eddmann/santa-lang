@@ -1,1 +1,4 @@
 site
+runner/node_modules
+docs/assets/*.js
+docs/assets/*.wasm
