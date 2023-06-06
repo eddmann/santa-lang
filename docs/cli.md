@@ -20,10 +20,7 @@ It includes the following functionality:
 
 **Note:** the TypeScript implementation can be accessed via the [GitHub repository](https://github.com/eddmann/santa-lang-ts).
 
-<figure markdown>
-  ![CLI Runner](assets/cli-runner.png){ align="left", width="46%" }
-  ![CLI REPL](assets/cli-repl.png){ align="right", width="46%" }
-</figure>
+> The Apple/Darwin release may require you to remove the _quarantine_ flag from the executable: `xattr -d com.apple.quarantine santa-lang-cli-*-x86_64-apple-darwin`
 
 ## External Functions
 
@@ -82,11 +79,33 @@ env()
 
 (REPL only) Prints the current environment's variables
 
+## Examples
+
+Below is example output for a successful Advent of Code solution and test execution, using the AoC runner:
+
+<figure markdown>
+  ![CLI Runner](assets/cli-runner.png){ width="400" }
+</figure>
+
+Below is example usage of the in-built CLI REPL environment:
+
+<figure markdown>
+  ![CLI REPL](assets/cli-repl.png){ width="400" }
+</figure>
+
+## Errors
+
+If an error occurrs during execution the the program is immediately halted; with the error message and associated call stack trace presented to the user, as shown below:
+
+<figure markdown>
+  ![CLI Errors](assets/cli-errors.png){ width="500" }
+</figure>
+
 ## Profiling
 
 The Rust-based CLI can be built locally (via a Cargo [`profile`](https://github.com/eddmann/santa-lang-rs/blob/main/runtime/cli/Cargo.toml#L26) feature flag) with additional [flamegraph](https://github.com/tikv/pprof-rs#flamegraph)/[pprof](https://github.com/tikv/pprof-rs#use-with-pprof) CPU profiling output for a given solutions' execution.
 This can be useful when trying to determine slow areas of a given solution, to improve its overall performance.
 
 <figure markdown>
-  ![CLI Profiler](assets/cli-profiler.png){ width="600" }
+  ![CLI Profiler](assets/cli-profiler.png){ width="500" }
 </figure>
