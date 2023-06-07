@@ -418,6 +418,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#errors" class="md-nav__link">
+    Errors
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#example" class="md-nav__link">
     Example
   </a>
@@ -529,6 +536,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#errors" class="md-nav__link">
+    Errors
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#example" class="md-nav__link">
     Example
   </a>
@@ -590,11 +604,29 @@ Errors that occur within the interpreter are relayed back to the PHP runtime via
 </tbody>
 </table>
 <h2 id="api">API</h2>
-<p>With the extension loaded, the interpreter is made accessible via several top-level PHP functions:</p>
-<pre class="highlight"><code class="language-php">function santa_aoc_run(string $source, string $cwd = null): array;
+<p>With the extension loaded, the interpreter is made accessible via several top-level PHP functions.
+The <a href="https://psalm.dev/">Psalm</a> type defintions are presented below:</p>
+<pre class="highlight"><code class="language-php">/**
+ * @psalm-type RunResult = array{value: string, duration:integer}
+ * @psalm-type RunEvaluation = array{part_one?: RunResult, part_two?: RunResult} | RunResult
+ */
 
+/**
+ * @psalm-return RunEvaluation
+ * @throws \Exception
+ */
+function santa_aoc_run(string $source, string $cwd = null): array;
+
+/**
+ * @psalm-return RunEvaluation
+ * @throws \Exception
+ */
 function santa_aoc_test(string $source, string $cwd = null): array;
 
+/**
+ * @psalm-return RunEvaluation
+ * @throws \Exception
+ */
 function santa_evaluate(string $expression, string $cwd = null): array;</code></pre>
 <h2 id="external-functions">External Functions</h2>
 <p>The PHP extension runtime provides two specific functions, these are:</p>
@@ -626,6 +658,11 @@ The path can either be:</p>
 </div>
 </div>
 </div>
+<h2 id="errors">Errors</h2>
+<p>If an error occurs during execution the the program is immediately halted; with the error message, location and associated call stack trace locations thrown as an <a href="https://www.php.net/manual/en/class.exception.php">PHP Exception</a>.</p>
+<figure>
+<p><img alt="PHP Extension Errors" src="../assets/php-ext-errors.png" width="550" /></p>
+</figure>
 <h2 id="example">Example</h2>
 <p>Below is an example which documents the use of the three different PHP functions:</p>
 <pre class="highlight"><code class="language-php">$solution = file_get_contents(__DIR__ . '/solution.santa');
@@ -634,7 +671,7 @@ santa_aoc_run($solution, cwd: __DIR__);
 
 santa_aoc_test($solution);
 
-santa_evaluate("1.. |&gt; filter(_ % 2) |&gt; take(3);");</code></pre>
+santa_evaluate('1.. |&gt; filter(_ % 2) |&gt; take(3);');</code></pre>
 <h2 id="future-scope">Future scope</h2>
 <p>Along with providing PHP extension support, there is future scope to expose the interpreter to <a href="https://github.com/PyO3/pyo3">Python</a> going forward.</p>
 

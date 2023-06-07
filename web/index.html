@@ -370,6 +370,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#errors" class="md-nav__link">
+    Errors
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#example" class="md-nav__link">
     Example
   </a>
@@ -380,6 +387,19 @@
   <a href="#editor" class="md-nav__link">
     Editor
   </a>
+  
+    <nav class="md-nav" aria-label="Editor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#errors_1" class="md-nav__link">
+    Errors
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -496,6 +516,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#errors" class="md-nav__link">
+    Errors
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#example" class="md-nav__link">
     Example
   </a>
@@ -506,6 +533,19 @@
   <a href="#editor" class="md-nav__link">
     Editor
   </a>
+  
+    <nav class="md-nav" aria-label="Editor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#errors_1" class="md-nav__link">
+    Errors
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -565,8 +605,13 @@ This variant is also used to execute the runnable examples found within this doc
 </table>
 <p><strong>Note:</strong> the TypeScript implementation can be accessed via the <a href="https://github.com/eddmann/santa-lang-ts">GitHub repository</a>.</p>
 <h2 id="api">API</h2>
-<p>Both variants expose the same API, however, the WASM version is required to be loaded before use.</p>
+<p>Both variants expose the same API, shown below as TypeScript type definitions:</p>
 <pre class="highlight"><code class="language-typescript">type InteropType = string | number | object;
+
+type Location = {
+  start: number;
+  end: number;
+};
 
 type RunResult = {
   value: string;
@@ -580,15 +625,21 @@ type RunEvaluation =
     }
   | RunResult;
 
+type RunErr = {
+  message: string;
+  source: Location;
+  trace: Location[];
+};
+
 type ExternalFunctions = {
   [name: string]: (arguments: InteropType[]) =&gt; InteropType;
 };
 
-function aoc_run(source: string, js_functions: ExternalFunctions): RunEvaluation;
+function aoc_run(source: string, js_functions: ExternalFunctions): RunEvaluation | RunErr;
 
-function aoc_test(source: string, js_functions: ExternalFunctions): RunEvaluation;
+function aoc_test(source: string, js_functions: ExternalFunctions): RunEvaluation | RunErr;
 
-function evaluate(expression: string, js_functions?: ExternalFunctions): string;</code></pre>
+function evaluate(expression: string, js_functions?: ExternalFunctions): string | RunErr;</code></pre>
 <h2 id="external-functions">External Functions</h2>
 <p>Unlike other runtimes which have a select few external functions (defined at the runtime level), the Web variants gives you the power of user-land JavaScript to define and execute desired behaviour.
 The runtimes implicitly handle the interoperability between the two languages type systems whilst communicating.
@@ -599,6 +650,8 @@ This provides an extensive platform on which to add additional behaviour and fun
 function external_function(arguments: InteropType[]): InteropType;</code></pre>
 <p>An example external function could be:</p>
 <pre class="highlight"><code class="language-js">const puts = (arguments: InteropType[]): InteropType =&gt; console.log(...arguments);</code></pre>
+<h2 id="errors">Errors</h2>
+<p>If an error occurs during execution the the program is immediately halted; with the error message, location and associated call stack trace locations returned as an <code>RunErr</code> object (as detailed above).</p>
 <h2 id="example">Example</h2>
 <p>Below is an example of how the WASM variant can be used within a Web context.</p>
 <pre class="highlight"><code class="language-js">import { evaluate } from '@eddmann/santa-lang-wasm';
@@ -616,6 +669,11 @@ The WASM variant however is the preferred version to use.</p>
 <p>In this use-case we are able to map the external <code>puts</code> function to <code>console.log</code>.
 We are additionally able to map the <code>read</code> function to a synchronous-blocking XMLHttpRequest call (old-school!), which provides access to the <code>http(s)</code> and <code>aoc</code> schema-based input.
 The evaluation itself is placed inside a Web Worker to ensure that the main JS user-thread is not blocked.</p>
+<h3 id="errors_1">Errors</h3>
+<p>If an error occurrs during execution the the program is immediately halted; with the error message and associated call stack trace presented to the user, as shown below:</p>
+<figure>
+<p><img alt="Web Editor" src="../assets/web-editor-errors.png" width="600" /></p>
+</figure>
 <h2 id="future-scope">Future scope</h2>
 <p>Due to the widespread reach of JavaScript and to a lesser extent WASM, there are possibility of bringing the runtime to other platforms in the future.
 For example, an <a href="https://www.electronjs.org/">Electron</a>/<a href="https://tauri.app/">Tauri</a>-based desktop application, or exposed within a <a href="https://workers.cloudflare.com/">CloudFlare Worker</a>.</p>
