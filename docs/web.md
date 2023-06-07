@@ -102,12 +102,14 @@ evaluate('puts("Hello, world")', { puts: console.log.bind(console) });
 
 ## Editor
 
+**Repository:** [eddmann/santa-lang-editor](https://github.com/eddmann/santa-lang-editor)
+
 One of the reasons for providing such a runtime was to create a Web-based code editor which could be used to develop solutions with.
-Both the Rust (WASM) and TypeScript (JavaScript) variants have been integrated into a version of the editor.
+Both the [Rust](https://eddmann.com/santa-lang-editor/) (WASM) and [TypeScript](https://eddmann.com/santa-lang-ts/) (JavaScript) variants have been integrated into a version of the editor.
 The WASM variant however is the preferred version to use.
 
 <figure markdown>
-  ![Web Editor](assets/web-editor.png){ width="600" }
+  <a href="https://eddmann.com/santa-lang-editor/">![Web Editor](assets/web-editor.png){ width="600" }</a>
 </figure>
 
 In this use-case we are able to map the external `puts` function to `console.log`.
