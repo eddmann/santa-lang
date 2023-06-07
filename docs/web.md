@@ -25,10 +25,15 @@ Both variants provide the following functionality:
 
 ## API
 
-Both variants expose the same API, however, the WASM version is required to be loaded before use.
+Both variants expose the same API, shown below as TypeScript type definitions:
 
 ```typescript
 type InteropType = string | number | object;
+
+type Location = {
+  start: number;
+  end: number;
+};
 
 type RunResult = {
   value: string;
@@ -42,15 +47,21 @@ type RunEvaluation =
     }
   | RunResult;
 
+type RunErr = {
+  message: string;
+  source: Location;
+  trace: Location[];
+};
+
 type ExternalFunctions = {
   [name: string]: (arguments: InteropType[]) => InteropType;
 };
 
-function aoc_run(source: string, js_functions: ExternalFunctions): RunEvaluation;
+function aoc_run(source: string, js_functions: ExternalFunctions): RunEvaluation | RunErr;
 
-function aoc_test(source: string, js_functions: ExternalFunctions): RunEvaluation;
+function aoc_test(source: string, js_functions: ExternalFunctions): RunEvaluation | RunErr;
 
-function evaluate(expression: string, js_functions?: ExternalFunctions): string;
+function evaluate(expression: string, js_functions?: ExternalFunctions): string | RunErr;
 ```
 
 ## External Functions
@@ -72,6 +83,10 @@ An example external function could be:
 ```js
 const puts = (arguments: InteropType[]): InteropType => console.log(...arguments);
 ```
+
+## Errors
+
+If an error occurs during execution the the program is immediately halted; with the error message, location and associated call stack trace locations returned as an `RunErr` object (as detailed above).
 
 ## Example
 
@@ -98,6 +113,14 @@ The WASM variant however is the preferred version to use.
 In this use-case we are able to map the external `puts` function to `console.log`.
 We are additionally able to map the `read` function to a synchronous-blocking XMLHttpRequest call (old-school!), which provides access to the `http(s)` and `aoc` schema-based input.
 The evaluation itself is placed inside a Web Worker to ensure that the main JS user-thread is not blocked.
+
+### Errors
+
+If an error occurrs during execution the the program is immediately halted; with the error message and associated call stack trace presented to the user, as shown below:
+
+<figure markdown>
+  ![Web Editor](assets/web-editor-errors.png){ width="600" }
+</figure>
 
 ## Future scope
 

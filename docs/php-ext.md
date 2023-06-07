@@ -23,13 +23,31 @@ Errors that occur within the interpreter are relayed back to the PHP runtime via
 
 ## API
 
-With the extension loaded, the interpreter is made accessible via several top-level PHP functions:
+With the extension loaded, the interpreter is made accessible via several top-level PHP functions.
+The [Psalm](https://psalm.dev/) type defintions are presented below:
 
 ```php
+/**
+ * @psalm-type RunResult = array{value: string, duration:integer}
+ * @psalm-type RunEvaluation = array{part_one?: RunResult, part_two?: RunResult} | RunResult
+ */
+
+/**
+ * @psalm-return RunEvaluation
+ * @throws \Exception
+ */
 function santa_aoc_run(string $source, string $cwd = null): array;
 
+/**
+ * @psalm-return RunEvaluation
+ * @throws \Exception
+ */
 function santa_aoc_test(string $source, string $cwd = null): array;
 
+/**
+ * @psalm-return RunEvaluation
+ * @throws \Exception
+ */
 function santa_evaluate(string $expression, string $cwd = null): array;
 ```
 
@@ -82,6 +100,14 @@ The path can either be:
     read("aoc://2015/1")
     ```
 
+## Errors
+
+If an error occurs during execution the the program is immediately halted; with the error message, location and associated call stack trace locations thrown as an [PHP Exception](https://www.php.net/manual/en/class.exception.php).
+
+<figure markdown>
+  ![PHP Extension Errors](assets/php-ext-errors.png){ width="550" }
+</figure>
+
 ## Example
 
 Below is an example which documents the use of the three different PHP functions:
@@ -93,7 +119,7 @@ santa_aoc_run($solution, cwd: __DIR__);
 
 santa_aoc_test($solution);
 
-santa_evaluate("1.. |> filter(_ % 2) |> take(3);");
+santa_evaluate('1.. |> filter(_ % 2) |> take(3);');
 ```
 
 ## Future scope

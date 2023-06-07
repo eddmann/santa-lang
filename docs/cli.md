@@ -79,20 +79,6 @@ env()
 
 (REPL only) Prints the current environment's variables
 
-## Examples
-
-Below is example output for a successful Advent of Code solution and test execution, using the AoC runner:
-
-<figure markdown>
-  ![CLI Runner](assets/cli-runner.png){ width="400" }
-</figure>
-
-Below is example usage of the in-built CLI REPL environment:
-
-<figure markdown>
-  ![CLI REPL](assets/cli-repl.png){ width="400" }
-</figure>
-
 ## Errors
 
 If an error occurrs during execution the the program is immediately halted; with the error message and associated call stack trace presented to the user, as shown below:
@@ -108,4 +94,18 @@ This can be useful when trying to determine slow areas of a given solution, to i
 
 <figure markdown>
   ![CLI Profiler](assets/cli-profiler.png){ width="500" }
+</figure>
+
+## Example
+
+Below is example output for a successful Advent of Code solution and test execution, using the AoC runner:
+
+<figure markdown>
+  ![CLI Runner](assets/cli-runner.png){ width="400" }
+</figure>
+
+Below is example usage of the in-built CLI REPL environment:
+
+<figure markdown>
+  ![CLI REPL](assets/cli-repl.png){ width="400" }
 </figure>

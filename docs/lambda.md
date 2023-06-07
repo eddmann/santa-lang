@@ -71,6 +71,21 @@ The path can either be:
     read("https://www.example.com/input.txt")
     ```
 
+## Errors
+
+The Lambda runtime follows the error response format laid out in the [API specification](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-api.html).
+
+| Type                         | Reason                                                                        |
+| ---------------------------- | ----------------------------------------------------------------------------- |
+| Runtime.HandlerNotFound      | Handler source file/section is not found                                      |
+| Runtime.InitialisationFailed | Unable to parse/evaluate the source file to retrieve the handler section      |
+| Runtime.EnvNotFound          | Required enviornment variable (`_HANDLER`, `LAMBDA_TASK_ROOT`) is not present |
+| Invocation.Error             | An error occurred during execution of the handler within a Lambda request     |
+
+<figure markdown>
+  ![CLI Profiler](assets/lambda-errors.png){ width="400" }
+</figure>
+
 ## Example
 
 Below is an example which documents the use of a handler (with shared function):
