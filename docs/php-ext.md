@@ -28,27 +28,23 @@ The [Psalm](https://psalm.dev/) type defintions are presented below:
 
 ```php
 /**
- * @psalm-type RunResult = array{value: string, duration:integer}
+ * @psalm-type RunResult = array{value: string, duration: integer}
  * @psalm-type RunEvaluation = array{part_one?: RunResult, part_two?: RunResult} | RunResult
- */
-
-/**
  * @psalm-return RunEvaluation
  * @throws \Exception
  */
 function santa_aoc_run(string $source, string $cwd = null): array;
 
 /**
- * @psalm-return RunEvaluation
+ * @psalm-type TestCaseResult = array{expected: string, actual: string; passed: bool}
+ * @psalm-type TestCase = array{part_one?: TestCaseResult, part_two?: TestCaseResult}
+ * @psalm-return TestCase[]
  * @throws \Exception
  */
 function santa_aoc_test(string $source, string $cwd = null): array;
 
-/**
- * @psalm-return RunEvaluation
- * @throws \Exception
- */
-function santa_evaluate(string $expression, string $cwd = null): array;
+/** @throws \Exception */
+function santa_evaluate(string $expression, string $cwd = null): string;
 ```
 
 ## External Functions

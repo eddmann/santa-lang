@@ -29,17 +29,14 @@ Both variants expose the same API, shown below as TypeScript type definitions:
 
 ```typescript
 type InteropType = string | number | object;
-
-type Location = {
-  start: number;
-  end: number;
+type ExternalFunctions = {
+  [name: string]: (arguments: InteropType[]) => InteropType;
 };
 
-type RunResult = {
-  value: string;
-  duration: number;
-};
+type Location = { start: number; end: number };
+type RunErr = { message: string; source: Location; trace: Location[] };
 
+type RunResult = { value: string; duration: number };
 type RunEvaluation =
   | {
       part_one?: RunResult;
@@ -47,19 +44,15 @@ type RunEvaluation =
     }
   | RunResult;
 
-type RunErr = {
-  message: string;
-  source: Location;
-  trace: Location[];
-};
-
-type ExternalFunctions = {
-  [name: string]: (arguments: InteropType[]) => InteropType;
+type TestCaseResult = { expected: string; actual: string; passed: boolean };
+type TestCase = {
+  part_one?: TestCaseResult;
+  part_two?: TestCaseResult;
 };
 
 function aoc_run(source: string, js_functions: ExternalFunctions): RunEvaluation | RunErr;
 
-function aoc_test(source: string, js_functions: ExternalFunctions): RunEvaluation | RunErr;
+function aoc_test(source: string, js_functions: ExternalFunctions): TestCase[] | RunErr;
 
 function evaluate(expression: string, js_functions?: ExternalFunctions): string | RunErr;
 ```
