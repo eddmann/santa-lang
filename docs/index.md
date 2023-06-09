@@ -32,16 +32,14 @@ Welcome **santa-lang**, my programming language designed to help tackle Advent o
 
 The language specification and runtime implementation can be seen as two separate concerns; similar to how the Python language has been implemented within [CPython](https://github.com/python/cpython)/[JPython](https://www.jython.org/), and ECMAScript within [V8](https://v8.dev/)/[SpiderMonkey](https://spidermonkey.dev/).
 There are two separate implementations of the language (and runner), both of which follow the (informal) specification laid out in this documentation.
-There is feature parity in regard to the core language, data types and builtin functions.
-Any solution that is written for one implementation should be executable (without modification) on the other.
-This is why along with extensive test coverage, each implementation is tested using the full [2022](https://github.com/eddmann/advent-of-code/tree/master/2022/santa-lang) Advent of Code calendar, to ensure of no regressions.
+There is feature parity in-regard to the core language, data types and builtin functions.
 
 ### TypeScript
 
 **Repository:** [eddmann/santa-lang-ts](https://github.com/eddmann/santa-lang-ts)
 
-This was the initial [tree-walking interpreter](<https://en.wikipedia.org/wiki/Interpreter_(computing)>) reference implementation used whilst creating of the language and runner.
-It allowed for quick exploration of different language constructs, and exercise them with actual Advent of Code problems throughout the 2022 calendar.
+This was the initial [tree-walking interpreted](<https://en.wikipedia.org/wiki/Interpreter_(computing)>) reference implementation used whilst creating of the language and runner.
+It allowed for quick exploration of different language constructs, and exercise them with actual Advent of Code problems throughout the [2022 calendar](https://github.com/eddmann/advent-of-code/tree/master/2022/santa-lang).
 TypeScript was chosen due to speed of development and minimal friction to try out new ideas.
 The JavaScript runtime also made it easy to develop the initial CLI, Web and Lambda runtimes; with minimal unique delivery requirements.
 
@@ -51,5 +49,5 @@ The JavaScript runtime also made it easy to develop the initial CLI, Web and Lam
 
 Taking all the learnings from the TypeScript counterpart, the Rust implementation was built to be a more stable and performant [tree-walking interpreter](<https://en.wikipedia.org/wiki/Interpreter_(computing)>).
 It was felt that the JavaScript runtime could only reach [so much performance](https://eddmann.com/posts/solving-the-advent-of-code-2022-calendar-using-my-own-programming-language-santa-lang/#so-whats-next), and a lower-level language could unlock more performance gains.
-Along with performance considerations, during its development there was the addition of a WASM runtime (which aligns with TypeScript's Web counterpart), a PHP extension and a CLI REPL.
+Along with performance considerations, during its development, there was the addition of a WASM runtime (which aligns with TypeScript's Web counterpart), a PHP extension and a CLI REPL.
 These features are all unique to the Rust implementation.
