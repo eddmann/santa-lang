@@ -13,17 +13,17 @@
       
       
       
-        <link rel="prev" href="../web/">
+        <link rel="prev" href="../php-ext/">
       
       
-        <link rel="next" href="../php-ext/">
+        <link rel="next" href="../examples/">
       
       <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.14">
     
     
       
-        <title>Lambda - santa-lang</title>
+        <title>Jupyter Kernel - santa-lang</title>
       
     
     
@@ -65,7 +65,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#lambda" class="md-skip">
+        <a href="#jupyter-kernel" class="md-skip">
           Skip to content
         </a>
       
@@ -100,7 +100,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Lambda
+              Jupyter Kernel
             
           </span>
         </div>
@@ -327,6 +327,34 @@
               
   
   
+  
+    <li class="md-nav__item">
+      <a href="../lambda/" class="md-nav__link">
+        Lambda
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../php-ext/" class="md-nav__link">
+        PHP Extension
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
     
   
   
@@ -339,12 +367,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Lambda
+          Jupyter Kernel
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Lambda
+        Jupyter Kernel
       </a>
       
         
@@ -370,8 +398,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#lifecycle" class="md-nav__link">
-    Lifecycle
+  <a href="#docker" class="md-nav__link">
+    Docker
   </a>
   
 </li>
@@ -381,74 +409,12 @@
     External Functions
   </a>
   
-    <nav class="md-nav" aria-label="External Functions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#puts" class="md-nav__link">
-    puts
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#read" class="md-nav__link">
-    read
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#errors" class="md-nav__link">
-    Errors
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
-    Example
-  </a>
-  
 </li>
       
     </ul>
   
 </nav>
       
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../php-ext/" class="md-nav__link">
-        PHP Extension
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../jupyter-kernel/" class="md-nav__link">
-        Jupyter Kernel
-      </a>
     </li>
   
 
@@ -509,8 +475,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#lifecycle" class="md-nav__link">
-    Lifecycle
+  <a href="#docker" class="md-nav__link">
+    Docker
   </a>
   
 </li>
@@ -518,40 +484,6 @@
         <li class="md-nav__item">
   <a href="#external-functions" class="md-nav__link">
     External Functions
-  </a>
-  
-    <nav class="md-nav" aria-label="External Functions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#puts" class="md-nav__link">
-    puts
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#read" class="md-nav__link">
-    read
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#errors" class="md-nav__link">
-    Errors
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
-    Example
   </a>
   
 </li>
@@ -574,13 +506,14 @@
   
 
 
-<h1 id="lambda">Lambda</h1>
-<p><a href="https://github.com/eddmann/santa-lang-rs/tree/main/runtime/lambda"><img alt="Rust" src="https://img.shields.io/badge/rust-%23000000.svg?style=for-the-badge&amp;logo=rust&amp;logoColor=white" /></a> <a href="https://github.com/eddmann/santa-lang-ts/tree/main/src/lambda"><img alt="TypeScript" src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&amp;logo=typescript&amp;logoColor=white" /></a></p>
-<p>As an exploration into AWS Lambda and how <a href="https://docs.aws.amazon.com/lambda/latest/dg/runtimes-api.html">custom runtimes</a> are built, I decided to provide access to the core language via the <a href="https://aws.amazon.com/lambda/">AWS Lambda</a> platform.
-This runtime provides the user with the ability to handle a given Lambda request using behaviour defined in santa-lang.
-Both the Rust and TypeScript implementation have a Lambda runtime available.
-This does not expose the Advent of Code runner, and is only primarily concerned with exposing the core language functionality.</p>
+<h1 id="jupyter-kernel">Jupyter Kernel</h1>
+<p><a href="https://github.com/eddmann/santa-lang-rs/tree/main/runtime/jupyter"><img alt="Rust" src="https://img.shields.io/badge/rust-%23000000.svg?style=for-the-badge&amp;logo=rust&amp;logoColor=white" /></a></p>
+<p>This runtime exposes the language as a <a href="https://docs.jupyter.org/en/latest/projects/kernels.html">kernel</a> which can be used within a <a href="https://jupyter.org/">Jupyter Notebook</a>.
+Evaluation of the language (and built-ins) is exposed at this time, the AoC Runner is currently not present.</p>
+<p>Similiar to other kernels (i.e. <a href="https://ipykernel.readthedocs.io/en/stable/">IPython</a>), the notebook uses a shared <em>variable environment</em> across all the evaluated code blocks.
+This allows you to define variables within one block and access them in subsquently evaluated blocks.</p>
 <h2 id="release">Release</h2>
+<p>The kernel is released as a standalone platform binary, which can be installed automatically with the host Jupyter Notebook instance by running <code>./santa-lang-jupyter-* install</code>.</p>
 <table>
 <thead>
 <tr>
@@ -590,93 +523,23 @@ This does not expose the Advent of Code runner, and is only primarily concerned 
 </thead>
 <tbody>
 <tr>
-<td>provided.al2</td>
-<td><code>arn:aws:lambda:eu-west-1:428533468732:layer:santa-lang:11</code></td>
+<td>Linux/GNU</td>
+<td><a href="https://github.com/eddmann/santa-lang-rs/releases/download/0.0.3/santa-lang-jupyter-0.0.3-x86_64-unknown-linux-gnu"><code>santa-lang-jupyter-0.0.3-x86_64-unknown-linux-gnu</code></a></td>
+</tr>
+<tr>
+<td>Apple/Darwin</td>
+<td><a href="https://github.com/eddmann/santa-lang-rs/releases/download/0.0.3/santa-lang-jupyter-0.0.3-x86_64-apple-darwin"><code>santa-lang-jupyter-0.0.3-x86_64-apple-darwin</code></a></td>
 </tr>
 </tbody>
 </table>
-<p><strong>Note:</strong> the TypeScript implementation can be accessed via the <a href="https://github.com/eddmann/santa-lang-ts">GitHub repository</a>.</p>
-<h2 id="lifecycle">Lifecycle</h2>
-<p>Both the Lambda request <em>event</em> and <em>context</em> are supplied to the handler <a href="../language/#sections">section</a> expression in the form of variables, <code>event</code> and <code>context</code> accordingly.
-The Lambda runtime request/response is implicitly mapped to the languages type system.
-The handler itself, is resolved based on the filename and section expression label you wish to invoke.
-For example, <code>fibonacci.handle</code> would be resolved to the source file <code>fibonacci.santa</code>, and within there the defined <code>handle</code> section.
-The resolved handler is then tasked with performing the desired behaviour, and returning either a <em>String</em> or structured <em>Dictionary</em> result (dependent on the desired Lambda integration).</p>
-<p>In a similar manor to other Lambda runtimes (i.e. Node), the handler section is the the only part that is evaluated upon each request.
-Other computation put outside this is shared between requests, hence, any expensive work you wish to carry out up front upon cold start can be placed here.
-However, mutation should not be relied upon due to the un-determinate nature of when a warm/cold Lambda will be used.</p>
+<h2 id="docker">Docker</h2>
+<p>In addition to the above binaries, a <a href="https://github.com/eddmann/santa-lang-rs/blob/main/runtime/jupyter/build.Dockerfile">Dockerfile</a> is provided alongside the source to run a containerized JupyterLab instance locally with the kernel pre-installed.
+This eases the process of getting up and running with the Notebook environment.</p>
 <figure>
-<p><img alt="Lambda Runtime" src="../assets/lambda-runtime.png" width="600" /></p>
+<p><img alt="Jupyter Kernel" src="../assets/jupyter-kernel.png" width="650" /></p>
 </figure>
 <h2 id="external-functions">External Functions</h2>
-<p>The Lambda runtime provides two specific functions, these are:</p>
-<h3 id="puts">puts</h3>
-<pre class="highlight"><code>puts(..value)</code></pre>
-<p>Prints the supplied values (using their display format) to <em>stdout</em>.</p>
-<pre class="highlight"><code>puts("Hello", [1, 2.5, true])</code></pre>
-<h3 id="read">read</h3>
-<pre class="highlight"><code>read(path)</code></pre>
-<p>Reads the contents of the given path into a String.
-The path can either be:</p>
-<ul>
-<li>A local directory path, absolute or relative to the source file (within the packaged Lambda artifact).</li>
-<li>Based on a <code>http(s)</code> schema being defined; a web URL location.</li>
-</ul>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Local</label><label for="__tabbed_1_2">URL</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<pre class="highlight"><code>read("input.txt")</code></pre>
-</div>
-<div class="tabbed-block">
-<pre class="highlight"><code>read("https://www.example.com/input.txt")</code></pre>
-</div>
-</div>
-</div>
-<h2 id="errors">Errors</h2>
-<p>The Lambda runtime follows the error response format laid out in the <a href="https://docs.aws.amazon.com/lambda/latest/dg/runtimes-api.html">API specification</a>.</p>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Reason</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Runtime.HandlerNotFound</td>
-<td>Handler source file/section is not found</td>
-</tr>
-<tr>
-<td>Runtime.InitialisationFailed</td>
-<td>Unable to parse/evaluate the source file to retrieve the handler section</td>
-</tr>
-<tr>
-<td>Runtime.EnvNotFound</td>
-<td>Required enviornment variable (<code>_HANDLER</code>, <code>LAMBDA_TASK_ROOT</code>) is not present</td>
-</tr>
-<tr>
-<td>Invocation.Error</td>
-<td>An error occurred during execution of the handler within a Lambda request</td>
-</tr>
-</tbody>
-</table>
-<figure>
-<p><img alt="CLI Profiler" src="../assets/lambda-errors.png" width="400" /></p>
-</figure>
-<h2 id="example">Example</h2>
-<p>Below is an example which documents the use of a handler (with shared function):</p>
-<pre class="highlight"><code>let fibonacci = |n| {
-  let recur = |x, y, n| {
-    if n &gt; 0 { return recur(y, x + y, n - 1) } else { x }
-  };
-  recur(0, 1, n);
-};
-
-handle: {
-  let number = event["number"];
-  puts("Requested the " + number + " number in the fibonacci sequence");
-  #{"result": fibonacci(number)};
-}</code></pre>
+<p>There are currently no external functions (i.e. <code>read</code>, <code>puts</code>) which are registered with the runtime.</p>
 
 
 
