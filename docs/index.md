@@ -1,5 +1,5 @@
 <p align="center"><img src="assets/logo.png" alt="santa-lang" width="400px" /></p>
-<p align="center"><a href="cli/">CLI</a> - <a href="web/">Web</a> - <a href="lambda/">Lambda</a> - <a href="php-ext/">PHP Extension</a></p>
+<p align="center"><a href="cli/">CLI</a> - <a href="web/">Web</a> - <a href="lambda/">Lambda</a> - <a href="php-ext/">PHP Extension</a> - <a href="jupyter-kernel/">Jupyter</a></p>
 
 # santa-lang
 
@@ -9,14 +9,16 @@ _Influenced by:_ Rust, Python, Clojure, F#, Scala
 
 ## Release
 
-| Runtime | Platform     | Release                                                                                                                                                           |
-| ------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| CLI     | Linux/GNU    | [`santa-lang-cli-0.0.1-x86_64-unknown-linux-gnu`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.1/santa-lang-cli-0.0.1-x86_64-unknown-linux-gnu) |
-| CLI     | Apple/Darwin | [`santa-lang-cli-0.0.1-x86_64-apple-darwin`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.1/santa-lang-cli-0.0.1-x86_64-apple-darwin)           |
-| CLI     | Docker/x86   | [`ghcr.io/eddmann/santa-lang-cli:0.0.1`](https://github.com/eddmann/santa-lang-rs/pkgs/container/santa-lang-cli)                                                  |
-| Web     | WASM         | [`@eddmann/santa-lang-wasm@0.0.1`](https://github.com/eddmann/santa-lang-rs/pkgs/npm/santa-lang-wasm)                                                             |
-| Lambda  | provided.al2 | `arn:aws:lambda:eu-west-1:428533468732:layer:santa-lang:9`                                                                                                        |
-| PHP     | Linux/GNU    | [`santa-lang-php-ext-0.0.1-x86_64-linux`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.1/santa-lang-php-ext-0.0.1-x86_64-linux.so)              |
+| Runtime | Platform     | Release                                                                                                                                                                   |
+| ------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| CLI     | Linux/GNU    | [`santa-lang-cli-0.0.1-x86_64-unknown-linux-gnu`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.1/santa-lang-cli-0.0.1-x86_64-unknown-linux-gnu)         |
+| CLI     | Apple/Darwin | [`santa-lang-cli-0.0.1-x86_64-apple-darwin`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.1/santa-lang-cli-0.0.1-x86_64-apple-darwin)                   |
+| CLI     | Docker/x86   | [`ghcr.io/eddmann/santa-lang-cli:0.0.1`](https://github.com/eddmann/santa-lang-rs/pkgs/container/santa-lang-cli)                                                          |
+| Web     | WASM         | [`@eddmann/santa-lang-wasm@0.0.1`](https://github.com/eddmann/santa-lang-rs/pkgs/npm/santa-lang-wasm)                                                                     |
+| Lambda  | provided.al2 | `arn:aws:lambda:eu-west-1:428533468732:layer:santa-lang:9`                                                                                                                |
+| PHP     | Linux/GNU    | [`santa-lang-php-ext-0.0.1-x86_64-linux`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.1/santa-lang-php-ext-0.0.1-x86_64-linux.so)                      |
+| Jupyter | Linux/GNU    | [`santa-lang-jupyter-0.0.3-x86_64-unknown-linux-gnu`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.1/santa-lang-jupyter-0.0.3-x86_64-unknown-linux-gnu) |
+| Jupyter | Apple/Darwin | [`santa-lang-jupyter-0.0.3-x86_64-apple-darwin`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.1/santa-lang-jupyter-0.0.3-x86_64-apple-darwin)           |
 
 ## Why?
 

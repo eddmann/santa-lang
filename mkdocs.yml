@@ -18,6 +18,7 @@ nav:
       - Web: web.md
       - Lambda: lambda.md
       - PHP Extension: php-ext.md
+      - Jupyter Kernel: jupyter-kernel.md
   - Examples: examples.md
 extra_javascript:
   - assets/runner.js
