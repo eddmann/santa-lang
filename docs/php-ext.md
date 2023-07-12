@@ -19,7 +19,7 @@ Errors that occur within the interpreter are relayed back to the PHP runtime via
 
 | Platform  | Release                                                                                                                                              |
 | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Linux/GNU | [`santa-lang-php-ext-0.0.1-x86_64-linux`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.1/santa-lang-php-ext-0.0.1-x86_64-linux.so) |
+| Linux/GNU | [`santa-lang-php-ext-0.0.3-x86_64-linux`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.3/santa-lang-php-ext-0.0.3-x86_64-linux.so) |
 
 ## API
 
