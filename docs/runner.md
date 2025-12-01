@@ -53,6 +53,28 @@ test: {
 }
 ```
 
+### Slow Tests
+
+Tests that are expensive or take a long time to run can be marked with the `@slow` attribute.
+These tests are skipped by default, allowing for faster iteration during development.
+
+```
+@slow
+test: {
+  input: read("aoc://2015/1")
+  part_one: 280
+  part_two: 1797
+}
+```
+
+To include slow tests during test execution, use the `-s` or `--slow` flag with the CLI:
+
+```bash
+santa-cli -t -s solution.santa
+```
+
+This is useful for tests that validate against the actual puzzle input, which may be computationally expensive compared to the smaller example inputs provided in the problem description.
+
 ## Example
 
 For completeness, below is the full example solution combining both the solution and test blocks.
