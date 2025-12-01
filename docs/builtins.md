@@ -2056,6 +2056,18 @@ If no match/capture can be found an empty List is returned.
 regex_match_all("\\w+: \\w+", "name: Bob, age: 30")
 ```
 
+### md5
+
+```
+md5(value)
+```
+
+Return the MD5 hash of a String as a lowercase hexadecimal string.
+
+```santa
+md5("hello")
+```
+
 ## Miscellaneous
 
 ### range
