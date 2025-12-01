@@ -300,6 +300,19 @@
     Testing
   </a>
   
+    <nav class="md-nav" aria-label="Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#slow-tests" class="md-nav__link">
+    Slow Tests
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -477,6 +490,19 @@
     Testing
   </a>
   
+    <nav class="md-nav" aria-label="Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#slow-tests" class="md-nav__link">
+    Slow Tests
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -544,6 +570,18 @@ It is upto the runtime to determine how this test results are presented.</p>
   part_one: -1
   part_two: 5
 }</code></pre>
+<h3 id="slow-tests">Slow Tests</h3>
+<p>Tests that are expensive or take a long time to run can be marked with the <code>@slow</code> attribute.
+These tests are skipped by default, allowing for faster iteration during development.</p>
+<pre class="highlight"><code>@slow
+test: {
+  input: read("aoc://2015/1")
+  part_one: 280
+  part_two: 1797
+}</code></pre>
+<p>To include slow tests during test execution, use the <code>-s</code> or <code>--slow</code> flag with the CLI:</p>
+<pre class="highlight"><code class="language-bash">santa-cli -t -s solution.santa</code></pre>
+<p>This is useful for tests that validate against the actual puzzle input, which may be computationally expensive compared to the smaller example inputs provided in the problem description.</p>
 <h2 id="example">Example</h2>
 <p>For completeness, below is the full example solution combining both the solution and test blocks.
 It also documents use of a runtime-specific external <code>read</code> function.</p>
