@@ -419,6 +419,17 @@ Expression with both a consequence and alternative `else` branch.
 if 10 < 5 { 1 } else { 2 }
 ```
 
+Chained conditions using `else if`.
+
+```santa
+let grade = |score| {
+  if score >= 90 { "A" }
+  else if score >= 80 { "B" }
+  else if score >= 70 { "C" }
+  else { "F" }
+};
+```
+
 Let-bindings can be declared within the predicate expressions.
 If the binding is _truthy_ then the variables is bound and available with the consequence branch.
 
