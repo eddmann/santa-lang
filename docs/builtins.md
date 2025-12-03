@@ -2068,6 +2068,62 @@ Return the MD5 hash of a String as a lowercase hexadecimal string.
 md5("hello")
 ```
 
+### upper
+
+```
+upper(value)
+```
+
+Convert a String to uppercase.
+
+```santa
+upper("hello")
+```
+
+### lower
+
+```
+lower(value)
+```
+
+Convert a String to lowercase.
+
+```santa
+lower("HELLO")
+```
+
+### replace
+
+```
+replace(pattern, replacement, value)
+```
+
+Replace all occurrences of pattern with replacement in the given String.
+
+```santa
+replace("o", "0", "hello world")
+```
+
+### join
+
+```
+join(separator, collection)
+```
+
+Join collection elements into a String with separator between each element.
+
+=== "List"
+
+    ```santa
+    join(", ", [1, 2, 3])
+    ```
+
+=== "Set"
+
+    ```santa
+    join("-", {"a", "b", "c"})
+    ```
+
 ## Miscellaneous
 
 ### range
