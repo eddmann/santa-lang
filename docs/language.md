@@ -29,12 +29,21 @@ let dec_with_underscores = 1_000_000.50;
 
 ### String
 
-Represents UTF-8 encoded character sequences, with the ability to escape newlines `\n`, tabs `\t` and quotes `\"`.
+Represents UTF-8 encoded character sequences, with support for escape sequences:
+
+- `\n` - newline
+- `\t` - tab
+- `\r` - carriage return
+- `\b` - backspace
+- `\f` - form feed
+- `\"` - double quote
+- `\\` - backslash
 
 ```santa
 let str = "Hello, world!";
 let escaped_str = "\"Hello, world!\"\n";
 let str_with_unicode = "❤🍕";
+let windows_line = "line1\r\nline2";
 ```
 
 ### Range
@@ -302,6 +311,29 @@ true != false;
 {1, 2, 3} != {1, 2, 3, 4};
 #{"a": 1} != #{"b": 2};
 ```
+
+### Operator Precedence
+
+From highest to lowest precedence:
+
+| Level | Operators | Description |
+|-------|-----------|-------------|
+| 1 | `[]` | Indexing |
+| 2 | `()` | Function call |
+| 3 | `!` `-` (unary) | Prefix operators (NOT, negation) |
+| 4 | `*` `/` `%` `` ` `` | Multiply, divide, modulo, infix call |
+| 5 | `+` `-` | Addition, subtraction |
+| 6 | `>>` `\|>` `..` `..=` | Composition, pipeline, ranges |
+| 7 | `<` `<=` `>` `>=` | Comparison |
+| 8 | `==` `!=` | Equality |
+| 9 | `&&` | Logical AND |
+| 10 | `\|\|` | Logical OR |
+
+**Important notes:**
+- Pipeline `|>`, composition `>>`, and range operators `..`/`..=` share the same precedence level
+- This means `1..5 + 1` parses as `1..(5+1)` since `+` binds tighter than `..`
+- Logical AND `&&` binds tighter than OR `||`, so `a || b && c` parses as `a || (b && c)`
+- Infix function calls using backticks have the same precedence as multiplication
 
 ## Indexing
 
