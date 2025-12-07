@@ -1947,6 +1947,18 @@ Return an Integer whose binary representation is the first operand shifted by th
 bit_shift_right(64, 3)
 ```
 
+### bit_not
+
+```
+bit_not(value)
+```
+
+Return an Integer whose binary representation has each bit inverted (0 becomes 1, 1 becomes 0).
+
+```santa
+bit_not(5) // ~0101
+```
+
 ## String
 
 ### int
