@@ -95,16 +95,19 @@ Returns `nil`.
 Reads content from a file path, URL, or Advent of Code input.
 
 **File paths:**
+
 ```santa
 let data = read("input.txt");
 ```
 
 **HTTP/HTTPS URLs:**
+
 ```santa
 let data = read("https://example.com/data.txt");
 ```
 
 **Advent of Code inputs:**
+
 ```santa
 let data = read("aoc://2015/1");  // Fetches Day 1 of 2015
 ```

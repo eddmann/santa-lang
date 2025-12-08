@@ -338,20 +338,21 @@ true != false;
 
 From highest to lowest precedence:
 
-| Level | Operators | Description |
-|-------|-----------|-------------|
-| 1 | `[]` | Indexing |
-| 2 | `()` | Function call |
-| 3 | `!` `-` (unary) | Prefix operators (NOT, negation) |
-| 4 | `*` `/` `%` `` ` `` | Multiply, divide, modulo, infix call |
-| 5 | `+` `-` | Addition, subtraction |
-| 6 | `>>` `\|>` `..` `..=` | Composition, pipeline, ranges |
-| 7 | `<` `<=` `>` `>=` | Comparison |
-| 8 | `==` `!=` | Equality |
-| 9 | `&&` | Logical AND |
-| 10 | `\|\|` | Logical OR |
+| Level | Operators             | Description                          |
+| ----- | --------------------- | ------------------------------------ |
+| 1     | `[]`                  | Indexing                             |
+| 2     | `()`                  | Function call                        |
+| 3     | `!` `-` (unary)       | Prefix operators (NOT, negation)     |
+| 4     | `*` `/` `%` `` ` ``   | Multiply, divide, modulo, infix call |
+| 5     | `+` `-`               | Addition, subtraction                |
+| 6     | `>>` `\|>` `..` `..=` | Composition, pipeline, ranges        |
+| 7     | `<` `<=` `>` `>=`     | Comparison                           |
+| 8     | `==` `!=`             | Equality                             |
+| 9     | `&&`                  | Logical AND                          |
+| 10    | `\|\|`                | Logical OR                           |
 
 **Important notes:**
+
 - Pipeline `|>`, composition `>>`, and range operators `..`/`..=` share the same precedence level
 - This means `1..5 + 1` parses as `1..(5+1)` since `+` binds tighter than `..`
 - Logical AND `&&` binds tighter than OR `||`, so `a || b && c` parses as `a || (b && c)`

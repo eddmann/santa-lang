@@ -1,6 +1,6 @@
 # CLI
 
-[![Rust](https://img.shields.io/badge/rust-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://github.com/eddmann/santa-lang-rs/tree/main/runtime/cli) [![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://github.com/eddmann/santa-lang-ts/tree/main/src/cli)
+[![Comet](https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://github.com/eddmann/santa-lang-rs/tree/main/runtime/cli) [![Blitzen](https://img.shields.io/badge/Blitzen-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://github.com/eddmann/santa-lang-blitzen/tree/main/runtime/cli) [![Prancer](https://img.shields.io/badge/Prancer-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://github.com/eddmann/santa-lang-ts/tree/main/src/cli)
 
 This runtime provides the ability to access the language/runner via a Command Line Interface (CLI).
 It includes the following functionality:
@@ -8,19 +8,21 @@ It includes the following functionality:
 - Execute a given solution's source file, providing benchmark timing for each defined part.
 - Execute a given solutions source files test suite.
 - Execute a given script source file.
-- (Rust only) Load an interactive REPL environment, which can be used to quickly explore the language.
+- (Comet only) Load an interactive REPL environment, which can be used to quickly explore the language.
 
-## Release
+## Release (Comet)
 
-| Platform     | Release                                                                                                                                                           |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Linux/GNU    | [`santa-lang-cli-0.0.3-x86_64-unknown-linux-gnu`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.3/santa-lang-cli-0.0.3-x86_64-unknown-linux-gnu) |
-| Apple/Darwin | [`santa-lang-cli-0.0.3-x86_64-apple-darwin`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.3/santa-lang-cli-0.0.3-x86_64-apple-darwin)           |
-| Docker/x86   | [`ghcr.io/eddmann/santa-lang-cli:0.0.3`](https://github.com/eddmann/santa-lang-rs/pkgs/container/santa-lang-cli)                                                  |
+| Platform      | Release                                                                                                                                             |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Linux (x64)   | [`santa-lang-comet-cli-0.0.8-linux-amd64`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.8/santa-lang-comet-cli-0.0.8-linux-amd64) |
+| Linux (ARM)   | [`santa-lang-comet-cli-0.0.8-linux-arm64`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.8/santa-lang-comet-cli-0.0.8-linux-arm64) |
+| macOS (Intel) | [`santa-lang-comet-cli-0.0.8-macos-amd64`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.8/santa-lang-comet-cli-0.0.8-macos-amd64) |
+| macOS (ARM)   | [`santa-lang-comet-cli-0.0.8-macos-arm64`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.8/santa-lang-comet-cli-0.0.8-macos-arm64) |
+| Docker        | [`ghcr.io/eddmann/santa-lang-cli:latest`](https://github.com/eddmann/santa-lang-rs/pkgs/container/santa-lang-cli)                                   |
 
-**Note:** the TypeScript implementation can be accessed via the [GitHub repository](https://github.com/eddmann/santa-lang-ts).
+**Note:** Blitzen and Prancer CLIs can be accessed via their GitHub repositories: [Blitzen](https://github.com/eddmann/santa-lang-blitzen/releases), [Prancer](https://github.com/eddmann/santa-lang-ts/releases).
 
-> The Apple/Darwin release may require you to remove the _quarantine_ flag from the executable: `xattr -d com.apple.quarantine santa-lang-cli-*-x86_64-apple-darwin`
+> The macOS release may require you to remove the _quarantine_ flag from the executable: `xattr -d com.apple.quarantine santa-lang-comet-cli-*`
 
 ## External Functions
 
@@ -89,7 +91,7 @@ If an error occurrs during execution the the program is immediately halted; with
 
 ## Profiling
 
-The Rust-based CLI can be built locally (via a Cargo [`profile`](https://github.com/eddmann/santa-lang-rs/blob/main/runtime/cli/Cargo.toml#L26) feature flag) with additional [flamegraph](https://github.com/tikv/pprof-rs#flamegraph)/[pprof](https://github.com/tikv/pprof-rs#use-with-pprof) CPU profiling output for a given solutions' execution.
+Comet's CLI can be built locally (via a Cargo [`profile`](https://github.com/eddmann/santa-lang-rs/blob/main/runtime/cli/Cargo.toml#L26) feature flag) with additional [flamegraph](https://github.com/tikv/pprof-rs#flamegraph)/[pprof](https://github.com/tikv/pprof-rs#use-with-pprof) CPU profiling output for a given solutions' execution.
 This can be useful when trying to determine slow areas of a given solution, to improve its overall performance.
 
 <figure markdown>

@@ -1,10 +1,10 @@
 # Web
 
-[![Rust](https://img.shields.io/badge/rust-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://github.com/eddmann/santa-lang-rs/tree/main/runtime/wasm) [![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://github.com/eddmann/santa-lang-ts/tree/main/src/web)
+[![Comet](https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://github.com/eddmann/santa-lang-rs/tree/main/runtime/wasm) [![Prancer](https://img.shields.io/badge/Prancer-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://github.com/eddmann/santa-lang-ts/tree/main/src/web)
 
-The Web runtime is accessible via WebAssembly (WASM) within the Rust implementation, and bundled JavaScript within the TypeScript implementation.
+The Web runtime is accessible via WebAssembly (WASM) within Comet, and bundled JavaScript within Prancer.
 This enables the interpreter to be run within the Browser, Web Worker and Node environments.
-As expected, the WASM variant is more performant that the JavaScript implementation, due to being compiled to a lower-level language.
+As expected, the WASM variant is more performant than the JavaScript implementation, due to being compiled to a lower-level language.
 This variant is also used to execute the runnable examples found within this documentation.
 
 Both variants provide the following functionality:
@@ -15,13 +15,13 @@ Both variants provide the following functionality:
 - Execute a arbitrary language expression.
 - Ability to define user-land JavaScript functions which are made available to the evaluator as [external functions](language.md#external).
 
-## Release
+## Release (Comet)
 
-| Platform | Release                                                                                               |
-| -------- | ----------------------------------------------------------------------------------------------------- |
-| WASM     | [`@eddmann/santa-lang-wasm@0.0.3`](https://github.com/eddmann/santa-lang-rs/pkgs/npm/santa-lang-wasm) |
+| Platform | Release                                                                                         |
+| -------- | ----------------------------------------------------------------------------------------------- |
+| WASM     | [`@eddmann/santa-lang-wasm`](https://github.com/eddmann/santa-lang-rs/pkgs/npm/santa-lang-wasm) |
 
-**Note:** the TypeScript implementation can be accessed via the [GitHub repository](https://github.com/eddmann/santa-lang-ts).
+**Note:** Prancer's Web runtime can be accessed via the [GitHub repository](https://github.com/eddmann/santa-lang-ts).
 
 ## API
 
@@ -50,11 +50,20 @@ type TestCase = {
   part_two?: TestCaseResult;
 };
 
-function aoc_run(source: string, js_functions: ExternalFunctions): RunEvaluation | RunErr;
+function aoc_run(
+  source: string,
+  js_functions: ExternalFunctions,
+): RunEvaluation | RunErr;
 
-function aoc_test(source: string, js_functions: ExternalFunctions): TestCase[] | RunErr;
+function aoc_test(
+  source: string,
+  js_functions: ExternalFunctions,
+): TestCase[] | RunErr;
 
-function evaluate(expression: string, js_functions?: ExternalFunctions): string | RunErr;
+function evaluate(
+  expression: string,
+  js_functions?: ExternalFunctions,
+): string | RunErr;
 ```
 
 ## External Functions
@@ -86,9 +95,9 @@ If an error occurs during execution the the program is immediately halted; with 
 Below is an example of how the WASM variant can be used within a Web context.
 
 ```js
-import { evaluate } from '@eddmann/santa-lang-wasm';
+import { evaluate } from "@eddmann/santa-lang-wasm";
 
-evaluate('[1, 2, 3] |> map(_ + 1) |> sum');
+evaluate("[1, 2, 3] |> map(_ + 1) |> sum");
 
 evaluate('puts("Hello, world")', { puts: console.log.bind(console) });
 ```
@@ -98,7 +107,7 @@ evaluate('puts("Hello, world")', { puts: console.log.bind(console) });
 **Repository:** [eddmann/santa-lang-editor](https://github.com/eddmann/santa-lang-editor)
 
 One of the reasons for providing such a runtime was to create a Web-based code editor which could be used to develop solutions with.
-Both the [Rust](https://eddmann.com/santa-lang-editor/) (WASM) and [TypeScript](https://eddmann.com/santa-lang-ts/) (JavaScript) variants have been integrated into a version of the editor.
+Both the [Comet](https://eddmann.com/santa-lang-editor/) (WASM) and [Prancer](https://eddmann.com/santa-lang-ts/) (JavaScript) variants have been integrated into a version of the editor.
 The WASM variant however is the preferred version to use.
 
 <figure markdown>

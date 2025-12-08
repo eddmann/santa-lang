@@ -1,19 +1,19 @@
 # Lambda
 
-[![Rust](https://img.shields.io/badge/rust-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://github.com/eddmann/santa-lang-rs/tree/main/runtime/lambda) [![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://github.com/eddmann/santa-lang-ts/tree/main/src/lambda)
+[![Comet](https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://github.com/eddmann/santa-lang-rs/tree/main/runtime/lambda) [![Prancer](https://img.shields.io/badge/Prancer-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://github.com/eddmann/santa-lang-ts/tree/main/src/lambda)
 
 As an exploration into AWS Lambda and how [custom runtimes](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-api.html) are built, I decided to provide access to the core language via the [AWS Lambda](https://aws.amazon.com/lambda/) platform.
 This runtime provides the user with the ability to handle a given Lambda request using behaviour defined in santa-lang.
-Both the Rust and TypeScript implementation have a Lambda runtime available.
+Both Comet and Prancer have a Lambda runtime available.
 This does not expose the Advent of Code runner, and is only primarily concerned with exposing the core language functionality.
 
-## Release
+## Release (Comet)
 
-| Platform     | Release                                                     |
-| ------------ | ----------------------------------------------------------- |
-| provided.al2 | `arn:aws:lambda:eu-west-1:428533468732:layer:santa-lang:11` |
+| Platform     | Release                                                                                                                                   |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| provided.al2 | [`santa-lang-comet-lambda-0.0.8.zip`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.8/santa-lang-comet-lambda-0.0.8.zip) |
 
-**Note:** the TypeScript implementation can be accessed via the [GitHub repository](https://github.com/eddmann/santa-lang-ts).
+**Note:** Prancer's Lambda runtime can be accessed via the [GitHub repository](https://github.com/eddmann/santa-lang-ts).
 
 ## Lifecycle
 

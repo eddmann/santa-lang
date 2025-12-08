@@ -1,6 +1,6 @@
 # PHP Extension
 
-[![Rust](https://img.shields.io/badge/rust-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://github.com/eddmann/santa-lang-rs/tree/main/runtime/php-ext)
+[![Comet](https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://github.com/eddmann/santa-lang-rs/tree/main/runtime/php-ext)
 
 This runtime provides the ability to access the language/runner via a native PHP extension.
 It includes the following functionality:
@@ -15,11 +15,11 @@ Using Rust macros and C bindings, it cleanly abstracts away the need to work dir
 The resulting values are implicitly converted into expected PHP data types.
 Errors that occur within the interpreter are relayed back to the PHP runtime via Exceptions.
 
-## Release
+## Release (Comet)
 
-| Platform  | Release                                                                                                                                              |
-| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Linux/GNU | [`santa-lang-php-ext-0.0.3-x86_64-linux`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.3/santa-lang-php-ext-0.0.3-x86_64-linux.so) |
+| Platform    | Release                                                                                                                                                   |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Linux (x64) | [`santa-lang-comet-php-0.0.8-linux-amd64.so`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.8/santa-lang-comet-php-0.0.8-linux-amd64.so) |
 
 ## API
 

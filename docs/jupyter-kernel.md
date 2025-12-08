@@ -1,21 +1,21 @@
 # Jupyter Kernel
 
-[![Rust](https://img.shields.io/badge/rust-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://github.com/eddmann/santa-lang-rs/tree/main/runtime/jupyter)
+[![Comet](https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://github.com/eddmann/santa-lang-rs/tree/main/runtime/jupyter)
 
 This runtime exposes the language as a [kernel](https://docs.jupyter.org/en/latest/projects/kernels.html) which can be used within a [Jupyter Notebook](https://jupyter.org/).
 Evaluation of the language (and built-ins) is exposed at this time, the AoC Runner is currently not present.
 
-Similiar to other kernels (i.e. [IPython](https://ipykernel.readthedocs.io/en/stable/)), the notebook uses a shared _variable environment_ across all the evaluated code blocks.
-This allows you to define variables within one block and access them in subsquently evaluated blocks.
+Similar to other kernels (i.e. [IPython](https://ipykernel.readthedocs.io/en/stable/)), the notebook uses a shared _variable environment_ across all the evaluated code blocks.
+This allows you to define variables within one block and access them in subsequently evaluated blocks.
 
-## Release
+## Release (Comet)
 
-The kernel is released as a standalone platform binary, which can be installed automatically with the host Jupyter Notebook instance by running `./santa-lang-jupyter-* install`.
+The kernel is released as a standalone platform binary, which can be installed automatically with the host Jupyter Notebook instance by running `./santa-lang-comet-jupyter-* install`.
 
-| Platform     | Release                                                                                                                                                                   |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Linux/GNU    | [`santa-lang-jupyter-0.0.3-x86_64-unknown-linux-gnu`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.3/santa-lang-jupyter-0.0.3-x86_64-unknown-linux-gnu) |
-| Apple/Darwin | [`santa-lang-jupyter-0.0.3-x86_64-apple-darwin`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.3/santa-lang-jupyter-0.0.3-x86_64-apple-darwin)           |
+| Platform      | Release                                                                                                                                                     |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Linux (x64)   | [`santa-lang-comet-jupyter-0.0.8-linux-amd64`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.8/santa-lang-comet-jupyter-0.0.8-linux-amd64) |
+| macOS (Intel) | [`santa-lang-comet-jupyter-0.0.8-macos-amd64`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.8/santa-lang-comet-jupyter-0.0.8-macos-amd64) |
 
 ## Docker
 
