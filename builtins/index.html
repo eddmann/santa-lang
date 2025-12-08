@@ -534,6 +534,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#last" class="md-nav__link">
+    last
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#rest" class="md-nav__link">
     rest
   </a>
@@ -685,6 +692,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#bit_not" class="md-nav__link">
+    bit_not
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -743,6 +757,34 @@
           <li class="md-nav__item">
   <a href="#md5" class="md-nav__link">
     md5
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upper" class="md-nav__link">
+    upper
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lower" class="md-nav__link">
+    lower
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replace" class="md-nav__link">
+    replace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#join" class="md-nav__link">
+    join
   </a>
   
 </li>
@@ -1232,6 +1274,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#last" class="md-nav__link">
+    last
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#rest" class="md-nav__link">
     rest
   </a>
@@ -1383,6 +1432,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#bit_not" class="md-nav__link">
+    bit_not
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1441,6 +1497,34 @@
           <li class="md-nav__item">
   <a href="#md5" class="md-nav__link">
     md5
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upper" class="md-nav__link">
+    upper
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lower" class="md-nav__link">
+    lower
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replace" class="md-nav__link">
+    replace
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#join" class="md-nav__link">
+    join
   </a>
   
 </li>
@@ -2373,11 +2457,35 @@ If the collection does not contain a second element then <code>nil</code> is ret
 </div>
 </div>
 </div>
+<h3 id="last">last</h3>
+<pre class="highlight"><code>last(collection)</code></pre>
+<p>Return the last element within the collection.
+If the collection is empty then <code>nil</code> is returned.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="34:5"><input checked="checked" id="__tabbed_34_1" name="__tabbed_34" type="radio" /><input id="__tabbed_34_2" name="__tabbed_34" type="radio" /><input id="__tabbed_34_3" name="__tabbed_34" type="radio" /><input id="__tabbed_34_4" name="__tabbed_34" type="radio" /><input id="__tabbed_34_5" name="__tabbed_34" type="radio" /><div class="tabbed-labels"><label for="__tabbed_34_1">List</label><label for="__tabbed_34_2">Set</label><label for="__tabbed_34_3">String</label><label for="__tabbed_34_4">Exclusive Range</label><label for="__tabbed_34_5">Inclusive Range</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">last([1, 2])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">last({1, 2})</code></pre>
+</div>
+<div class="tabbed-block">
+<p>Each character is considered an element.</p>
+<pre class="highlight"><code class="language-santa">last("ab")</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">last(1..5)</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">last(1..=5)</code></pre>
+</div>
+</div>
+</div>
 <h3 id="rest">rest</h3>
 <pre class="highlight"><code>rest(collection)</code></pre>
 <p>Return the collection with the first element omitted (aka <em>tail</em>).
 If the collection does not have more than one element then an empty List is returned.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="34:7"><input checked="checked" id="__tabbed_34_1" name="__tabbed_34" type="radio" /><input id="__tabbed_34_2" name="__tabbed_34" type="radio" /><input id="__tabbed_34_3" name="__tabbed_34" type="radio" /><input id="__tabbed_34_4" name="__tabbed_34" type="radio" /><input id="__tabbed_34_5" name="__tabbed_34" type="radio" /><input id="__tabbed_34_6" name="__tabbed_34" type="radio" /><input id="__tabbed_34_7" name="__tabbed_34" type="radio" /><div class="tabbed-labels"><label for="__tabbed_34_1">List</label><label for="__tabbed_34_2">Set</label><label for="__tabbed_34_3">String</label><label for="__tabbed_34_4">Exclusive Range</label><label for="__tabbed_34_5">Inclusive Range</label><label for="__tabbed_34_6">Unbounded Range</label><label for="__tabbed_34_7">Lazy Sequence</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="35:7"><input checked="checked" id="__tabbed_35_1" name="__tabbed_35" type="radio" /><input id="__tabbed_35_2" name="__tabbed_35" type="radio" /><input id="__tabbed_35_3" name="__tabbed_35" type="radio" /><input id="__tabbed_35_4" name="__tabbed_35" type="radio" /><input id="__tabbed_35_5" name="__tabbed_35" type="radio" /><input id="__tabbed_35_6" name="__tabbed_35" type="radio" /><input id="__tabbed_35_7" name="__tabbed_35" type="radio" /><div class="tabbed-labels"><label for="__tabbed_35_1">List</label><label for="__tabbed_35_2">Set</label><label for="__tabbed_35_3">String</label><label for="__tabbed_35_4">Exclusive Range</label><label for="__tabbed_35_5">Inclusive Range</label><label for="__tabbed_35_6">Unbounded Range</label><label for="__tabbed_35_7">Lazy Sequence</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <pre class="highlight"><code class="language-santa">rest([1, 2])</code></pre>
@@ -2436,7 +2544,7 @@ If the List size is not divisible by the chunk size then the last chunk will con
 <h3 id="includes">includes?</h3>
 <pre class="highlight"><code>includes?(collection, value)</code></pre>
 <p>Predicate to assert if a value is present within a given collection, based on <a href="../language/#operators">equality</a> rules.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="35:7"><input checked="checked" id="__tabbed_35_1" name="__tabbed_35" type="radio" /><input id="__tabbed_35_2" name="__tabbed_35" type="radio" /><input id="__tabbed_35_3" name="__tabbed_35" type="radio" /><input id="__tabbed_35_4" name="__tabbed_35" type="radio" /><input id="__tabbed_35_5" name="__tabbed_35" type="radio" /><input id="__tabbed_35_6" name="__tabbed_35" type="radio" /><input id="__tabbed_35_7" name="__tabbed_35" type="radio" /><div class="tabbed-labels"><label for="__tabbed_35_1">List</label><label for="__tabbed_35_2">Set</label><label for="__tabbed_35_3">String</label><label for="__tabbed_35_4">Exclusive Range</label><label for="__tabbed_35_5">Inclusive Range</label><label for="__tabbed_35_6">Unbounded Range</label><label for="__tabbed_35_7">Lazy Sequence</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="36:7"><input checked="checked" id="__tabbed_36_1" name="__tabbed_36" type="radio" /><input id="__tabbed_36_2" name="__tabbed_36" type="radio" /><input id="__tabbed_36_3" name="__tabbed_36" type="radio" /><input id="__tabbed_36_4" name="__tabbed_36" type="radio" /><input id="__tabbed_36_5" name="__tabbed_36" type="radio" /><input id="__tabbed_36_6" name="__tabbed_36" type="radio" /><input id="__tabbed_36_7" name="__tabbed_36" type="radio" /><div class="tabbed-labels"><label for="__tabbed_36_1">List</label><label for="__tabbed_36_2">Set</label><label for="__tabbed_36_3">String</label><label for="__tabbed_36_4">Exclusive Range</label><label for="__tabbed_36_5">Inclusive Range</label><label for="__tabbed_36_6">Unbounded Range</label><label for="__tabbed_36_7">Lazy Sequence</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <pre class="highlight"><code class="language-santa">includes?([1, 2], 1)</code></pre>
@@ -2465,7 +2573,7 @@ If the List size is not divisible by the chunk size then the last chunk will con
 <h3 id="excludes">excludes?</h3>
 <pre class="highlight"><code>excludes?(collection, value)</code></pre>
 <p>Predicate to assert if a value is not present within a given collection, based on <a href="../language/#operators">equality</a> rules.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="36:5"><input checked="checked" id="__tabbed_36_1" name="__tabbed_36" type="radio" /><input id="__tabbed_36_2" name="__tabbed_36" type="radio" /><input id="__tabbed_36_3" name="__tabbed_36" type="radio" /><input id="__tabbed_36_4" name="__tabbed_36" type="radio" /><input id="__tabbed_36_5" name="__tabbed_36" type="radio" /><div class="tabbed-labels"><label for="__tabbed_36_1">List</label><label for="__tabbed_36_2">Set</label><label for="__tabbed_36_3">String</label><label for="__tabbed_36_4">Exclusive Range</label><label for="__tabbed_36_5">Inclusive Range</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="37:5"><input checked="checked" id="__tabbed_37_1" name="__tabbed_37" type="radio" /><input id="__tabbed_37_2" name="__tabbed_37" type="radio" /><input id="__tabbed_37_3" name="__tabbed_37" type="radio" /><input id="__tabbed_37_4" name="__tabbed_37" type="radio" /><input id="__tabbed_37_5" name="__tabbed_37" type="radio" /><div class="tabbed-labels"><label for="__tabbed_37_1">List</label><label for="__tabbed_37_2">Set</label><label for="__tabbed_37_3">String</label><label for="__tabbed_37_4">Exclusive Range</label><label for="__tabbed_37_5">Inclusive Range</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <pre class="highlight"><code class="language-santa">excludes?([1, 2], 3)</code></pre>
@@ -2488,7 +2596,7 @@ If the List size is not divisible by the chunk size then the last chunk will con
 <h3 id="any">any?</h3>
 <pre class="highlight"><code>any?(predicate, collection)</code></pre>
 <p>Predicate to assert if any value within the collection holds <a href="../language/#truthy-semantics">truthy</a> based on the supplied pure <code>predicate</code> function.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="37:7"><input checked="checked" id="__tabbed_37_1" name="__tabbed_37" type="radio" /><input id="__tabbed_37_2" name="__tabbed_37" type="radio" /><input id="__tabbed_37_3" name="__tabbed_37" type="radio" /><input id="__tabbed_37_4" name="__tabbed_37" type="radio" /><input id="__tabbed_37_5" name="__tabbed_37" type="radio" /><input id="__tabbed_37_6" name="__tabbed_37" type="radio" /><input id="__tabbed_37_7" name="__tabbed_37" type="radio" /><div class="tabbed-labels"><label for="__tabbed_37_1">List</label><label for="__tabbed_37_2">Set</label><label for="__tabbed_37_3">String</label><label for="__tabbed_37_4">Exclusive Range</label><label for="__tabbed_37_5">Inclusive Range</label><label for="__tabbed_37_6">Unbounded Range</label><label for="__tabbed_37_7">Lazy Sequence</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="38:7"><input checked="checked" id="__tabbed_38_1" name="__tabbed_38" type="radio" /><input id="__tabbed_38_2" name="__tabbed_38" type="radio" /><input id="__tabbed_38_3" name="__tabbed_38" type="radio" /><input id="__tabbed_38_4" name="__tabbed_38" type="radio" /><input id="__tabbed_38_5" name="__tabbed_38" type="radio" /><input id="__tabbed_38_6" name="__tabbed_38" type="radio" /><input id="__tabbed_38_7" name="__tabbed_38" type="radio" /><div class="tabbed-labels"><label for="__tabbed_38_1">List</label><label for="__tabbed_38_2">Set</label><label for="__tabbed_38_3">String</label><label for="__tabbed_38_4">Exclusive Range</label><label for="__tabbed_38_5">Inclusive Range</label><label for="__tabbed_38_6">Unbounded Range</label><label for="__tabbed_38_7">Lazy Sequence</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <pre class="highlight"><code class="language-santa">any?(_ == 1, [1, 2])</code></pre>
@@ -2517,7 +2625,7 @@ If the List size is not divisible by the chunk size then the last chunk will con
 <h3 id="all">all?</h3>
 <pre class="highlight"><code>all?(predicate, collection)</code></pre>
 <p>Predicate to assert if all values within the collection hold <a href="../language/#truthy-semantics">truthy</a> based on the supplied pure <code>predicate</code> function.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="38:5"><input checked="checked" id="__tabbed_38_1" name="__tabbed_38" type="radio" /><input id="__tabbed_38_2" name="__tabbed_38" type="radio" /><input id="__tabbed_38_3" name="__tabbed_38" type="radio" /><input id="__tabbed_38_4" name="__tabbed_38" type="radio" /><input id="__tabbed_38_5" name="__tabbed_38" type="radio" /><div class="tabbed-labels"><label for="__tabbed_38_1">List</label><label for="__tabbed_38_2">Set</label><label for="__tabbed_38_3">String</label><label for="__tabbed_38_4">Exclusive Range</label><label for="__tabbed_38_5">Inclusive Range</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="39:5"><input checked="checked" id="__tabbed_39_1" name="__tabbed_39" type="radio" /><input id="__tabbed_39_2" name="__tabbed_39" type="radio" /><input id="__tabbed_39_3" name="__tabbed_39" type="radio" /><input id="__tabbed_39_4" name="__tabbed_39" type="radio" /><input id="__tabbed_39_5" name="__tabbed_39" type="radio" /><div class="tabbed-labels"><label for="__tabbed_39_1">List</label><label for="__tabbed_39_2">Set</label><label for="__tabbed_39_3">String</label><label for="__tabbed_39_4">Exclusive Range</label><label for="__tabbed_39_5">Inclusive Range</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <pre class="highlight"><code class="language-santa">all?(_ &gt; 0, [1, 2])</code></pre>
@@ -2541,7 +2649,7 @@ If the List size is not divisible by the chunk size then the last chunk will con
 <h3 id="abs">abs</h3>
 <pre class="highlight"><code>abs(value)</code></pre>
 <p>Return the absolute value of a number.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="39:2"><input checked="checked" id="__tabbed_39_1" name="__tabbed_39" type="radio" /><input id="__tabbed_39_2" name="__tabbed_39" type="radio" /><div class="tabbed-labels"><label for="__tabbed_39_1">Integer</label><label for="__tabbed_39_2">Decimal</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="40:2"><input checked="checked" id="__tabbed_40_1" name="__tabbed_40" type="radio" /><input id="__tabbed_40_2" name="__tabbed_40" type="radio" /><div class="tabbed-labels"><label for="__tabbed_40_1">Integer</label><label for="__tabbed_40_2">Decimal</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <pre class="highlight"><code class="language-santa">abs(-1)</code></pre>
@@ -2560,7 +2668,7 @@ The resulting List will contain results up to the shortest List's size.</p>
 <h3 id="signum">signum</h3>
 <pre class="highlight"><code>signum(value)</code></pre>
 <p>Return the sign (<code>-1, 0, 1</code>) for the given number.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="40:2"><input checked="checked" id="__tabbed_40_1" name="__tabbed_40" type="radio" /><input id="__tabbed_40_2" name="__tabbed_40" type="radio" /><div class="tabbed-labels"><label for="__tabbed_40_1">Integer</label><label for="__tabbed_40_2">Decimal</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="41:2"><input checked="checked" id="__tabbed_41_1" name="__tabbed_41" type="radio" /><input id="__tabbed_41_2" name="__tabbed_41" type="radio" /><div class="tabbed-labels"><label for="__tabbed_41_1">Integer</label><label for="__tabbed_41_2">Decimal</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <pre class="highlight"><code class="language-santa">signum(5)</code></pre>
@@ -2591,11 +2699,15 @@ The resulting List will contain results up to the shortest List's size.</p>
 <pre class="highlight"><code>bit_shift_right(value, shift)</code></pre>
 <p>Return an Integer whose binary representation is the first operand shifted by the specified number of bits to the right.</p>
 <pre class="highlight"><code class="language-santa">bit_shift_right(64, 3)</code></pre>
+<h3 id="bit_not">bit_not</h3>
+<pre class="highlight"><code>bit_not(value)</code></pre>
+<p>Return an Integer whose binary representation has each bit inverted (0 becomes 1, 1 becomes 0).</p>
+<pre class="highlight"><code class="language-santa">bit_not(5) // ~0101</code></pre>
 <h2 id="string">String</h2>
 <h3 id="int">int</h3>
 <pre class="highlight"><code>int(value)</code></pre>
 <p>Attempt to parse the provided value into an Integer representation.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="41:4"><input checked="checked" id="__tabbed_41_1" name="__tabbed_41" type="radio" /><input id="__tabbed_41_2" name="__tabbed_41" type="radio" /><input id="__tabbed_41_3" name="__tabbed_41" type="radio" /><input id="__tabbed_41_4" name="__tabbed_41" type="radio" /><div class="tabbed-labels"><label for="__tabbed_41_1">Integer</label><label for="__tabbed_41_2">Decimal</label><label for="__tabbed_41_3">String</label><label for="__tabbed_41_4">Boolean</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="42:4"><input checked="checked" id="__tabbed_42_1" name="__tabbed_42" type="radio" /><input id="__tabbed_42_2" name="__tabbed_42" type="radio" /><input id="__tabbed_42_3" name="__tabbed_42" type="radio" /><input id="__tabbed_42_4" name="__tabbed_42" type="radio" /><div class="tabbed-labels"><label for="__tabbed_42_1">Integer</label><label for="__tabbed_42_2">Decimal</label><label for="__tabbed_42_3">String</label><label for="__tabbed_42_4">Boolean</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <pre class="highlight"><code class="language-santa">int(5)</code></pre>
@@ -2643,6 +2755,31 @@ If no match/capture can be found an empty List is returned.</p>
 <pre class="highlight"><code>md5(value)</code></pre>
 <p>Return the MD5 hash of a String as a lowercase hexadecimal string.</p>
 <pre class="highlight"><code class="language-santa">md5("hello")</code></pre>
+<h3 id="upper">upper</h3>
+<pre class="highlight"><code>upper(value)</code></pre>
+<p>Convert a String to uppercase.</p>
+<pre class="highlight"><code class="language-santa">upper("hello")</code></pre>
+<h3 id="lower">lower</h3>
+<pre class="highlight"><code>lower(value)</code></pre>
+<p>Convert a String to lowercase.</p>
+<pre class="highlight"><code class="language-santa">lower("HELLO")</code></pre>
+<h3 id="replace">replace</h3>
+<pre class="highlight"><code>replace(pattern, replacement, value)</code></pre>
+<p>Replace all occurrences of pattern with replacement in the given String.</p>
+<pre class="highlight"><code class="language-santa">replace("o", "0", "hello world")</code></pre>
+<h3 id="join">join</h3>
+<pre class="highlight"><code>join(separator, collection)</code></pre>
+<p>Join collection elements into a String with separator between each element.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="43:2"><input checked="checked" id="__tabbed_43_1" name="__tabbed_43" type="radio" /><input id="__tabbed_43_2" name="__tabbed_43" type="radio" /><div class="tabbed-labels"><label for="__tabbed_43_1">List</label><label for="__tabbed_43_2">Set</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">join(", ", [1, 2, 3])</code></pre>
+</div>
+<div class="tabbed-block">
+<pre class="highlight"><code class="language-santa">join("-", {"a", "b", "c"})</code></pre>
+</div>
+</div>
+</div>
 <h2 id="miscellaneous">Miscellaneous</h2>
 <h3 id="range">range</h3>
 <pre class="highlight"><code>range(from, to, step)</code></pre>

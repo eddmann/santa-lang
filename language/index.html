@@ -259,6 +259,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#comments" class="md-nav__link">
+    Comments
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#types" class="md-nav__link">
     Types
   </a>
@@ -398,6 +405,19 @@
   <a href="#operators" class="md-nav__link">
     Operators
   </a>
+  
+    <nav class="md-nav" aria-label="Operators">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#operator-precedence" class="md-nav__link">
+    Operator Precedence
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -739,6 +759,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#comments" class="md-nav__link">
+    Comments
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#types" class="md-nav__link">
     Types
   </a>
@@ -878,6 +905,19 @@
   <a href="#operators" class="md-nav__link">
     Operators
   </a>
+  
+    <nav class="md-nav" aria-label="Operators">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#operator-precedence" class="md-nav__link">
+    Operator Precedence
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1058,6 +1098,19 @@
 <li>Block expressions implicitly return the last statement as their result, unless an explicit <code>return</code> is used.</li>
 </ul>
 <p>There is a <a href="https://eddmann.com/posts/designing-santa-lang-a-language-for-solving-advent-of-code-puzzles/">write-up</a> detailing the design decisions that went into creating the language.</p>
+<h2 id="comments">Comments</h2>
+<p>Line comments start with <code>//</code> and continue until the end of the line.
+Everything after <code>//</code> on that line is ignored by the interpreter.</p>
+<pre class="highlight"><code class="language-santa">// This is a comment
+let x = 1; // This is also a comment</code></pre>
+<p>Comments are useful for documenting code, temporarily disabling code, or adding explanatory notes.</p>
+<pre class="highlight"><code class="language-santa">let fibonacci = |n| {
+  // Base cases
+  if n == 0 { 0 }
+  else if n == 1 { 1 }
+  // Recursive case
+  else { fibonacci(n - 1) + fibonacci(n - 2) }
+};</code></pre>
 <h2 id="types">Types</h2>
 <h3 id="integer">Integer</h3>
 <p>Represents Integer values, stored as a 64-bit signed number.</p>
@@ -1068,10 +1121,20 @@ let int_with_underscores = 1_000_000;</code></pre>
 <pre class="highlight"><code class="language-santa">let dec = 1.5;
 let dec_with_underscores = 1_000_000.50;</code></pre>
 <h3 id="string">String</h3>
-<p>Represents UTF-8 encoded character sequences, with the ability to escape newlines <code>\n</code>, tabs <code>\t</code> and quotes <code>\"</code>.</p>
+<p>Represents UTF-8 encoded character sequences, with support for escape sequences:</p>
+<ul>
+<li><code>\n</code> - newline</li>
+<li><code>\t</code> - tab</li>
+<li><code>\r</code> - carriage return</li>
+<li><code>\b</code> - backspace</li>
+<li><code>\f</code> - form feed</li>
+<li><code>\"</code> - double quote</li>
+<li><code>\\</code> - backslash</li>
+</ul>
 <pre class="highlight"><code class="language-santa">let str = "Hello, world!";
 let escaped_str = "\"Hello, world!\"\n";
-let str_with_unicode = "❤🍕";</code></pre>
+let str_with_unicode = "❤🍕";
+let windows_line = "line1\r\nline2";</code></pre>
 <h3 id="range">Range</h3>
 <h4 id="exclusive-range">Exclusive Range</h4>
 <p>Lazily evaluates the Integer range from a given start value until (but not including) the end value.
@@ -1243,6 +1306,74 @@ true != false;
 [1, 2, 3] != [1, 2, 3, 4]
 {1, 2, 3} != {1, 2, 3, 4};
 #{"a": 1} != #{"b": 2};</code></pre>
+<h3 id="operator-precedence">Operator Precedence</h3>
+<p>From highest to lowest precedence:</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Operators</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>[]</code></td>
+<td>Indexing</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>()</code></td>
+<td>Function call</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>!</code> <code>-</code> (unary)</td>
+<td>Prefix operators (NOT, negation)</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>*</code> <code>/</code> <code>%</code> <code>`</code></td>
+<td>Multiply, divide, modulo, infix call</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>+</code> <code>-</code></td>
+<td>Addition, subtraction</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>&gt;&gt;</code> <code>\|&gt;</code> <code>..</code> <code>..=</code></td>
+<td>Composition, pipeline, ranges</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>&lt;</code> <code>&lt;=</code> <code>&gt;</code> <code>&gt;=</code></td>
+<td>Comparison</td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>==</code> <code>!=</code></td>
+<td>Equality</td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>&amp;&amp;</code></td>
+<td>Logical AND</td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>\|\|</code></td>
+<td>Logical OR</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Important notes:</strong>
+- Pipeline <code>|&gt;</code>, composition <code>&gt;&gt;</code>, and range operators <code>..</code>/<code>..=</code> share the same precedence level
+- This means <code>1..5 + 1</code> parses as <code>1..(5+1)</code> since <code>+</code> binds tighter than <code>..</code>
+- Logical AND <code>&amp;&amp;</code> binds tighter than OR <code>||</code>, so <code>a || b &amp;&amp; c</code> parses as <code>a || (b &amp;&amp; c)</code>
+- Infix function calls using backticks have the same precedence as multiplication</p>
 <h2 id="indexing">Indexing</h2>
 <h3 id="list_1">List</h3>
 <p>List indexing is zero-based, with the ability to index from the start (positive index) and end (negative index) of a sequence.
@@ -1256,9 +1387,17 @@ list[-5]; // nil</code></pre>
 <p>List slices can be achieved by-way of inclusive/exclusive range indexing.</p>
 <pre class="highlight"><code class="language-santa">let list = [1, 2, 3, 4];
 
-list[1..2]; // [2]
-list[1..=2]; // [2, 3]
-list[1..=-1]; // [2, 1, 4]</code></pre>
+list[1..2]; // [2] - exclusive: index 1 only
+list[1..3]; // [2, 3] - exclusive: indices 1 and 2
+list[1..=2]; // [2, 3] - inclusive: indices 1 and 2</code></pre>
+<p>Negative indices can be used in slice ranges to index from the end of the collection.
+The index <code>-1</code> refers to the last element, <code>-2</code> to the second-to-last, and so on.</p>
+<pre class="highlight"><code class="language-santa">let list = [1, 2, 3, 4, 5];
+
+list[1..-1]; // [2, 3, 4] - from index 1 up to (but not including) the last element
+list[1..=-1]; // [2, 3, 4, 5] - from index 1 up to and including the last element
+list[-3..-1]; // [3, 4] - from third-to-last up to (but not including) last
+list[-3..=-1]; // [3, 4, 5] - from third-to-last up to and including last</code></pre>
 <h3 id="dictionary_1">Dictionary</h3>
 <p>Dictionary values can be found via their associated key.
 If a Dictionary key is not present within the collection <code>nil</code> is returned.</p>
@@ -1275,12 +1414,13 @@ str[0]; // "h"
 str[-1]; // "o"
 str[5]; // nil
 str[-6]; // nil</code></pre>
-<p>String slices can be achieved by-way of inclusive/exclusive range indexing.</p>
+<p>String slices can be achieved by-way of inclusive/exclusive range indexing, including negative indices.</p>
 <pre class="highlight"><code class="language-santa">let str = "hello";
 
-str[1..2]; // "e"
-str[1..=2]; // "el"
-str[1..=-1]; // "eho"</code></pre>
+str[1..3]; // "el"
+str[1..=3]; // "ell"
+str[1..-1]; // "ell" - from index 1 up to (but not including) the last character
+str[-3..=-1]; // "llo" - last three characters</code></pre>
 <h2 id="control-structures">Control Structures</h2>
 <h3 id="if">If</h3>
 <p>This expression provides a means of performing conditional logic.
@@ -1292,6 +1432,13 @@ Following block expression semantics found elsewhere in the language, unless exp
 if 10 &lt; 5 { 1 } // nil</code></pre>
 <p>Expression with both a consequence and alternative <code>else</code> branch.</p>
 <pre class="highlight"><code class="language-santa">if 10 &lt; 5 { 1 } else { 2 }</code></pre>
+<p>Chained conditions using <code>else if</code>.</p>
+<pre class="highlight"><code class="language-santa">let grade = |score| {
+  if score &gt;= 90 { "A" }
+  else if score &gt;= 80 { "B" }
+  else if score &gt;= 70 { "C" }
+  else { "F" }
+};</code></pre>
 <p>Let-bindings can be declared within the predicate expressions.
 If the binding is <em>truthy</em> then the variables is bound and available with the consequence branch.</p>
 <pre class="highlight"><code class="language-santa">if let x = 10 { x } else { 20 }</code></pre>

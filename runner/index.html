@@ -316,6 +316,40 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#external-functions" class="md-nav__link">
+    External Functions
+  </a>
+  
+    <nav class="md-nav" aria-label="External Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#putsvalues" class="md-nav__link">
+    puts(...values)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readpath" class="md-nav__link">
+    read(path)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#env" class="md-nav__link">
+    env()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#example" class="md-nav__link">
     Example
   </a>
@@ -506,6 +540,40 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#external-functions" class="md-nav__link">
+    External Functions
+  </a>
+  
+    <nav class="md-nav" aria-label="External Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#putsvalues" class="md-nav__link">
+    puts(...values)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readpath" class="md-nav__link">
+    read(path)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#env" class="md-nav__link">
+    env()
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#example" class="md-nav__link">
     Example
   </a>
@@ -582,6 +650,35 @@ test: {
 <p>To include slow tests during test execution, use the <code>-s</code> or <code>--slow</code> flag with the CLI:</p>
 <pre class="highlight"><code class="language-bash">santa-cli -t -s solution.santa</code></pre>
 <p>This is useful for tests that validate against the actual puzzle input, which may be computationally expensive compared to the smaller example inputs provided in the problem description.</p>
+<h2 id="external-functions">External Functions</h2>
+<p>The CLI runtime provides the following external functions that are available in your santa-lang programs:</p>
+<h3 id="putsvalues"><code>puts(...values)</code></h3>
+<p>Prints values to standard output, separated by spaces, followed by a newline.</p>
+<pre class="highlight"><code class="language-santa">puts("Hello", "World");  // Output: Hello World
+puts(1, 2, 3);           // Output: 1 2 3</code></pre>
+<p>Returns <code>nil</code>.</p>
+<h3 id="readpath"><code>read(path)</code></h3>
+<p>Reads content from a file path, URL, or Advent of Code input.</p>
+<p><strong>File paths:</strong>
+<pre class="highlight"><code class="language-santa">let data = read("input.txt");</code></pre></p>
+<p><strong>HTTP/HTTPS URLs:</strong>
+<pre class="highlight"><code class="language-santa">let data = read("https://example.com/data.txt");</code></pre></p>
+<p><strong>Advent of Code inputs:</strong>
+<pre class="highlight"><code class="language-santa">let data = read("aoc://2015/1");  // Fetches Day 1 of 2015</code></pre></p>
+<p>The <code>aoc://</code> scheme requires the <code>SANTA_CLI_SESSION_TOKEN</code> environment variable to be set with your Advent of Code session cookie.
+Fetched inputs are cached locally as <code>aoc{year}_day{day}.input</code> files to avoid repeated requests.</p>
+<p>Returns the file contents as a String.</p>
+<h3 id="env"><code>env()</code></h3>
+<p>Prints all variables and functions currently defined in the REPL environment.
+Useful for debugging and exploring what's available in the current session.</p>
+<pre class="highlight"><code class="language-santa">let x = 42;
+let add = |a, b| a + b;
+env();
+// Output:
+// Environment:
+//   x = 42
+//   add = Function</code></pre>
+<p>Returns <code>nil</code>. This function is primarily useful in REPL mode.</p>
 <h2 id="example">Example</h2>
 <p>For completeness, below is the full example solution combining both the solution and test blocks.
 It also documents use of a runtime-specific external <code>read</code> function.</p>
