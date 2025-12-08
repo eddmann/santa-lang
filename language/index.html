@@ -1369,11 +1369,13 @@ true != false;
 </tr>
 </tbody>
 </table>
-<p><strong>Important notes:</strong>
-- Pipeline <code>|&gt;</code>, composition <code>&gt;&gt;</code>, and range operators <code>..</code>/<code>..=</code> share the same precedence level
-- This means <code>1..5 + 1</code> parses as <code>1..(5+1)</code> since <code>+</code> binds tighter than <code>..</code>
-- Logical AND <code>&amp;&amp;</code> binds tighter than OR <code>||</code>, so <code>a || b &amp;&amp; c</code> parses as <code>a || (b &amp;&amp; c)</code>
-- Infix function calls using backticks have the same precedence as multiplication</p>
+<p><strong>Important notes:</strong></p>
+<ul>
+<li>Pipeline <code>|&gt;</code>, composition <code>&gt;&gt;</code>, and range operators <code>..</code>/<code>..=</code> share the same precedence level</li>
+<li>This means <code>1..5 + 1</code> parses as <code>1..(5+1)</code> since <code>+</code> binds tighter than <code>..</code></li>
+<li>Logical AND <code>&amp;&amp;</code> binds tighter than OR <code>||</code>, so <code>a || b &amp;&amp; c</code> parses as <code>a || (b &amp;&amp; c)</code></li>
+<li>Infix function calls using backticks have the same precedence as multiplication</li>
+</ul>
 <h2 id="indexing">Indexing</h2>
 <h3 id="list_1">List</h3>
 <p>List indexing is zero-based, with the ability to index from the start (positive index) and end (negative index) of a sequence.

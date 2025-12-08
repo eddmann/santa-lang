@@ -659,12 +659,12 @@ puts(1, 2, 3);           // Output: 1 2 3</code></pre>
 <p>Returns <code>nil</code>.</p>
 <h3 id="readpath"><code>read(path)</code></h3>
 <p>Reads content from a file path, URL, or Advent of Code input.</p>
-<p><strong>File paths:</strong>
-<pre class="highlight"><code class="language-santa">let data = read("input.txt");</code></pre></p>
-<p><strong>HTTP/HTTPS URLs:</strong>
-<pre class="highlight"><code class="language-santa">let data = read("https://example.com/data.txt");</code></pre></p>
-<p><strong>Advent of Code inputs:</strong>
-<pre class="highlight"><code class="language-santa">let data = read("aoc://2015/1");  // Fetches Day 1 of 2015</code></pre></p>
+<p><strong>File paths:</strong></p>
+<pre class="highlight"><code class="language-santa">let data = read("input.txt");</code></pre>
+<p><strong>HTTP/HTTPS URLs:</strong></p>
+<pre class="highlight"><code class="language-santa">let data = read("https://example.com/data.txt");</code></pre>
+<p><strong>Advent of Code inputs:</strong></p>
+<pre class="highlight"><code class="language-santa">let data = read("aoc://2015/1");  // Fetches Day 1 of 2015</code></pre>
 <p>The <code>aoc://</code> scheme requires the <code>SANTA_CLI_SESSION_TOKEN</code> environment variable to be set with your Advent of Code session cookie.
 Fetched inputs are cached locally as <code>aoc{year}_day{day}.input</code> files to avoid repeated requests.</p>
 <p>Returns the file contents as a String.</p>
