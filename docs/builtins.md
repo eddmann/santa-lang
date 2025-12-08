@@ -1504,6 +1504,47 @@ If the collection does not contain a second element then `nil` is returned.
     second(iterate(_ + 1, 1))
     ```
 
+### last
+
+```
+last(collection)
+```
+
+Return the last element within the collection.
+If the collection is empty then `nil` is returned.
+
+=== "List"
+
+    ```santa
+    last([1, 2])
+    ```
+
+=== "Set"
+
+    ```santa
+    last({1, 2})
+    ```
+
+=== "String"
+
+    Each character is considered an element.
+
+    ```santa
+    last("ab")
+    ```
+
+=== "Exclusive Range"
+
+    ```santa
+    last(1..5)
+    ```
+
+=== "Inclusive Range"
+
+    ```santa
+    last(1..=5)
+    ```
+
 ### rest
 
 ```

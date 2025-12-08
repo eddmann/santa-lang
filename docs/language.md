@@ -7,6 +7,28 @@
 
 There is a [write-up](https://eddmann.com/posts/designing-santa-lang-a-language-for-solving-advent-of-code-puzzles/) detailing the design decisions that went into creating the language.
 
+## Comments
+
+Line comments start with `//` and continue until the end of the line.
+Everything after `//` on that line is ignored by the interpreter.
+
+```santa
+// This is a comment
+let x = 1; // This is also a comment
+```
+
+Comments are useful for documenting code, temporarily disabling code, or adding explanatory notes.
+
+```santa
+let fibonacci = |n| {
+  // Base cases
+  if n == 0 { 0 }
+  else if n == 1 { 1 }
+  // Recursive case
+  else { fibonacci(n - 1) + fibonacci(n - 2) }
+};
+```
+
 ## Types
 
 ### Integer
@@ -356,9 +378,21 @@ List slices can be achieved by-way of inclusive/exclusive range indexing.
 ```santa
 let list = [1, 2, 3, 4];
 
-list[1..2]; // [2]
-list[1..=2]; // [2, 3]
-list[1..=-1]; // [2, 1, 4]
+list[1..2]; // [2] - exclusive: index 1 only
+list[1..3]; // [2, 3] - exclusive: indices 1 and 2
+list[1..=2]; // [2, 3] - inclusive: indices 1 and 2
+```
+
+Negative indices can be used in slice ranges to index from the end of the collection.
+The index `-1` refers to the last element, `-2` to the second-to-last, and so on.
+
+```santa
+let list = [1, 2, 3, 4, 5];
+
+list[1..-1]; // [2, 3, 4] - from index 1 up to (but not including) the last element
+list[1..=-1]; // [2, 3, 4, 5] - from index 1 up to and including the last element
+list[-3..-1]; // [3, 4] - from third-to-last up to (but not including) last
+list[-3..=-1]; // [3, 4, 5] - from third-to-last up to and including last
 ```
 
 ### Dictionary
@@ -387,14 +421,15 @@ str[5]; // nil
 str[-6]; // nil
 ```
 
-String slices can be achieved by-way of inclusive/exclusive range indexing.
+String slices can be achieved by-way of inclusive/exclusive range indexing, including negative indices.
 
 ```santa
 let str = "hello";
 
-str[1..2]; // "e"
-str[1..=2]; // "el"
-str[1..=-1]; // "eho"
+str[1..3]; // "el"
+str[1..=3]; // "ell"
+str[1..-1]; // "ell" - from index 1 up to (but not including) the last character
+str[-3..=-1]; // "llo" - last three characters
 ```
 
 ## Control Structures

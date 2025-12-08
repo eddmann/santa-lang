@@ -75,6 +75,62 @@ santa-cli -t -s solution.santa
 
 This is useful for tests that validate against the actual puzzle input, which may be computationally expensive compared to the smaller example inputs provided in the problem description.
 
+## External Functions
+
+The CLI runtime provides the following external functions that are available in your santa-lang programs:
+
+### `puts(...values)`
+
+Prints values to standard output, separated by spaces, followed by a newline.
+
+```santa
+puts("Hello", "World");  // Output: Hello World
+puts(1, 2, 3);           // Output: 1 2 3
+```
+
+Returns `nil`.
+
+### `read(path)`
+
+Reads content from a file path, URL, or Advent of Code input.
+
+**File paths:**
+```santa
+let data = read("input.txt");
+```
+
+**HTTP/HTTPS URLs:**
+```santa
+let data = read("https://example.com/data.txt");
+```
+
+**Advent of Code inputs:**
+```santa
+let data = read("aoc://2015/1");  // Fetches Day 1 of 2015
+```
+
+The `aoc://` scheme requires the `SANTA_CLI_SESSION_TOKEN` environment variable to be set with your Advent of Code session cookie.
+Fetched inputs are cached locally as `aoc{year}_day{day}.input` files to avoid repeated requests.
+
+Returns the file contents as a String.
+
+### `env()`
+
+Prints all variables and functions currently defined in the REPL environment.
+Useful for debugging and exploring what's available in the current session.
+
+```santa
+let x = 42;
+let add = |a, b| a + b;
+env();
+// Output:
+// Environment:
+//   x = 42
+//   add = Function
+```
+
+Returns `nil`. This function is primarily useful in REPL mode.
+
 ## Example
 
 For completeness, below is the full example solution combining both the solution and test blocks.
