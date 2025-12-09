@@ -14,8 +14,8 @@ The kernel is released as a standalone platform binary, which can be installed a
 
 | Platform      | Release                                                                                                                                                     |
 | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Linux (x64)   | [`santa-lang-comet-jupyter-0.0.8-linux-amd64`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.8/santa-lang-comet-jupyter-0.0.8-linux-amd64) |
-| macOS (Intel) | [`santa-lang-comet-jupyter-0.0.8-macos-amd64`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.8/santa-lang-comet-jupyter-0.0.8-macos-amd64) |
+| Linux (x64)   | [`santa-lang-comet-jupyter-0.0.9-linux-amd64`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.9/santa-lang-comet-jupyter-0.0.9-linux-amd64) |
+| macOS (Intel) | [`santa-lang-comet-jupyter-0.0.9-macos-amd64`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.9/santa-lang-comet-jupyter-0.0.9-macos-amd64) |
 
 ## Docker
 

@@ -14,10 +14,10 @@ It includes the following functionality:
 
 | Platform      | Release                                                                                                                                             |
 | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Linux (x64)   | [`santa-lang-comet-cli-0.0.8-linux-amd64`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.8/santa-lang-comet-cli-0.0.8-linux-amd64) |
-| Linux (ARM)   | [`santa-lang-comet-cli-0.0.8-linux-arm64`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.8/santa-lang-comet-cli-0.0.8-linux-arm64) |
-| macOS (Intel) | [`santa-lang-comet-cli-0.0.8-macos-amd64`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.8/santa-lang-comet-cli-0.0.8-macos-amd64) |
-| macOS (ARM)   | [`santa-lang-comet-cli-0.0.8-macos-arm64`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.8/santa-lang-comet-cli-0.0.8-macos-arm64) |
+| Linux (x64)   | [`santa-lang-comet-cli-0.0.9-linux-amd64`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.9/santa-lang-comet-cli-0.0.9-linux-amd64) |
+| Linux (ARM)   | [`santa-lang-comet-cli-0.0.9-linux-arm64`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.9/santa-lang-comet-cli-0.0.9-linux-arm64) |
+| macOS (Intel) | [`santa-lang-comet-cli-0.0.9-macos-amd64`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.9/santa-lang-comet-cli-0.0.9-macos-amd64) |
+| macOS (ARM)   | [`santa-lang-comet-cli-0.0.9-macos-arm64`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.9/santa-lang-comet-cli-0.0.9-macos-arm64) |
 | Docker        | [`ghcr.io/eddmann/santa-lang-cli:latest`](https://github.com/eddmann/santa-lang-rs/pkgs/container/santa-lang-cli)                                   |
 
 **Note:** Blitzen and Prancer CLIs can be accessed via their GitHub repositories: [Blitzen](https://github.com/eddmann/santa-lang-blitzen/releases), [Prancer](https://github.com/eddmann/santa-lang-ts/releases).
