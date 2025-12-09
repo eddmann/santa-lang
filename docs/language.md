@@ -20,12 +20,12 @@ let x = 1; // This is also a comment
 Comments are useful for documenting code, temporarily disabling code, or adding explanatory notes.
 
 ```santa
-let fibonacci = |n| {
+let fibonacci = |n| match n {
   // Base cases
-  if n == 0 { 0 }
-  else if n == 1 { 1 }
+  0 { 0 }
+  1 { 1 }
   // Recursive case
-  else { fibonacci(n - 1) + fibonacci(n - 2) }
+  _ { fibonacci(n - 1) + fibonacci(n - 2) }
 };
 ```
 
@@ -453,17 +453,6 @@ Expression with both a consequence and alternative `else` branch.
 
 ```santa
 if 10 < 5 { 1 } else { 2 }
-```
-
-Chained conditions using `else if`.
-
-```santa
-let grade = |score| {
-  if score >= 90 { "A" }
-  else if score >= 80 { "B" }
-  else if score >= 70 { "C" }
-  else { "F" }
-};
 ```
 
 Let-bindings can be declared within the predicate expressions.
