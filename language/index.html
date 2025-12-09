@@ -1104,12 +1104,12 @@ Everything after <code>//</code> on that line is ignored by the interpreter.</p>
 <pre class="highlight"><code class="language-santa">// This is a comment
 let x = 1; // This is also a comment</code></pre>
 <p>Comments are useful for documenting code, temporarily disabling code, or adding explanatory notes.</p>
-<pre class="highlight"><code class="language-santa">let fibonacci = |n| {
+<pre class="highlight"><code class="language-santa">let fibonacci = |n| match n {
   // Base cases
-  if n == 0 { 0 }
-  else if n == 1 { 1 }
+  0 { 0 }
+  1 { 1 }
   // Recursive case
-  else { fibonacci(n - 1) + fibonacci(n - 2) }
+  _ { fibonacci(n - 1) + fibonacci(n - 2) }
 };</code></pre>
 <h2 id="types">Types</h2>
 <h3 id="integer">Integer</h3>
@@ -1434,13 +1434,6 @@ Following block expression semantics found elsewhere in the language, unless exp
 if 10 &lt; 5 { 1 } // nil</code></pre>
 <p>Expression with both a consequence and alternative <code>else</code> branch.</p>
 <pre class="highlight"><code class="language-santa">if 10 &lt; 5 { 1 } else { 2 }</code></pre>
-<p>Chained conditions using <code>else if</code>.</p>
-<pre class="highlight"><code class="language-santa">let grade = |score| {
-  if score &gt;= 90 { "A" }
-  else if score &gt;= 80 { "B" }
-  else if score &gt;= 70 { "C" }
-  else { "F" }
-};</code></pre>
 <p>Let-bindings can be declared within the predicate expressions.
 If the binding is <em>truthy</em> then the variables is bound and available with the consequence branch.</p>
 <pre class="highlight"><code class="language-santa">if let x = 10 { x } else { 20 }</code></pre>
