@@ -13,7 +13,7 @@
       
       
       
-        <link rel="prev" href="../runner/">
+        <link rel="prev" href="../formatter/">
       
       
         <link rel="next" href="../web/">
@@ -268,6 +268,21 @@
 
   
   
+  
+    <li class="md-nav__item">
+      <a href="../formatter/" class="md-nav__link">
+        Formatter
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
     
   
   
@@ -279,17 +294,17 @@
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
       
       
       
-        <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
           Runtimes
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
-        <label class="md-nav__title" for="__nav_5">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_6">
           <span class="md-nav__icon md-icon"></span>
           Runtimes
         </label>
@@ -372,6 +387,13 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#formatting" class="md-nav__link">
+    Formatting
+  </a>
   
 </li>
       
@@ -550,6 +572,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#formatting" class="md-nav__link">
+    Formatting
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#errors" class="md-nav__link">
     Errors
   </a>
@@ -609,19 +638,19 @@ It includes the following functionality:</p>
 <tbody>
 <tr>
 <td>Linux (x64)</td>
-<td><a href="https://github.com/eddmann/santa-lang-rs/releases/download/0.0.9/santa-lang-comet-cli-0.0.9-linux-amd64"><code>santa-lang-comet-cli-0.0.9-linux-amd64</code></a></td>
+<td><a href="https://github.com/eddmann/santa-lang-rs/releases/download/0.0.10/santa-lang-comet-cli-0.0.10-linux-amd64"><code>santa-lang-comet-cli-0.0.10-linux-amd64</code></a></td>
 </tr>
 <tr>
 <td>Linux (ARM)</td>
-<td><a href="https://github.com/eddmann/santa-lang-rs/releases/download/0.0.9/santa-lang-comet-cli-0.0.9-linux-arm64"><code>santa-lang-comet-cli-0.0.9-linux-arm64</code></a></td>
+<td><a href="https://github.com/eddmann/santa-lang-rs/releases/download/0.0.10/santa-lang-comet-cli-0.0.10-linux-arm64"><code>santa-lang-comet-cli-0.0.10-linux-arm64</code></a></td>
 </tr>
 <tr>
 <td>macOS (Intel)</td>
-<td><a href="https://github.com/eddmann/santa-lang-rs/releases/download/0.0.9/santa-lang-comet-cli-0.0.9-macos-amd64"><code>santa-lang-comet-cli-0.0.9-macos-amd64</code></a></td>
+<td><a href="https://github.com/eddmann/santa-lang-rs/releases/download/0.0.10/santa-lang-comet-cli-0.0.10-macos-amd64"><code>santa-lang-comet-cli-0.0.10-macos-amd64</code></a></td>
 </tr>
 <tr>
 <td>macOS (ARM)</td>
-<td><a href="https://github.com/eddmann/santa-lang-rs/releases/download/0.0.9/santa-lang-comet-cli-0.0.9-macos-arm64"><code>santa-lang-comet-cli-0.0.9-macos-arm64</code></a></td>
+<td><a href="https://github.com/eddmann/santa-lang-rs/releases/download/0.0.10/santa-lang-comet-cli-0.0.10-macos-arm64"><code>santa-lang-comet-cli-0.0.10-macos-arm64</code></a></td>
 </tr>
 <tr>
 <td>Docker</td>
@@ -666,6 +695,24 @@ The path can either be:</p>
 <h3 id="env">env</h3>
 <pre class="highlight"><code>env()</code></pre>
 <p>(REPL only) Prints the current environment's variables</p>
+<h2 id="formatting">Formatting</h2>
+<p><a href="https://github.com/eddmann/santa-lang-rs"><img alt="Comet" src="https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&amp;logo=rust&amp;logoColor=white" /></a></p>
+<p>The CLI provides an opinionated code formatter that produces consistent, readable output. There are no configuration options - it enforces a single canonical style.</p>
+<pre class="highlight"><code class="language-bash"># Format to stdout
+santa-cli -f solution.santa
+
+# Format file in place
+santa-cli --fmt-write solution.santa
+
+# Check if formatted (exit 1 if not, useful for CI)
+santa-cli --fmt-check solution.santa</code></pre>
+<p>The formatter also accepts input from stdin or inline expressions:</p>
+<pre class="highlight"><code class="language-bash"># Format from stdin
+echo "let x=1+2" | santa-cli -f
+
+# Format inline expression
+santa-cli -e "let x=1+2" -f</code></pre>
+<p>See the <a href="../formatter/">Formatter</a> documentation for details on formatting rules.</p>
 <h2 id="errors">Errors</h2>
 <p>If an error occurrs during execution the the program is immediately halted; with the error message and associated call stack trace presented to the user, as shown below:</p>
 <figure>

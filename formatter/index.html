@@ -13,17 +13,17 @@
       
       
       
-        <link rel="prev" href="../lambda/">
+        <link rel="prev" href="../runner/">
       
       
-        <link rel="next" href="../jupyter-kernel/">
+        <link rel="next" href="../cli/">
       
       <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.14">
     
     
       
-        <title>PHP Extension - santa-lang</title>
+        <title>Formatter - santa-lang</title>
       
     
     
@@ -65,7 +65,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#php-extension" class="md-skip">
+        <a href="#formatter" class="md-skip">
           Skip to content
         </a>
       
@@ -100,7 +100,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              PHP Extension
+              Formatter
             
           </span>
         </div>
@@ -268,11 +268,183 @@
 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../formatter/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Formatter
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Formatter
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    Usage
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cli" class="md-nav__link">
+    CLI
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wasm" class="md-nav__link">
+    WASM
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#properties" class="md-nav__link">
+    Properties
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#formatting-rules" class="md-nav__link">
+    Formatting Rules
+  </a>
+  
+    <nav class="md-nav" aria-label="Formatting Rules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general" class="md-nav__link">
+    General
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spacing" class="md-nav__link">
+    Spacing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#collections" class="md-nav__link">
+    Collections
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pipe-chains" class="md-nav__link">
+    Pipe Chains (|&gt;)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-composition" class="md-nav__link">
+    Function Composition (&gt;&gt;)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lambda-functions" class="md-nav__link">
+    Lambda Functions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trailing-lambda-syntax" class="md-nav__link">
+    Trailing Lambda Syntax
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#if-else-expressions" class="md-nav__link">
+    If-Else Expressions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#match-expressions" class="md-nav__link">
+    Match Expressions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sections-aoc-runner" class="md-nav__link">
+    Sections (AoC Runner)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operator-precedence" class="md-nav__link">
+    Operator Precedence
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comments" class="md-nav__link">
+    Comments
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -283,18 +455,16 @@
 
   
   
-    
-  
   
     
       
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
       
       
       
@@ -303,7 +473,7 @@
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
         <label class="md-nav__title" for="__nav_6">
           <span class="md-nav__icon md-icon"></span>
           Runtimes
@@ -356,107 +526,11 @@
               
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          PHP Extension
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../php-ext/" class="md-nav__link">
         PHP Extension
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#release-comet" class="md-nav__link">
-    Release (Comet)
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#api" class="md-nav__link">
-    API
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#external-functions" class="md-nav__link">
-    External Functions
-  </a>
-  
-    <nav class="md-nav" aria-label="External Functions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#puts" class="md-nav__link">
-    puts
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#read" class="md-nav__link">
-    read
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#errors" class="md-nav__link">
-    Errors
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
-    Example
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#future-scope" class="md-nav__link">
-    Future scope
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -524,37 +598,30 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#release-comet" class="md-nav__link">
-    Release (Comet)
+  <a href="#overview" class="md-nav__link">
+    Overview
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#api" class="md-nav__link">
-    API
+  <a href="#usage" class="md-nav__link">
+    Usage
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#external-functions" class="md-nav__link">
-    External Functions
-  </a>
-  
-    <nav class="md-nav" aria-label="External Functions">
+    <nav class="md-nav" aria-label="Usage">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#puts" class="md-nav__link">
-    puts
+  <a href="#cli" class="md-nav__link">
+    CLI
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#read" class="md-nav__link">
-    read
+  <a href="#wasm" class="md-nav__link">
+    WASM
   </a>
   
 </li>
@@ -565,23 +632,106 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#errors" class="md-nav__link">
-    Errors
+  <a href="#properties" class="md-nav__link">
+    Properties
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
-    Example
+  <a href="#formatting-rules" class="md-nav__link">
+    Formatting Rules
+  </a>
+  
+    <nav class="md-nav" aria-label="Formatting Rules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general" class="md-nav__link">
+    General
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#future-scope" class="md-nav__link">
-    Future scope
+        
+          <li class="md-nav__item">
+  <a href="#spacing" class="md-nav__link">
+    Spacing
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#collections" class="md-nav__link">
+    Collections
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pipe-chains" class="md-nav__link">
+    Pipe Chains (|&gt;)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function-composition" class="md-nav__link">
+    Function Composition (&gt;&gt;)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lambda-functions" class="md-nav__link">
+    Lambda Functions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trailing-lambda-syntax" class="md-nav__link">
+    Trailing Lambda Syntax
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#if-else-expressions" class="md-nav__link">
+    If-Else Expressions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#match-expressions" class="md-nav__link">
+    Match Expressions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sections-aoc-runner" class="md-nav__link">
+    Sections (AoC Runner)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operator-precedence" class="md-nav__link">
+    Operator Precedence
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comments" class="md-nav__link">
+    Comments
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -603,102 +753,235 @@
   
 
 
-<h1 id="php-extension">PHP Extension</h1>
-<p><a href="https://github.com/eddmann/santa-lang-rs/tree/main/runtime/php-ext"><img alt="Comet" src="https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&amp;logo=rust&amp;logoColor=white" /></a></p>
-<p>This runtime provides the ability to access the language/runner via a native PHP extension.
-It includes the following functionality:</p>
-<ul>
-<li>Execute a given solution's source, providing benchmark timing for each defined part.</li>
-<li>Execute a given solution's source test suite.</li>
-<li>Execute a given script source.</li>
-<li>Execute a arbitrary language expression.</li>
-</ul>
-<p>This runtime was built to highlight the power of Rust and explore how to build a PHP extension using <a href="https://github.com/davidcole1340/ext-php-rs">ext-php-rs</a>.
-Using Rust macros and C bindings, it cleanly abstracts away the need to work directly with the Zend API.
-The resulting values are implicitly converted into expected PHP data types.
-Errors that occur within the interpreter are relayed back to the PHP runtime via Exceptions.</p>
-<h2 id="release-comet">Release (Comet)</h2>
+<h1 id="formatter">Formatter</h1>
+<p><a href="https://github.com/eddmann/santa-lang-rs"><img alt="Comet" src="https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&amp;logo=rust&amp;logoColor=white" /></a></p>
+<p>An opinionated code formatter for santa-lang that produces consistent, readable output.</p>
+<h2 id="overview">Overview</h2>
+<p>The formatter transforms santa-lang source code into a canonical format, ensuring consistent style across codebases. It follows a single, deterministic formatting style - there are no configuration options.</p>
+<h2 id="usage">Usage</h2>
+<h3 id="cli">CLI</h3>
+<pre class="highlight"><code class="language-bash"># Format to stdout
+santa-cli -f file.santa
+
+# Format in place
+santa-cli --fmt-write file.santa
+
+# Check if formatted (exit 1 if not)
+santa-cli --fmt-check file.santa
+
+# Format inline expression
+santa-cli -e "1+2" -f
+
+# Format from stdin
+echo "1+2" | santa-cli -f</code></pre>
+<h3 id="wasm">WASM</h3>
+<pre class="highlight"><code class="language-javascript">import { format, isFormatted } from "@eddmann/santa-lang-wasm";
+
+const formatted = format("let x=1+2");
+const needsFormat = !isFormatted(source);</code></pre>
+<h2 id="properties">Properties</h2>
+<p>The formatter guarantees:</p>
+<ol>
+<li><strong>Idempotency</strong>: Formatting formatted code produces identical output</li>
+<li><strong>Semantic preservation</strong>: Formatted code parses to an equivalent AST</li>
+<li><strong>Determinism</strong>: Same input always produces same output</li>
+</ol>
+<h2 id="formatting-rules">Formatting Rules</h2>
+<h3 id="general">General</h3>
 <table>
 <thead>
 <tr>
-<th>Platform</th>
-<th>Release</th>
+<th>Setting</th>
+<th>Value</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Linux (x64)</td>
-<td><a href="https://github.com/eddmann/santa-lang-rs/releases/download/0.0.10/santa-lang-comet-php-0.0.10-linux-amd64.so"><code>santa-lang-comet-php-0.0.10-linux-amd64.so</code></a></td>
+<td>Line width</td>
+<td>100 characters</td>
+</tr>
+<tr>
+<td>Indentation</td>
+<td>2 spaces</td>
+</tr>
+<tr>
+<td>Trailing newline</td>
+<td>Files end with a single newline</td>
+</tr>
+<tr>
+<td>Blank lines</td>
+<td>One blank line between top-level statements</td>
 </tr>
 </tbody>
 </table>
-<h2 id="api">API</h2>
-<p>With the extension loaded, the interpreter is made accessible via several top-level PHP functions.
-The <a href="https://psalm.dev/">Psalm</a> type defintions are presented below:</p>
-<pre class="highlight"><code class="language-php">/**
- * @psalm-type RunResult = array{value: string, duration: integer}
- * @psalm-type RunEvaluation = array{part_one?: RunResult, part_two?: RunResult} | RunResult
- * @psalm-return RunEvaluation
- * @throws \Exception
- */
-function santa_aoc_run(string $source, string $cwd = null): array;
+<h3 id="spacing">Spacing</h3>
+<table>
+<thead>
+<tr>
+<th>Context</th>
+<th>Rule</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Binary operators</td>
+<td>Spaces around</td>
+<td><code>1 + 2</code></td>
+</tr>
+<tr>
+<td>Commas</td>
+<td>Space after</td>
+<td><code>[1, 2, 3]</code></td>
+</tr>
+<tr>
+<td>Colons (dict/section)</td>
+<td>Space after</td>
+<td><code>key: value</code></td>
+</tr>
+<tr>
+<td>Function calls</td>
+<td>No space before parens</td>
+<td><code>func(arg)</code></td>
+</tr>
+<tr>
+<td>Lambda parameters</td>
+<td>No space inside pipes</td>
+<td><code>\|x, y\|</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="collections">Collections</h3>
+<p>Collections (lists, sets, dictionaries) use smart wrapping:</p>
+<pre class="highlight"><code class="language-santa">// Fits on one line
+[1, 2, 3]
 
-/**
- * @psalm-type TestCaseResult = array{expected: string, actual: string; passed: bool}
- * @psalm-type TestCase = array{part_one?: TestCaseResult, part_two?: TestCaseResult}
- * @psalm-return TestCase[]
- * @throws \Exception
- */
-function santa_aoc_test(string $source, string $cwd = null): array;
-
-/** @throws \Exception */
-function santa_evaluate(string $expression, string $cwd = null): string;</code></pre>
-<h2 id="external-functions">External Functions</h2>
-<p>The PHP extension runtime provides two specific functions, these are:</p>
-<h3 id="puts">puts</h3>
-<pre class="highlight"><code>puts(..value)</code></pre>
-<p>Prints the supplied values (using their display format) to <em>stdout</em>.</p>
-<pre class="highlight"><code>puts("Hello", [1, 2.5, true])</code></pre>
-<h3 id="read">read</h3>
-<pre class="highlight"><code>read(path)</code></pre>
-<p>Reads the contents of the given path into a String.
-The path can either be:</p>
+// Wraps when exceeding 100 characters
+[
+  very_long_name_one,
+  very_long_name_two,
+  very_long_name_three
+]</code></pre>
 <ul>
-<li>A local directory path, absolute or relative to the current working directory supplied within thr PHP invocation.</li>
-<li>Based on a <code>http(s)</code> schema being defined; a web URL location.</li>
-<li>Based on a <code>aoc</code> schema being defined; a specific Advent of Code problem input (i.e. <code>aoc://2015/1</code>).
-  In this case an external <code>SANTA_CLI_SESSION_TOKEN</code> environment variable must be defined which includes a valid Advent of Code session token.
-  This can be extracted from the cookie set upon successful login to the <a href="https://adventofcode.com/">platform</a>.</li>
+<li><strong>No trailing commas</strong> in any mode</li>
+<li>Empty collections: <code>[]</code>, <code>{}</code>, <code>#{}</code></li>
 </ul>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Local</label><label for="__tabbed_1_2">URL</label><label for="__tabbed_1_3">AoC</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<pre class="highlight"><code>read("input.txt")</code></pre>
-</div>
-<div class="tabbed-block">
-<pre class="highlight"><code>read("https://www.example.com/input.txt")</code></pre>
-</div>
-<div class="tabbed-block">
-<pre class="highlight"><code>read("aoc://2015/1")</code></pre>
-</div>
-</div>
-</div>
-<h2 id="errors">Errors</h2>
-<p>If an error occurs during execution the the program is immediately halted; with the error message, location and associated call stack trace locations thrown as an <a href="https://www.php.net/manual/en/class.exception.php">PHP Exception</a>.</p>
-<figure>
-<p><img alt="PHP Extension Errors" src="../assets/php-ext-errors.png" width="550" /></p>
-</figure>
-<h2 id="example">Example</h2>
-<p>Below is an example which documents the use of the three different PHP functions:</p>
-<pre class="highlight"><code class="language-php">$solution = file_get_contents(__DIR__ . '/solution.santa');
+<h3 id="pipe-chains">Pipe Chains (<code>|&gt;</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Chain length</th>
+<th>Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Single pipe (2 elements)</td>
+<td>Inline: <code>data \|&gt; sum</code></td>
+</tr>
+<tr>
+<td>Multiple pipes (3+ elements)</td>
+<td>Multiline with 2-space indent</td>
+</tr>
+</tbody>
+</table>
+<pre class="highlight"><code class="language-santa">// Single pipe stays inline
+[1, 2, 3] |&gt; sum
 
-santa_aoc_run($solution, cwd: __DIR__);
+// Multiple pipes break to multiple lines
+[1, 2, 3]
+  |&gt; map(|x| x * 2)
+  |&gt; filter(|x| x &gt; 2)
+  |&gt; sum</code></pre>
+<h3 id="function-composition">Function Composition (<code>&gt;&gt;</code>)</h3>
+<table>
+<thead>
+<tr>
+<th>Chain length</th>
+<th>Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Two functions</td>
+<td>Inline: <code>f &gt;&gt; g</code></td>
+</tr>
+<tr>
+<td>Three+ functions</td>
+<td>Multiline with 2-space indent</td>
+</tr>
+</tbody>
+</table>
+<pre class="highlight"><code class="language-santa">// Two functions stay inline
+parse &gt;&gt; transform
 
-santa_aoc_test($solution);
+// Three or more functions break to multiple lines
+parse
+  &gt;&gt; validate
+  &gt;&gt; transform</code></pre>
+<h3 id="lambda-functions">Lambda Functions</h3>
+<p>Single-expression bodies are unwrapped:</p>
+<pre class="highlight"><code class="language-santa">|x| x + 1
+|x, y| x * y</code></pre>
+<p>Multi-statement bodies use braces:</p>
+<pre class="highlight"><code class="language-santa">|x| {
+  let y = x * 2;
 
-santa_evaluate('1.. |&gt; filter(_ % 2) |&gt; take(3);');</code></pre>
-<h2 id="future-scope">Future scope</h2>
-<p>Along with providing PHP extension support, there is future scope to expose the interpreter to <a href="https://github.com/PyO3/pyo3">Python</a> going forward.</p>
+  y + 1
+}</code></pre>
+<h3 id="trailing-lambda-syntax">Trailing Lambda Syntax</h3>
+<p>Multi-statement lambdas as the last argument use trailing lambda style:</p>
+<pre class="highlight"><code class="language-santa">// Formatted with trailing lambda
+items
+  |&gt; map |x| {
+    let y = x * 2;
+
+    y + 1
+  }</code></pre>
+<h3 id="if-else-expressions">If-Else Expressions</h3>
+<p>Simple if-else stays inline:</p>
+<pre class="highlight"><code class="language-santa">if x &gt; 0 { "positive" } else { "non-positive" }</code></pre>
+<p>Complex bodies use multiline format:</p>
+<pre class="highlight"><code class="language-santa">if condition {
+  do_something();
+
+  result
+} else {
+  do_other();
+
+  other_result
+}</code></pre>
+<h3 id="match-expressions">Match Expressions</h3>
+<p>Always multiline with cases on separate lines:</p>
+<pre class="highlight"><code class="language-santa">match value {
+  0 { "zero" }
+  1 { "one" }
+  n if n &gt; 10 { "large" }
+  _ { "other" }
+}</code></pre>
+<h3 id="sections-aoc-runner">Sections (AoC Runner)</h3>
+<p>Single-expression sections are inline:</p>
+<pre class="highlight"><code class="language-santa">input: read("aoc://2024/1")</code></pre>
+<p><code>part_one</code> and <code>part_two</code> always use braces at top level:</p>
+<pre class="highlight"><code class="language-santa">part_one: {
+  input |&gt; solve
+}</code></pre>
+<h3 id="operator-precedence">Operator Precedence</h3>
+<p>The formatter preserves necessary parentheses and removes unnecessary ones:</p>
+<pre class="highlight"><code class="language-santa">// Parentheses preserved for precedence
+(a + b) * c
+
+// Unnecessary parentheses removed
+a + (b * c)  // becomes: a + b * c</code></pre>
+<h3 id="comments">Comments</h3>
+<p>Comments are preserved at top-level with blank line separation:</p>
+<pre class="highlight"><code class="language-santa">// First section
+
+let a = 1
+
+// Second section
+
+let b = 2</code></pre>
 
 
 

@@ -268,6 +268,21 @@
 
   
   
+  
+    <li class="md-nav__item">
+      <a href="../formatter/" class="md-nav__link">
+        Formatter
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
     
   
   
@@ -279,17 +294,17 @@
       
       
       
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
       
       
       
-        <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
           Runtimes
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
-        <label class="md-nav__title" for="__nav_5">
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_6">
           <span class="md-nav__icon md-icon"></span>
           Runtimes
         </label>
@@ -600,6 +615,7 @@ This variant is also used to execute the runnable examples found within this doc
 <li>Execute a given solution's source test suite.</li>
 <li>Execute a given script source.</li>
 <li>Execute a arbitrary language expression.</li>
+<li>(Comet only) Format source code and check if code is formatted.</li>
 <li>Ability to define user-land JavaScript functions which are made available to the evaluator as <a href="../language/#external">external functions</a>.</li>
 </ul>
 <h2 id="release-comet">Release (Comet)</h2>
@@ -655,7 +671,11 @@ function aoc_test(
 function evaluate(
   expression: string,
   js_functions?: ExternalFunctions,
-): string | RunErr;</code></pre>
+): string | RunErr;
+
+// Comet (WASM) only
+function format(source: string): string | RunErr;
+function isFormatted(source: string): boolean | RunErr;</code></pre>
 <h2 id="external-functions">External Functions</h2>
 <p>Unlike other runtimes which have a select few external functions (defined at the runtime level), the Web variants gives you the power of user-land JavaScript to define and execute desired behaviour.
 The runtimes implicitly handle the interoperability between the two languages type systems whilst communicating.
@@ -670,11 +690,15 @@ function external_function(arguments: InteropType[]): InteropType;</code></pre>
 <p>If an error occurs during execution the the program is immediately halted; with the error message, location and associated call stack trace locations returned as an <code>RunErr</code> object (as detailed above).</p>
 <h2 id="example">Example</h2>
 <p>Below is an example of how the WASM variant can be used within a Web context.</p>
-<pre class="highlight"><code class="language-js">import { evaluate } from "@eddmann/santa-lang-wasm";
+<pre class="highlight"><code class="language-js">import { evaluate, format, isFormatted } from "@eddmann/santa-lang-wasm";
 
 evaluate("[1, 2, 3] |&gt; map(_ + 1) |&gt; sum");
 
-evaluate('puts("Hello, world")', { puts: console.log.bind(console) });</code></pre>
+evaluate('puts("Hello, world")', { puts: console.log.bind(console) });
+
+// Formatting (Comet only)
+format("let x=1+2"); // Returns: "let x = 1 + 2\n"
+isFormatted("let x = 1 + 2\n"); // Returns: true</code></pre>
 <h2 id="editor">Editor</h2>
 <p><strong>Repository:</strong> <a href="https://github.com/eddmann/santa-lang-editor">eddmann/santa-lang-editor</a></p>
 <p>One of the reasons for providing such a runtime was to create a Web-based code editor which could be used to develop solutions with.
