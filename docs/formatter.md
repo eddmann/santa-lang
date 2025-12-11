@@ -161,16 +161,30 @@ Multi-statement bodies use braces:
 
 ### Trailing Lambda Syntax
 
-Multi-statement lambdas as the last argument use trailing lambda style:
+Trailing lambda syntax is used based on line width and statement count:
+
+| Scenario                            | Format                     |
+| ----------------------------------- | -------------------------- |
+| Multi-statement lambda              | Always trailing with block |
+| Single-statement, fits in 100 chars | Inline: `map(\|x\| x + 1)` |
+| Single-statement, exceeds 100 chars | Trailing with block        |
 
 ```santa
-// Formatted with trailing lambda
-items
-  |> map |x| {
-    let y = x * 2;
+// Short lambdas stay inline
+map(|x| x + 1)
+fold(0, |acc, x| acc + x)
 
-    y + 1
-  }
+// Long lambdas (>100 chars) use trailing syntax with block
+map |some_long_param| {
+  some_long_param + another_long_expression + yet_another_one + and_more_stuffff
+}
+
+// Multi-statement always trailing
+each |x| {
+  let y = x * 2;
+
+  puts(y)
+}
 ```
 
 ### If-Else Expressions
