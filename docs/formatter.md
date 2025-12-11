@@ -106,20 +106,24 @@ Collections (lists, sets, dictionaries) use smart wrapping:
 
 ### Function Composition (`>>`)
 
-| Chain length     | Format                        |
-| ---------------- | ----------------------------- |
-| Two functions    | Inline: `f >> g`              |
-| Three+ functions | Multiline with 2-space indent |
+Composition uses **line-width based** formatting:
+
+| Scenario              | Format                        |
+| --------------------- | ----------------------------- |
+| Fits within 100 chars | Inline: `f >> g >> h`         |
+| Exceeds 100 chars     | Multiline with 2-space indent |
 
 ```santa
-// Two functions stay inline
-parse >> transform
+// Short chains stay inline regardless of function count
+parse >> validate >> transform
 
-// Three or more functions break to multiple lines
-parse
-  >> validate
-  >> transform
+// Long chains wrap at line width
+very_long_function_name
+  >> another_long_function
+  >> third_long_function
 ```
+
+Note: This differs from pipe chains (`|>`), which always force multiline with 2+ functions.
 
 ### Lambda Functions
 
