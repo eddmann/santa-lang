@@ -13,6 +13,7 @@ nav:
   - Language: language.md
   - Builtins: builtins.md
   - Runner: runner.md
+  - Formatter: formatter.md
   - Runtimes:
       - CLI: cli.md
       - Web: web.md

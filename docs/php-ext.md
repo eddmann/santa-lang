@@ -17,9 +17,9 @@ Errors that occur within the interpreter are relayed back to the PHP runtime via
 
 ## Release (Comet)
 
-| Platform    | Release                                                                                                                                                   |
-| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Linux (x64) | [`santa-lang-comet-php-0.0.9-linux-amd64.so`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.9/santa-lang-comet-php-0.0.9-linux-amd64.so) |
+| Platform    | Release                                                                                                                                                      |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Linux (x64) | [`santa-lang-comet-php-0.0.10-linux-amd64.so`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.10/santa-lang-comet-php-0.0.10-linux-amd64.so) |
 
 ## API
 

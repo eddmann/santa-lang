@@ -13,6 +13,7 @@ Both variants provide the following functionality:
 - Execute a given solution's source test suite.
 - Execute a given script source.
 - Execute a arbitrary language expression.
+- (Comet only) Format source code and check if code is formatted.
 - Ability to define user-land JavaScript functions which are made available to the evaluator as [external functions](language.md#external).
 
 ## Release (Comet)
@@ -64,6 +65,10 @@ function evaluate(
   expression: string,
   js_functions?: ExternalFunctions,
 ): string | RunErr;
+
+// Comet (WASM) only
+function format(source: string): string | RunErr;
+function isFormatted(source: string): boolean | RunErr;
 ```
 
 ## External Functions
@@ -95,11 +100,15 @@ If an error occurs during execution the the program is immediately halted; with 
 Below is an example of how the WASM variant can be used within a Web context.
 
 ```js
-import { evaluate } from "@eddmann/santa-lang-wasm";
+import { evaluate, format, isFormatted } from "@eddmann/santa-lang-wasm";
 
 evaluate("[1, 2, 3] |> map(_ + 1) |> sum");
 
 evaluate('puts("Hello, world")', { puts: console.log.bind(console) });
+
+// Formatting (Comet only)
+format("let x=1+2"); // Returns: "let x = 1 + 2\n"
+isFormatted("let x = 1 + 2\n"); // Returns: true
 ```
 
 ## Editor

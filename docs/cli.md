@@ -12,13 +12,13 @@ It includes the following functionality:
 
 ## Release (Comet)
 
-| Platform      | Release                                                                                                                                             |
-| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Linux (x64)   | [`santa-lang-comet-cli-0.0.9-linux-amd64`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.9/santa-lang-comet-cli-0.0.9-linux-amd64) |
-| Linux (ARM)   | [`santa-lang-comet-cli-0.0.9-linux-arm64`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.9/santa-lang-comet-cli-0.0.9-linux-arm64) |
-| macOS (Intel) | [`santa-lang-comet-cli-0.0.9-macos-amd64`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.9/santa-lang-comet-cli-0.0.9-macos-amd64) |
-| macOS (ARM)   | [`santa-lang-comet-cli-0.0.9-macos-arm64`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.9/santa-lang-comet-cli-0.0.9-macos-arm64) |
-| Docker        | [`ghcr.io/eddmann/santa-lang-cli:latest`](https://github.com/eddmann/santa-lang-rs/pkgs/container/santa-lang-cli)                                   |
+| Platform      | Release                                                                                                                                                |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Linux (x64)   | [`santa-lang-comet-cli-0.0.10-linux-amd64`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.10/santa-lang-comet-cli-0.0.10-linux-amd64) |
+| Linux (ARM)   | [`santa-lang-comet-cli-0.0.10-linux-arm64`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.10/santa-lang-comet-cli-0.0.10-linux-arm64) |
+| macOS (Intel) | [`santa-lang-comet-cli-0.0.10-macos-amd64`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.10/santa-lang-comet-cli-0.0.10-macos-amd64) |
+| macOS (ARM)   | [`santa-lang-comet-cli-0.0.10-macos-arm64`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.10/santa-lang-comet-cli-0.0.10-macos-arm64) |
+| Docker        | [`ghcr.io/eddmann/santa-lang-cli:latest`](https://github.com/eddmann/santa-lang-rs/pkgs/container/santa-lang-cli)                                      |
 
 **Note:** Blitzen and Prancer CLIs can be accessed via their GitHub repositories: [Blitzen](https://github.com/eddmann/santa-lang-blitzen/releases), [Prancer](https://github.com/eddmann/santa-lang-ts/releases).
 
@@ -80,6 +80,35 @@ env()
 ```
 
 (REPL only) Prints the current environment's variables
+
+## Formatting
+
+[![Comet](https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://github.com/eddmann/santa-lang-rs)
+
+The CLI provides an opinionated code formatter that produces consistent, readable output. There are no configuration options - it enforces a single canonical style.
+
+```bash
+# Format to stdout
+santa-cli -f solution.santa
+
+# Format file in place
+santa-cli --fmt-write solution.santa
+
+# Check if formatted (exit 1 if not, useful for CI)
+santa-cli --fmt-check solution.santa
+```
+
+The formatter also accepts input from stdin or inline expressions:
+
+```bash
+# Format from stdin
+echo "let x=1+2" | santa-cli -f
+
+# Format inline expression
+santa-cli -e "let x=1+2" -f
+```
+
+See the [Formatter](formatter.md) documentation for details on formatting rules.
 
 ## Errors
 
