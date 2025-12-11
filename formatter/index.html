@@ -757,7 +757,7 @@
 <p><a href="https://github.com/eddmann/santa-lang-rs"><img alt="Comet" src="https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&amp;logo=rust&amp;logoColor=white" /></a></p>
 <p>An opinionated code formatter for santa-lang that produces consistent, readable output.</p>
 <h2 id="overview">Overview</h2>
-<p>The formatter transforms santa-lang source code into a canonical format, ensuring consistent style across codebases. It follows a single, deterministic formatting style - there are no configuration options.</p>
+<p>The formatter transforms santa-lang source code into a canonical format, ensuring consistent style across solutions. It follows a single, deterministic formatting style - there are no configuration options.</p>
 <h2 id="usage">Usage</h2>
 <h3 id="cli">CLI</h3>
 <pre class="highlight"><code class="language-bash"># Format to stdout
@@ -894,31 +894,33 @@ const needsFormat = !isFormatted(source);</code></pre>
   |&gt; filter(|x| x &gt; 2)
   |&gt; sum</code></pre>
 <h3 id="function-composition">Function Composition (<code>&gt;&gt;</code>)</h3>
+<p>Composition uses <strong>line-width based</strong> formatting:</p>
 <table>
 <thead>
 <tr>
-<th>Chain length</th>
+<th>Scenario</th>
 <th>Format</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Two functions</td>
-<td>Inline: <code>f &gt;&gt; g</code></td>
+<td>Fits within 100 chars</td>
+<td>Inline: <code>f &gt;&gt; g &gt;&gt; h</code></td>
 </tr>
 <tr>
-<td>Three+ functions</td>
+<td>Exceeds 100 chars</td>
 <td>Multiline with 2-space indent</td>
 </tr>
 </tbody>
 </table>
-<pre class="highlight"><code class="language-santa">// Two functions stay inline
-parse &gt;&gt; transform
+<pre class="highlight"><code class="language-santa">// Short chains stay inline regardless of function count
+parse &gt;&gt; validate &gt;&gt; transform
 
-// Three or more functions break to multiple lines
-parse
-  &gt;&gt; validate
-  &gt;&gt; transform</code></pre>
+// Long chains wrap at line width
+very_long_function_name
+  &gt;&gt; another_long_function
+  &gt;&gt; third_long_function</code></pre>
+<p>Note: This differs from pipe chains (<code>|&gt;</code>), which always force multiline with 2+ functions.</p>
 <h3 id="lambda-functions">Lambda Functions</h3>
 <p>Single-expression bodies are unwrapped:</p>
 <pre class="highlight"><code class="language-santa">|x| x + 1
@@ -974,7 +976,7 @@ items
 // Unnecessary parentheses removed
 a + (b * c)  // becomes: a + b * c</code></pre>
 <h3 id="comments">Comments</h3>
-<p>Comments are preserved at top-level with blank line separation:</p>
+<p>Comments are preserved throughout the code, with blank lines added between top-level comments and statements:</p>
 <pre class="highlight"><code class="language-santa">// First section
 
 let a = 1
