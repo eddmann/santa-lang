@@ -6,7 +6,7 @@ An opinionated code formatter for santa-lang that produces consistent, readable 
 
 ## Overview
 
-The formatter transforms santa-lang source code into a canonical format, ensuring consistent style across codebases. It follows a single, deterministic formatting style - there are no configuration options.
+The formatter transforms santa-lang source code into a canonical format, ensuring consistent style across solutions. It follows a single, deterministic formatting style - there are no configuration options.
 
 ## Usage
 
@@ -219,7 +219,7 @@ a + (b * c)  // becomes: a + b * c
 
 ### Comments
 
-Comments are preserved at top-level with blank line separation:
+Comments are preserved throughout the code, with blank lines added between top-level comments and statements:
 
 ```santa
 // First section
