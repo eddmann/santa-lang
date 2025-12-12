@@ -159,6 +159,12 @@ Multi-statement bodies use braces:
 }
 ```
 
+**Exceptions** - Braces are preserved when the body would be ambiguous:
+
+1. **Set/Dictionary bodies** - `|x| {1, 2}` would parse `{1, 2}` as lambda body end
+2. **Pipe/Composition bodies** - operators would bind to the lambda definition
+3. **Match with collection subject** - `|x| match [a, b] { ... }` would parse `[a, b]` as body
+
 ### Trailing Lambda Syntax
 
 Trailing lambda syntax is used based on line width and statement count:
@@ -171,16 +177,16 @@ Trailing lambda syntax is used based on line width and statement count:
 
 ```santa
 // Short lambdas stay inline
-map(|x| x + 1)
-fold(0, |acc, x| acc + x)
+items |> map(|x| x + 1)
+items |> fold(0, |acc, x| acc + x)
 
 // Long lambdas (>100 chars) use trailing syntax with block
-map |some_long_param| {
-  some_long_param + another_long_expression + yet_another_one + and_more_stuffff
+items |> map |x| {
+  value1 + value2 + value3 + value4 + value5 + value6 + value7 + value8 + value9 + value10 + x
 }
 
 // Multi-statement always trailing
-each |x| {
+items |> each |x| {
   let y = x * 2;
 
   puts(y)
@@ -252,7 +258,9 @@ a + (b * c)  // becomes: a + b * c
 
 ### Comments
 
-Comments are preserved throughout the code, with blank lines added between top-level comments and statements:
+Comments are preserved throughout the code:
+
+**Top-level comments** have blank lines added for separation:
 
 ```santa
 // First section
@@ -262,4 +270,35 @@ let a = 1
 // Second section
 
 let b = 2
+```
+
+**Trailing comments** on statements are preserved:
+
+```santa
+let x = 1 // important value
+let y = compute(x) // derived value
+```
+
+**Trailing comments on match cases** are preserved:
+
+```santa
+match direction {
+  "N" { [y - 1, x] } // north
+  "S" { [y + 1, x] } // south
+  "E" { [y, x + 1] } // east
+  "W" { [y, x - 1] } // west
+}
+```
+
+**Blank lines** within blocks are preserved when authored by the user:
+
+```santa
+let solve = |input| {
+  let parsed = parse(input)
+  let step1 = transform(parsed)
+
+  let step2 = validate(step1)
+
+  finalize(step2)
+}
 ```
