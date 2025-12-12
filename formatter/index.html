@@ -374,6 +374,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#dictionaries" class="md-nav__link">
+    Dictionaries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pipe-chains" class="md-nav__link">
     Pipe Chains (|&gt;)
   </a>
@@ -668,6 +675,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#dictionaries" class="md-nav__link">
+    Dictionaries
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#pipe-chains" class="md-nav__link">
     Pipe Chains (|&gt;)
   </a>
@@ -866,6 +880,16 @@ const needsFormat = !isFormatted(source);</code></pre>
 <li><strong>No trailing commas</strong> in any mode</li>
 <li>Empty collections: <code>[]</code>, <code>{}</code>, <code>#{}</code></li>
 </ul>
+<h3 id="dictionaries">Dictionaries</h3>
+<p>Dictionary shorthand syntax is used when a key string matches the variable name:</p>
+<pre class="highlight"><code class="language-santa">// Shorthand syntax preferred
+#{foo, bar, baz}
+
+// Explicit syntax only when key differs from variable
+#{"key": value, name}
+
+// Explicit form is converted to shorthand
+#{"foo": foo}  // becomes: #{foo}</code></pre>
 <h3 id="pipe-chains">Pipe Chains (<code>|&gt;</code>)</h3>
 <table>
 <thead>
@@ -931,15 +955,51 @@ very_long_function_name
 
   y + 1
 }</code></pre>
+<p><strong>Exceptions</strong> - Braces are preserved when the body would be ambiguous:</p>
+<ol>
+<li><strong>Set/Dictionary bodies</strong> - <code>|x| {1, 2}</code> would parse <code>{1, 2}</code> as lambda body end</li>
+<li><strong>Pipe/Composition bodies</strong> - operators would bind to the lambda definition</li>
+<li><strong>Match with collection subject</strong> - <code>|x| match [a, b] { ... }</code> would parse <code>[a, b]</code> as body</li>
+</ol>
 <h3 id="trailing-lambda-syntax">Trailing Lambda Syntax</h3>
-<p>Multi-statement lambdas as the last argument use trailing lambda style:</p>
-<pre class="highlight"><code class="language-santa">// Formatted with trailing lambda
-items
-  |&gt; map |x| {
-    let y = x * 2;
+<p>Trailing lambda syntax is used based on line width and statement count:</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Multi-statement lambda</td>
+<td>Always trailing with block</td>
+</tr>
+<tr>
+<td>Single-statement, fits in 100 chars</td>
+<td>Inline: <code>map(\|x\| x + 1)</code></td>
+</tr>
+<tr>
+<td>Single-statement, exceeds 100 chars</td>
+<td>Trailing with block</td>
+</tr>
+</tbody>
+</table>
+<pre class="highlight"><code class="language-santa">// Short lambdas stay inline
+items |&gt; map(|x| x + 1)
+items |&gt; fold(0, |acc, x| acc + x)
 
-    y + 1
-  }</code></pre>
+// Long lambdas (&gt;100 chars) use trailing syntax with block
+items |&gt; map |x| {
+  value1 + value2 + value3 + value4 + value5 + value6 + value7 + value8 + value9 + value10 + x
+}
+
+// Multi-statement always trailing
+items |&gt; each |x| {
+  let y = x * 2;
+
+  puts(y)
+}</code></pre>
 <h3 id="if-else-expressions">If-Else Expressions</h3>
 <p>Simple if-else stays inline:</p>
 <pre class="highlight"><code class="language-santa">if x &gt; 0 { "positive" } else { "non-positive" }</code></pre>
@@ -976,7 +1036,8 @@ items
 // Unnecessary parentheses removed
 a + (b * c)  // becomes: a + b * c</code></pre>
 <h3 id="comments">Comments</h3>
-<p>Comments are preserved throughout the code, with blank lines added between top-level comments and statements:</p>
+<p>Comments are preserved throughout the code:</p>
+<p><strong>Top-level comments</strong> have blank lines added for separation:</p>
 <pre class="highlight"><code class="language-santa">// First section
 
 let a = 1
@@ -984,6 +1045,25 @@ let a = 1
 // Second section
 
 let b = 2</code></pre>
+<p><strong>Trailing comments</strong> on statements are preserved:</p>
+<pre class="highlight"><code class="language-santa">let x = 1 // important value
+let y = compute(x) // derived value</code></pre>
+<p><strong>Trailing comments on match cases</strong> are preserved:</p>
+<pre class="highlight"><code class="language-santa">match direction {
+  "N" { [y - 1, x] } // north
+  "S" { [y + 1, x] } // south
+  "E" { [y, x + 1] } // east
+  "W" { [y, x - 1] } // west
+}</code></pre>
+<p><strong>Blank lines</strong> within blocks are preserved when authored by the user:</p>
+<pre class="highlight"><code class="language-santa">let solve = |input| {
+  let parsed = parse(input)
+  let step1 = transform(parsed)
+
+  let step2 = validate(step1)
+
+  finalize(step2)
+}</code></pre>
 
 
 
