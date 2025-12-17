@@ -299,17 +299,18 @@ Expected arthritic operations on Integer and Decimal values are available, along
 5.0 / 2.25; // 2.22
 ```
 
-Logical _OR_ and _AND_ operations are supported for all values.
+Logical _OR_ and _AND_ operations are supported for all values and always return a Boolean.
 Non-Boolean values are evaluated based on _truthy_ value semantics.
 
 ```santa
-true || false;
-1 || 0;
+true || false; // true
+1 || 0;        // true (1 is truthy)
 ```
 
 ```santa
-true && true;
-[1] && {1};
+true && true;  // true
+[1] && {1};    // true (non-empty collections are truthy)
+0 && 2;        // false (0 is falsy)
 ```
 
 Intuitive equality operations are support for all values.

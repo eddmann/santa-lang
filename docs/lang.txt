@@ -479,23 +479,24 @@ Prefix operator that returns the logical negation based on truthiness.
 ```
 
 #### Logical OR (`||`)
-Returns the first truthy value, or the last value if all are falsy.
+Returns `true` if either operand is truthy, `false` otherwise. Short-circuit evaluation: if the left operand is truthy, the right operand is not evaluated.
 
 ```santa
 true || false          // true
-1 || 0                 // 1
-0 || 2                 // 2
-false || nil           // nil
+1 || 0                 // true (1 is truthy)
+0 || 2                 // true (2 is truthy)
+false || nil           // false (both are falsy)
+false || 0             // false (both are falsy)
 ```
 
 #### Logical AND (`&&`)
-Returns the first falsy value, or the last value if all are truthy.
+Returns `true` if both operands are truthy, `false` otherwise. Short-circuit evaluation: if the left operand is falsy, the right operand is not evaluated.
 
 ```santa
 true && true           // true
-1 && 2                 // 2
-0 && 2                 // 0
-1 && nil               // nil
+1 && 2                 // true (both are truthy)
+0 && 2                 // false (0 is falsy)
+1 && nil               // false (nil is falsy)
 ```
 
 ### 4.5 Bitwise Operators
@@ -2715,7 +2716,7 @@ Get the type name of a value as a String.
 
 **Permitted types:** Any value
 
-**Returns:** One of: "Nil", "Integer", "Decimal", "Boolean", "String", "List", "Set", "Dictionary", "LazySequence", "Function"
+**Returns:** One of: "Nil", "Integer", "Decimal", "Boolean", "String", "List", "Set", "Dictionary", "BoundedRange", "UnboundedRange", "LazySequence", "Function"
 
 ```santa
 type(nil)                       // "Nil"
@@ -2726,7 +2727,9 @@ type("hello")                   // "String"
 type([1, 2, 3])                 // "List"
 type({1, 2, 3})                 // "Set"
 type(#{a: 1})                   // "Dictionary"
-type(1..)                       // "LazySequence"
+type(1..10)                     // "BoundedRange"
+type(1..)                       // "UnboundedRange"
+type(1.. |> map(_ + 1))         // "LazySequence"
 type(|x| x)                     // "Function"
 ```
 
@@ -2748,42 +2751,6 @@ let fib = memoize |n| {
 
 fib(30)                         // 832040 (fast)
 fib(50)                         // 12586269025 (still fast)
-```
-
-#### `or(a, b)` → Value
-Logical OR as a standalone function. Returns first truthy value or last value.
-
-**Permitted types:** Any values (uses truthiness rules)
-
-**Use case:** Can be used as a first-class function in `reduce` and other higher-order operations.
-
-```santa
-or(true, false)                 // true
-or(false, false)                // false
-or(nil, 5)                      // 5 (returns first truthy or last)
-or(0, 10)                       // 10 (0 is falsy)
-
-// As first-class function
-reduce(or, [false, false, true])  // true
-reduce(or, [nil, nil, "found"])   // "found"
-```
-
-#### `and(a, b)` → Value
-Logical AND as a standalone function. Returns first falsy value or last value.
-
-**Permitted types:** Any values (uses truthiness rules)
-
-**Use case:** Can be used as a first-class function in `reduce` and other higher-order operations.
-
-```santa
-and(true, true)                 // true
-and(true, false)                // false
-and(5, 10)                      // 10 (both truthy, returns last)
-and(nil, 5)                     // nil (returns first falsy)
-
-// As first-class function
-reduce(and, [true, true, false])  // false
-reduce(and, [1, 2, 3])            // 3
 ```
 
 #### `evaluate(source)` → Value
@@ -3495,8 +3462,6 @@ keyword          ::= "let" | "mut" | "if" | "else" | "match"
 | `id` | `(value) -> Value` | Identity function |
 | `type` | `(value) -> String` | Get type |
 | `memoize` | `(fn) -> Function` | Memoize function |
-| `or` | `(a, b) -> Value` | Logical OR function |
-| `and` | `(a, b) -> Value` | Logical AND function |
 | `evaluate` | `(source) -> Value` | Evaluate code string |
 
 ---

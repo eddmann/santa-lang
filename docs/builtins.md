@@ -1545,6 +1545,9 @@ If the collection is empty then `nil` is returned.
     last(1..=5)
     ```
 
+!!! note
+    `last` is not supported for unbounded ranges or infinite lazy sequences as they have no end.
+
 ### rest
 
 ```
@@ -1703,6 +1706,15 @@ Predicate to assert if a value is present within a given collection, based on [e
     includes?({1, 2}, 1)
     ```
 
+=== "Dictionary"
+
+    Checks if value is a **key** (not a value in the mapping).
+
+    ```santa
+    includes?(#{"a": 1, "b": 2}, "a") // true (key exists)
+    includes?(#{"a": 1, "b": 2}, 1)   // false (1 is a value, not a key)
+    ```
+
 === "String"
 
     Each character is considered an element.
@@ -1753,6 +1765,15 @@ Predicate to assert if a value is not present within a given collection, based o
 
     ```santa
     excludes?({1, 2}, 3)
+    ```
+
+=== "Dictionary"
+
+    Checks if value is **not** a key (not checking values in the mapping).
+
+    ```santa
+    excludes?(#{"a": 1, "b": 2}, "c") // true (key doesn't exist)
+    excludes?(#{"a": 1, "b": 2}, "a") // false (key exists)
     ```
 
 === "String"
@@ -2243,6 +2264,19 @@ type(value)
 
 Return the type of the given value as a String.
 
+Returns one of: `"Nil"`, `"Integer"`, `"Decimal"`, `"Boolean"`, `"String"`, `"List"`, `"Set"`, `"Dictionary"`, `"BoundedRange"`, `"UnboundedRange"`, `"LazySequence"`, `"Function"`
+
 ```santa
-type(1)
+type(nil)                       // "Nil"
+type(42)                        // "Integer"
+type(3.14)                      // "Decimal"
+type(true)                      // "Boolean"
+type("hello")                   // "String"
+type([1, 2, 3])                 // "List"
+type({1, 2, 3})                 // "Set"
+type(#{a: 1})                   // "Dictionary"
+type(1..10)                     // "BoundedRange"
+type(1..)                       // "UnboundedRange"
+type(1.. |> map(_ + 1))         // "LazySequence"
+type(|x| x)                     // "Function"
 ```
