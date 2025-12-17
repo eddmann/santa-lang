@@ -1,5 +1,5 @@
 MKDOCS_IMAGE = squidfunk/mkdocs-material:9.1.14
-NODE_IMAGE = node:18.16.0-alpine3.18
+NODE_IMAGE = node:22-alpine
 DOCKER = docker run --rm -v $(PWD):/docs -w /docs
 
 .PHONY: serve
