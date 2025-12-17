@@ -1,0 +1,3610 @@
+# Santa Programming Language Specification
+
+Version: 1.0
+Authors: Edd Mann
+Last Updated: 2025
+
+## Table of Contents
+
+1. [Introduction](#introduction)
+2. [Lexical Structure](#lexical-structure)
+3. [Type System](#type-system)
+4. [Operators](#operators)
+5. [Variables and Bindings](#variables-and-bindings)
+6. [Expressions](#expressions)
+7. [Control Flow](#control-flow)
+8. [Functions](#functions)
+9. [Pattern Matching](#pattern-matching)
+10. [Collections](#collections)
+11. [Built-in Functions](#built-in-functions)
+12. [AOC Runner](#aoc-runner)
+13. [External Functions](#external-functions)
+14. [Semantics](#semantics)
+15. [Implementation Notes](#implementation-notes)
+
+---
+
+## 1. Introduction
+
+**Santa** is a functional, expression-oriented programming language designed specifically for solving Advent of Code puzzles. The language is influenced by Rust, Python, Clojure, F#, and Scala.
+
+### Design Principles
+
+- **Everything is an expression**: All constructs evaluate to a value
+- **Everything is a function** (mostly): Operators and control structures are function-based
+- **Semicolons or newlines separate statements**: Either semicolons or newlines can be used to separate statements; at least one is required between statements on the same line
+- **Immutable by default**: Variables are immutable unless explicitly declared as mutable
+- **Persistent data structures**: Collections are immutable; operations produce new collections
+- **Expression blocks return implicitly**: The last expression in a block is its return value
+
+### Language Philosophy
+
+Santa prioritizes conciseness and expressiveness for algorithmic problem-solving, with a focus on functional programming patterns like mapping, filtering, folding, and lazy evaluation.
+
+---
+
+## 2. Lexical Structure
+
+### 2.1 Character Set
+
+Santa source files are UTF-8 encoded text.
+
+### 2.2 Comments
+
+Line comments start with `//` and continue to the end of the line.
+
+```santa
+// This is a full-line comment
+let x = 42;  // This is an inline comment
+```
+
+Comments are lexed as tokens but ignored during parsing.
+
+### 2.3 Identifiers
+
+Identifiers must match the pattern: `[a-zA-Z][a-zA-Z0-9_?]*`
+
+Valid identifiers:
+```
+x
+counter
+parse_input
+is_valid?
+my_var_123
+```
+
+Identifiers may end with `?` by convention to indicate predicate functions (functions that return a boolean value). All built-in predicate functions follow this convention (e.g., `includes?`, `excludes?`, `any?`, `all?`). User-defined predicates should follow this convention.
+
+### 2.4 Keywords
+
+Reserved keywords:
+```
+let
+mut
+if
+else
+match
+return
+break
+nil
+true
+false
+```
+
+### 2.5 Literals
+
+#### Integer Literals
+- 64-bit signed integers
+- Decimal notation: `42`, `-17`, `0`
+- Underscores for readability: `1_000_000`
+
+#### Decimal Literals
+- 64-bit floating-point (IEEE 754-2008 binary64)
+- Decimal notation: `3.14`, `-0.5`
+- Underscores for readability: `1_000.50`
+
+#### String Literals
+- UTF-8 encoded strings
+- Delimited by double quotes: `"hello"`
+- Escape sequences:
+  - `\n` - newline
+  - `\t` - tab
+  - `\r` - carriage return
+  - `\b` - backspace
+  - `\f` - form feed
+  - `\"` - double quote
+  - `\\` - backslash
+
+```santa
+"Hello, world!"
+"Line 1\nLine 2"
+"Tab\tseparated"
+"Quote: \"text\""
+"Windows\r\nline ending"
+```
+
+#### Boolean Literals
+- `true` - Boolean true value
+- `false` - Boolean false value
+
+```santa
+let is_valid = true;
+let has_error = false;
+```
+
+Booleans are first-class values and can be used in comparisons, logical operations, and conditionals. Santa also supports truthy/falsy semantics for non-boolean values (see Section 14.1).
+
+#### Nil Literal
+`nil` represents the absence of a value.
+
+---
+
+## 3. Type System
+
+Santa has a dynamic type system with the following types:
+
+### 3.1 Integer
+
+64-bit signed integers.
+
+```santa
+let x = 42;
+let y = -17;
+let big = 1_000_000;
+```
+
+### 3.2 Decimal
+
+64-bit floating-point numbers (IEEE 754-2008 binary64).
+
+```santa
+let pi = 3.14159;
+let small = 0.001;
+let readable = 1_000.50;
+```
+
+### 3.3 String
+
+UTF-8 encoded character sequences. String indexing is **grapheme-cluster indexed**, meaning each index refers to a visual character (grapheme cluster), not individual bytes or code points.
+
+```santa
+let greeting = "Hello";
+let multiline = "Line 1\nLine 2";
+let unicode = "❤🍕";
+let emoji = "👨‍👩‍👧‍👦";  // Family emoji (single grapheme cluster)
+```
+
+String operations:
+- Concatenation: `"hello" + " " + "world"`
+- Repetition: `"abc" * 3` → `"abcabcabc"`
+- Indexing: `"hello"[0]` → `"h"` (returns single grapheme as String)
+- Slicing: `"hello"[1..=3]` → `"ell"`
+- Complex Unicode: `"👨‍👩‍👧‍👦"[0]` → `"👨‍👩‍👧‍👦"` (entire family emoji)
+
+### 3.4 Range
+
+Ranges represent sequences of integers with lazy evaluation.
+
+#### Exclusive Range (`start..end`)
+From `start` (inclusive) to `end` (exclusive).
+
+```santa
+1..5        // 1, 2, 3, 4
+5..1        // 5, 4, 3, 2 (auto-descending)
+-2..2       // -2, -1, 0, 1
+5..5        // [] (empty - start equals end)
+```
+
+#### Inclusive Range (`start..=end`)
+From `start` to `end` (both inclusive).
+
+```santa
+1..=5       // 1, 2, 3, 4, 5
+5..=1       // 5, 4, 3, 2, 1
+-2..=2      // -2, -1, 0, 1, 2
+5..=5       // [5] (single element - start equals end)
+```
+
+#### Unbounded Range (`start..`)
+Infinite sequence starting from `start`, incrementing by 1.
+
+```santa
+1..         // 1, 2, 3, 4, ...
+-5..        // -5, -4, -3, -2, ...
+```
+
+Ranges are lazy and can be used with collection functions:
+```santa
+1..10 |> map(_ * 2)           // Lazy sequence of even numbers
+1.. |> take(5) |> sum          // Sum of first 5 positive integers
+```
+
+### 3.5 List
+
+Ordered, heterogeneous, persistent sequences.
+
+```santa
+let numbers = [1, 2, 3, 4];
+let mixed = [1, "two", 3.0];
+let nested = [[1, 2], [3, 4]];
+let empty = [];
+```
+
+Operations:
+- Concatenation: `[1, 2] + [3, 4]` → `[1, 2, 3, 4]`
+- Repetition: `[1, 2] * 3` → `[1, 2, 1, 2, 1, 2]`
+- Indexing: `[10, 20, 30][1]` → `20`
+- Negative indexing: `[10, 20, 30][-1]` → `30`
+- Slicing: `[1, 2, 3, 4][1..=2]` → `[2, 3]`
+
+### 3.6 Set
+
+Unordered collections of unique elements (persistent). **Iteration order is not guaranteed** and may vary between program runs.
+
+```santa
+let unique = {1, 2, 3, 2, 1};  // {1, 2, 3}
+let mixed = {"a", 1, 2.5};
+let empty = {};
+```
+
+**Note on `{}` disambiguation**: The parser distinguishes between empty sets and empty blocks based on context:
+- In **expression position** (assignment, function argument, list element): `{}` is parsed as an empty Set
+- In **statement position** (if/else body, match arm body, function body): `{}` is parsed as an empty Block
+
+```santa
+let x = {};              // Empty set (expression position)
+fold({}, |acc, x| ...)   // Empty set (function argument)
+if true { }              // Empty block (statement position)
+let f = || { };          // Empty block (function body)
+```
+
+Restrictions:
+- Cannot contain Lazy Sequences
+- Cannot contain Functions
+
+Operations:
+- Union: `{1, 2} + {2, 3}` → `{1, 2, 3}`
+- Difference: `{1, 2, 3} - {2}` → `{1, 3}`
+- Membership: `{1, 2, 3} \`includes?\` 2` → `true`
+
+### 3.7 Dictionary
+
+Unordered key-value mappings (persistent). **Iteration order is not guaranteed** and may vary between program runs.
+
+```santa
+let ages = #{"Alice": 30, "Bob": 25};
+let mixed = #{1: "one", "two": 2};
+let nested = #{"a": [1, 2], "b": #{3: 4}};
+let empty = #{};
+```
+
+**Shorthand syntax**: When an identifier is used without a colon, it creates a key-value pair where the key is the identifier name as a string:
+```santa
+let name = "Alice";
+let age = 30;
+#{name, age}  // Equivalent to #{"name": name, "age": age}
+              // Result: #{"name": "Alice", "age": 30}
+```
+
+Keys can be any type except Lazy Sequences and Functions.
+
+Operations:
+- Access: `ages["Alice"]` → `30`
+- Missing keys: `ages["Charlie"]` → `nil`
+- Association: `ages |> assoc("Charlie", 35)`
+
+### 3.8 Lazy Sequence
+
+Infinite sequences with deferred computation.
+
+```santa
+let evens = iterate(_ + 2, 0);    // 0, 2, 4, 6, ...
+let repeated = repeat(5);          // 5, 5, 5, 5, ...
+let cycled = cycle([1, 2, 3]);    // 1, 2, 3, 1, 2, 3, ...
+```
+
+Lazy sequences are only computed when consumed by functions like `take`, `find`, or `reduce`.
+
+### 3.9 Function
+
+First-class functions.
+
+```santa
+let inc = |x| x + 1;
+let add = |a, b| a + b;
+```
+
+Functions can be passed as arguments, returned from functions, and stored in collections.
+
+### 3.10 Nil
+
+Represents the absence of a value. Used when:
+- Accessing non-existent collection elements
+- Pattern matching fails
+- If-expressions without else branches evaluate to false
+- Functions have no explicit return value
+
+```santa
+[1, 2, 3][10]           // nil
+#{"a": 1}["b"]          // nil
+if false { 1 }          // nil
+```
+
+### 3.11 Hashability
+
+Some types can be used as Set elements and Dictionary keys (they are "hashable"). Others cannot.
+
+| Type | Hashable? | Notes |
+|------|-----------|-------|
+| Nil | Yes | |
+| Integer | Yes | |
+| Decimal | Yes | |
+| Boolean | Yes | |
+| String | Yes | |
+| List | Yes | Only if ALL elements are hashable |
+| Set | Yes | |
+| Dictionary | **No** | Cannot be used as key or set element |
+| LazySequence | **No** | Cannot be used as key or set element |
+| Function | **No** | Cannot be used as key or set element |
+
+**Examples:**
+```santa
+{1, 2, 3}                    // OK: integers are hashable
+{[1, 2], [3, 4]}             // OK: lists of hashable elements
+#{[1, 2]: "pair"}            // OK: list key (elements are hashable)
+{#{a: 1}}                    // Error: dictionaries are not hashable
+{|x| x}                      // Error: functions are not hashable
+```
+
+**RuntimeErr:** Attempting to use a non-hashable value as a Set element or Dictionary key results in a runtime error.
+
+---
+
+## 4. Operators
+
+### 4.1 Arithmetic Operators
+
+**Type Coercion Rule**: For mixed-type arithmetic operations (Integer and Decimal), the **left operand determines the result type**. If the left operand is an Integer, the result is an Integer. If the left operand is a Decimal, the result is a Decimal.
+
+```santa
+1 + 2.5                // 3 (left is Integer, result is Integer)
+1.5 + 2                // 3.5 (left is Decimal, result is Decimal)
+```
+
+#### Addition (`+`)
+- **Integers/Decimals**: Numeric addition
+- **Strings**: Concatenation (with type coercion when string is on the left)
+- **Lists**: Concatenation
+- **Sets**: Union
+- **Dictionaries**: Merge (right precedence)
+
+**String coercion**: When the left operand is a String, any right operand is coerced to a string. However, `Integer + String` is NOT supported (produces a runtime error). This asymmetric behavior matches the Rust and TypeScript implementations.
+
+```santa
+1 + 2                  // 3
+"hello" + " " + "world"  // "hello world"
+"count: " + 42         // "count: 42" (Integer coerced to String)
+"value: " + 3.14       // "value: 3.14" (Decimal coerced to String)
+// 42 + " items"       // ERROR: Cannot add Integer and String
+[1, 2] + [3, 4]        // [1, 2, 3, 4]
+{1, 2} + {2, 3}        // {1, 2, 3}
+#{a: 1} + #{b: 2}      // #{a: 1, b: 2}
+```
+
+#### Subtraction (`-`)
+- **Integers/Decimals**: Numeric subtraction
+- **Sets**: Set difference
+
+```santa
+5 - 3                  // 2
+{1, 2, 3} - {2}        // {1, 3}
+```
+
+#### Multiplication (`*`)
+- **Integers/Decimals**: Numeric multiplication
+- **Strings**: Repetition
+- **Lists**: Repetition
+
+```santa
+3 * 4                  // 12
+"a" * 3                // "aaa"
+[1, 2] * 2             // [1, 2, 1, 2]
+```
+
+#### Division (`/`)
+- **Integers**: Floored division (Python-style, floors toward negative infinity)
+- **Decimals**: Floating-point division
+
+```santa
+7 / 2                  // 3
+-7 / 2                 // -4 (floors toward negative infinity)
+7 / -2                 // -4
+-7 / -2                // 3
+7.0 / 2                // 3.5
+-7.0 / 2               // -3.5
+```
+
+#### Modulo (`%`)
+- **Integers**: Remainder of division using floored division (Python-style)
+- The result has the same sign as the divisor (right operand)
+
+```santa
+7 % 3                  // 1
+-7 % 3                 // 2 (floor: -7 = -3*3 + 2)
+7 % -3                 // -2 (floor: 7 = -2*-3 + (-2))
+-7 % -3                // -1
+```
+
+### 4.2 Comparison Operators
+
+Available for comparable types: `<`, `>`, `<=`, `>=`
+
+**Comparable types**: Only Integer, Decimal, and String types support comparison operators. Comparing other types (List, Set, Dictionary, Function, Lazy Sequence) results in a runtime error.
+
+```santa
+5 < 10                 // true
+3.14 < 5               // true (mixed numeric comparison works)
+"abc" < "def"          // true (lexicographic)
+[1, 2] < [1, 3]        // Error: Lists are not comparable
+```
+
+### 4.3 Equality Operators
+
+- `==` - Equality
+- `!=` - Inequality
+
+Equality is structural for all types:
+
+```santa
+1 == 1                 // true
+[1, 2] == [1, 2]       // true
+#{a: 1} == #{a: 1}     // true
+{1, 2} == {2, 1}       // true (sets are unordered)
+```
+
+### 4.4 Logical Operators
+
+#### Logical NOT (`!`)
+Prefix operator that returns the logical negation based on truthiness.
+
+```santa
+!true              // false
+!false             // true
+!0                 // true (0 is falsy)
+!1                 // false (1 is truthy)
+!""                // true (empty string is falsy)
+!"hello"           // false (non-empty string is truthy)
+![]                // true (empty list is falsy)
+!nil               // true (nil is falsy)
+```
+
+#### Logical OR (`||`)
+Returns the first truthy value, or the last value if all are falsy.
+
+```santa
+true || false          // true
+1 || 0                 // 1
+0 || 2                 // 2
+false || nil           // nil
+```
+
+#### Logical AND (`&&`)
+Returns the first falsy value, or the last value if all are truthy.
+
+```santa
+true && true           // true
+1 && 2                 // 2
+0 && 2                 // 0
+1 && nil               // nil
+```
+
+### 4.5 Bitwise Operators
+
+- `bit_and(a, b)` - Bitwise AND
+- `bit_or(a, b)` - Bitwise OR
+- `bit_xor(a, b)` - Bitwise XOR
+- `bit_not(value)` - Bitwise NOT (complement)
+- `bit_shift_left(value, shift)` - Left shift
+- `bit_shift_right(value, shift)` - Right shift
+
+```santa
+bit_and(12, 10)              // 8  (1100 & 1010 = 1000)
+bit_or(12, 10)               // 14 (1100 | 1010 = 1110)
+bit_xor(12, 10)              // 6  (1100 ^ 1010 = 0110)
+bit_not(12)                  // -13 (bitwise complement)
+bit_shift_left(1, 3)         // 8  (1 << 3 = 1000)
+bit_shift_right(8, 2)        // 2  (1000 >> 2 = 10)
+```
+
+### 4.6 Indexing Operator
+
+Square brackets `[]` for collection access.
+
+**Lists:**
+```santa
+[10, 20, 30][1]        // 20
+[10, 20, 30][-1]       // 30 (from end)
+[10, 20, 30][1..=2]    // [20, 30] (slice)
+```
+
+**Strings:**
+```santa
+"hello"[0]             // "h"
+"hello"[-1]            // "o"
+"hello"[1..=3]         // "ell"
+```
+
+**Dictionaries:**
+```santa
+#{a: 1, b: 2}["a"]     // 1
+#{a: 1}["c"]           // nil
+```
+
+### 4.7 Pipeline Operator (`|>`)
+
+Thread a value through a series of function calls.
+
+```santa
+[1, 2, 3]
+  |> map(_ * 2)
+  |> filter(_ > 2)
+  |> sum
+// Equivalent to: sum(filter(_ > 2, map(_ * 2, [1, 2, 3])))
+```
+
+### 4.8 Function Composition Operator (`>>`)
+
+Forward composition: applies functions left-to-right.
+
+```santa
+let parse = lines >> map(int) >> sum;
+// Equivalent to: |x| sum(map(int, lines(x)))
+// Applies lines first, then map(int), then sum
+
+parse("1\n2\n3")       // 6
+
+let inc_then_double = _ + 1 >> _ * 2;
+inc_then_double(5)     // 12 (applies +1 first, then *2)
+```
+
+### 4.9 Spread Operator (`..`)
+
+Spread collections or create rest parameters.
+
+```santa
+let list = [1, 2, 3];
+[0, ..list, 4]         // [0, 1, 2, 3, 4]
+
+let fn = |first, ..rest| rest;
+fn(1, 2, 3, 4)         // [2, 3, 4]
+```
+
+---
+
+## 5. Variables and Bindings
+
+### 5.1 Variable Declaration
+
+Variables are declared with `let`:
+
+```santa
+let x = 42;
+let name = "Alice";
+let values = [1, 2, 3];
+```
+
+### 5.2 Immutability
+
+Variables are immutable by default:
+
+```santa
+let x = 1;
+x = 2;  // Error: Variable 'x' is not mutable
+```
+
+### 5.3 Mutable Variables
+
+Use `let mut` for mutable variables:
+
+```santa
+let mut counter = 0;
+counter = counter + 1;  // OK
+counter = 5;            // OK
+```
+
+### 5.4 Destructuring
+
+#### List Destructuring
+
+**Basic destructuring:**
+```santa
+let [a, b, c] = [1, 2, 3];
+// a = 1, b = 2, c = 3
+```
+
+**Rest patterns** (can appear anywhere in the pattern):
+```santa
+let [first, ..rest] = [1, 2, 3, 4];
+// first = 1, rest = [2, 3, 4]
+
+let [..initial, last] = [1, 2, 3, 4];
+// initial = [1, 2, 3], last = 4
+
+let [first, ..middle, last] = [1, 2, 3, 4, 5];
+// first = 1, middle = [2, 3, 4], last = 5
+```
+
+**Ignore patterns** (using `_`):
+```santa
+let [x, _, z] = [1, 2, 3];
+// x = 1, z = 3 (ignore middle element)
+
+let [a, b, c, ..] = [1, 2, 3, 4, 5];
+// a = 1, b = 2, c = 3 (ignore rest)
+```
+
+**Nested destructuring:**
+```santa
+let [[a, b], c] = [[1, 2], 3];
+// a = 1, b = 2, c = 3
+
+let [x, [y, z]] = [1, [2, 3]];
+// x = 1, y = 2, z = 3
+
+let [[a, ..rest], last] = [[1, 2, 3], 4];
+// a = 1, rest = [2, 3], last = 4
+```
+
+**Placeholder `_` contexts:**
+
+The underscore `_` has multiple context-dependent meanings in Santa:
+1. **Pattern matching**: Ignore/discard a value: `let [x, _] = [1, 2]`
+2. **Partial application**: Placeholder for arguments: `let inc = _ + 1`
+3. **Function parameters**: Ignored parameter: `|_| 42`
+4. **Match wildcard**: Catch-all pattern: `match x { _ { "default" } }`
+
+#### Mutable Destructuring
+
+```santa
+let mut [x, y] = [1, 2];
+x = 10;
+y = 20;
+```
+
+### 5.5 Shadowing
+
+Variables can be shadowed in nested scopes:
+
+```santa
+let x = 1;
+{
+  let x = 2;
+  x;  // 2
+};
+x;  // 1
+```
+
+---
+
+## 6. Expressions
+
+### 6.1 Literal Expressions
+
+Literals evaluate to themselves:
+
+```santa
+42
+3.14
+"hello"
+[1, 2, 3]
+#{a: 1, b: 2}
+```
+
+### 6.2 Variable Expressions
+
+Identifiers evaluate to their bound values:
+
+```santa
+let x = 42;
+x  // 42
+```
+
+### 6.3 Block Expressions
+
+Blocks group expressions and return the last expression:
+
+```santa
+let result = {
+  let x = 10;
+  let y = 20;
+  x + y
+};
+result  // 30
+```
+
+**Let-bindings are expressions** that return the bound value:
+
+```santa
+let value = {
+  let x = 10;
+  let y = 20;
+};
+value  // 20 (let y = 20 returns 20)
+
+let a = (let b = 5);
+a  // 5
+```
+
+Empty blocks return `nil`.
+
+### 6.4 Function Call Expressions
+
+```santa
+max(1, 2, 3)
+split(",", "a,b,c")
+```
+
+### 6.5 Infix Function Calls
+
+Functions can be called in infix position using backticks:
+
+```santa
+[1, 2, 3] `includes?` 2
+// Equivalent to: includes?([1, 2, 3], 2)
+
+"hello,world" `split` ","
+// Equivalent to: split(",", "hello,world")
+```
+
+### 6.6 Method-Style Calls (Pipeline)
+
+The pipeline operator enables method-style chaining:
+
+```santa
+input
+  |> lines
+  |> map(int)
+  |> filter(_ > 0)
+  |> sum
+```
+
+---
+
+## 7. Control Flow
+
+### 7.1 If Expressions
+
+Conditional branching. Returns a value.
+
+```santa
+if condition { expression }
+
+if condition {
+  expression1
+} else {
+  expression2
+}
+```
+
+**Examples:**
+
+```santa
+let x = if 5 > 3 { "yes" } else { "no" };  // "yes"
+
+let y = if false { 1 };  // nil (no else branch)
+
+// Using match (more declarative)
+let grade = |score| match score {
+  90.. => "A",
+  80..90 => "B",
+  70..80 => "C",
+  _ => "F"
+};
+
+// With let-binding in condition
+if let x = compute() {
+  use(x)
+} else {
+  default()
+}
+```
+
+**Truthy Semantics:**
+
+The condition is evaluated for truthiness (see Section 14.1).
+
+### 7.2 Match Expressions
+
+Pattern matching with multiple branches.
+
+```santa
+match subject {
+  pattern1 { expression1 }
+  pattern2 { expression2 }
+  pattern3 { expression3 }
+}
+```
+
+Returns the value of the matching branch, or `nil` if no match.
+
+**Primitive Matching:**
+
+```santa
+let describe = |n| match n {
+  0 { "zero" }
+  1 { "one" }
+  2 { "two" }
+  _ { "many" }
+};
+```
+
+**List Pattern Matching:**
+
+```santa
+match list {
+  [] { "empty" }
+  [x] { "single element" }
+  [x, y] { "two elements" }
+  [head, ..tail] { "multiple elements" }
+}
+```
+
+**Range Matching:**
+
+```santa
+match value {
+  0..5 { "less than 5" }
+  5..=10 { "between 5 and 10" }
+  11.. { "greater than 10" }
+}
+```
+
+**Guard Clauses:**
+
+```santa
+match list {
+  [x] if x > 10 { "single large element" }
+  [x, y] if x == y { "two equal elements" }
+  _ { "other" }
+}
+```
+
+### 7.3 Return Statement
+
+Early return from a function. **Context**: `return` is only valid inside function bodies (including lambdas). Using `return` outside a function results in a runtime error.
+
+```santa
+let check = |x| {
+  if x < 0 { return "negative" }
+  if x == 0 { return "zero" }
+  "positive"
+};
+
+return 10;  // Error: return outside function
+```
+
+### 7.4 Break Statement
+
+Break from an iteration context. **Context**: `break` is only valid inside iteration constructs (`reduce`, `fold`, `each`, lazy sequence consumers). Using `break` outside these contexts results in a runtime error.
+
+```santa
+1.. |> reduce |acc, n| {
+  if n > 10 { break acc }
+  else { acc + n }
+}
+// Sum of 1..10 = 55
+
+let x = break 5;  // Error: break outside iteration
+```
+
+Break can return a value that becomes the result of the enclosing expression.
+
+---
+
+## 8. Functions
+
+### 8.1 Function Definition
+
+Anonymous function syntax:
+
+```santa
+|param1, param2, ...| expression
+
+|param1, param2, ...| {
+  // statements
+  expression
+}
+```
+
+Bind to a variable:
+
+```santa
+let add = |a, b| a + b;
+let greet = |name| "Hello, " + name;
+```
+
+### 8.2 Function Invocation
+
+```santa
+add(1, 2)           // 3
+greet("Alice")      // "Hello, Alice"
+```
+
+### 8.3 Closures
+
+Functions can capture variables from enclosing scopes:
+
+```santa
+let make_adder = |x| {
+  |y| x + y
+};
+
+let add5 = make_adder(5);
+add5(3)  // 8
+```
+
+Closures can capture mutable variables:
+
+```santa
+let counter = || {
+  let mut count = 0;
+  || {
+    count = count + 1;
+    count
+  }
+}();
+
+counter()  // 1
+counter()  // 2
+counter()  // 3
+```
+
+### 8.4 Partial Application
+
+Using the placeholder `_`:
+
+```santa
+let inc = _ + 1;
+let dec = _ - 1;
+let double = _ * 2;
+
+inc(5)      // 6
+dec(10)     // 9
+double(4)   // 8
+```
+
+Multiple arguments:
+
+```santa
+let subtract_from_10 = 10 - _;
+subtract_from_10(3)  // 7
+
+let divide = _ / _;
+divide(10, 2)  // 5
+```
+
+Partial application with explicit function syntax:
+
+```santa
+let inc = +(1);         // |x| x + 1
+let dec = -(_, 1);      // |x| x - 1
+```
+
+### 8.5 Variadic Functions (Rest Parameters)
+
+```santa
+let sum_all = |..nums| nums |> sum;
+sum_all(1, 2, 3, 4)  // 10
+
+let first_and_rest = |first, ..rest| [first, rest];
+first_and_rest(1, 2, 3, 4)  // [1, [2, 3, 4]]
+```
+
+### 8.6 Spread Arguments
+
+```santa
+let args = [1, 2, 3];
+max(..args)  // 3
+
+let add = |a, b, c| a + b + c;
+add(..[10, 20, 30])  // 60
+```
+
+### 8.7 Function Composition
+
+```santa
+let inc = _ + 1;
+let double = _ * 2;
+
+let inc_then_double = inc >> double;
+inc_then_double(5)  // 12 (5+1=6, 6*2=12)
+
+let parse_lines = lines >> map(int);
+```
+
+### 8.8 Trailing Lambda Syntax
+
+When the last argument to a function is a lambda, it can be written after the call.
+
+**With pipeline operator:**
+```santa
+[1, 2, 3] |> map |x| {
+  x * x
+}
+
+[1, 2, 3] |> fold(0) |acc, x| {
+  acc + x
+}
+```
+
+**Direct trailing lambda (without pipeline):**
+```santa
+[1, 2, 3] map |x| x * 2
+// Parses as: map([1, 2, 3], |x| x * 2)
+
+[1, 2, 3] filter |x| x > 1
+// Parses as: filter([1, 2, 3], |x| x > 1)
+
+fold(0) |acc, x| acc + x
+// Trailing lambda after partial application
+```
+
+The parser auto-applies the collection as the first argument when a trailing lambda follows a function name.
+
+### 8.9 Recursion and Tail-Call Optimization
+
+Santa supports recursion:
+
+```santa
+let factorial = |n| {
+  if n == 0 { 1 }
+  else { n * factorial(n - 1) }
+};
+```
+
+Tail-call optimization (TCO) is available for **self-recursion only** (a function calling itself in tail position). Mutual recursion (function A calls B, B calls A) is NOT optimized.
+
+```santa
+let factorial = |n| {
+  let recur = |acc, n| {
+    if n == 0 { acc }
+    else { recur(acc * n, n - 1) }  // TCO applied: recur calls itself
+  };
+  recur(1, n);
+};
+```
+
+**TCO requirements:**
+1. The recursive call must be in **tail position** (the last expression evaluated)
+2. The call must be **self-recursion** (same function calling itself)
+3. No operations after the recursive call (e.g., `1 + recur(...)` is NOT tail position)
+
+### 8.10 Memoization
+
+The `memoize` function caches results:
+
+```santa
+let fib = memoize |n| {
+  if n > 1 {
+    fib(n - 1) + fib(n - 2)
+  } else {
+    n
+  }
+};
+
+fib(50)  // Computed efficiently
+```
+
+### 8.11 Higher-Order Functions
+
+Functions are first-class and can be passed as arguments:
+
+```santa
+let apply_twice = |f, x| f(f(x));
+
+apply_twice(_ + 1, 5)  // 7
+apply_twice(_ * 2, 3)  // 12
+```
+
+---
+
+## 9. Pattern Matching
+
+### 9.1 Match Expression Syntax
+
+```santa
+match subject {
+  pattern { expression }
+  ...
+}
+```
+
+### 9.2 Patterns
+
+#### Literal Patterns
+
+```santa
+match x {
+  0 { "zero" }
+  1 { "one" }
+  "hello" { "greeting" }
+}
+```
+
+#### Wildcard Pattern
+
+```santa
+match x {
+  0 { "zero" }
+  _ { "something else" }
+}
+```
+
+#### Variable Pattern
+
+```santa
+match x {
+  n { "captured as n: " + n }
+}
+```
+
+#### List Patterns
+
+```santa
+match list {
+  [] { "empty" }
+  [x] { "one element" }
+  [x, y] { "two elements" }
+  [first, second, ..rest] { "multiple elements" }
+}
+```
+
+#### Mixed Literal and Variable Patterns
+
+List patterns can combine literal values and variables:
+
+```santa
+match command {
+  ["move", direction] { handle_move(direction) }
+  ["turn", "left"] { turn_left() }
+  ["turn", "right"] { turn_right() }
+  _ { "unknown command" }
+}
+```
+
+#### Nested Patterns
+
+Patterns can be nested arbitrarily deep:
+
+```santa
+match data {
+  [x, [a, b]] { use(x, a, b) }
+  [[1, 2], y] { "first is [1, 2]" }
+  [["N", pos], _] { handle_north(pos) }
+}
+```
+
+#### Range Patterns in Lists
+
+Ranges can be used inside list patterns to match element values:
+
+```santa
+match [facing, [y, x]] {
+  ["N", [0, 8..12]] { "north at row 0, columns 8-11" }
+  ["S", [0..10, _]] { "south in first 10 rows" }
+  [_, [y, x]] { "other: " + y + "," + x }
+}
+```
+
+#### Range Patterns (Top-Level)
+
+```santa
+match n {
+  0..10 { "single digit" }
+  10..=99 { "two digits" }
+  100.. { "three or more digits" }
+}
+```
+
+### 9.3 Guards
+
+Add conditions to patterns:
+
+```santa
+match value {
+  x if x > 0 { "positive" }
+  x if x < 0 { "negative" }
+  _ { "zero" }
+}
+
+match list {
+  [x, y] if x == y { "pair of equal elements" }
+  [x, y] if x > y { "descending pair" }
+  _ { "other" }
+}
+```
+
+### 9.4 Matching in Function Parameters
+
+Pattern matching can be used directly in function definitions via the `match` expression:
+
+```santa
+let sum = |list| match list {
+  [] { 0 }
+  [head, ..tail] { head + sum(tail) }
+};
+```
+
+---
+
+## 10. Collections
+
+### 10.1 Lists
+
+Ordered, heterogeneous sequences.
+
+**Creation:**
+```santa
+[1, 2, 3]
+["a", 1, 2.5]
+[]
+```
+
+**Operations:**
+```santa
+[1, 2] + [3, 4]        // Concatenation: [1, 2, 3, 4]
+[1, 2] * 3             // Repetition: [1, 2, 1, 2, 1, 2]
+```
+
+**Access:**
+```santa
+list[0]                // First element
+list[-1]               // Last element
+list[1..=2]            // Slice
+```
+
+**Immutability:**
+```santa
+let list = [1, 2, 3];
+let new_list = list |> push(4);  // [1, 2, 3, 4]
+list  // Still [1, 2, 3]
+```
+
+### 10.2 Sets
+
+Unordered collections of unique elements.
+
+**Creation:**
+```santa
+{1, 2, 3}
+{"a", "b", "c"}
+{}
+```
+
+**Trailing commas** are allowed in collection literals:
+```santa
+{1, 2, 3,}             // Valid (trailing comma)
+[1, 2, 3,]             // Valid
+#{"a": 1, "b": 2,}     // Valid
+```
+
+**Operations:**
+```santa
+{1, 2} + {2, 3}        // Union: {1, 2, 3}
+{1, 2, 3} - {2}        // Difference: {1, 3}
+```
+
+**Membership:**
+```santa
+{1, 2, 3} `includes?` 2    // true
+```
+
+**Note on ordering:** Sets are unordered. The order of elements when converting to Lists (via `list()`) is implementation-defined and should not be relied upon.
+
+### 10.3 Dictionaries
+
+Unordered key-value mappings.
+
+**Creation:**
+```santa
+#{"name": "Alice", "age": 30}
+#{1: "one", 2: "two"}
+#{}
+```
+
+**Shorthand syntax** (ES6-style variable shorthand only):
+```santa
+let name = "Alice";
+let age = 30;
+
+#{name, age}                  // Shorthand for #{"name": name, "age": age}
+#{name, age, "city": "NYC"}   // Can mix shorthand and explicit entries
+```
+
+**Note:** Computed key syntax (e.g., `#{[expression]: value}`) is NOT supported. Use explicit string keys or variable shorthand only.
+
+**Access:**
+```santa
+dict["key"]            // Value or nil
+```
+
+**Operations:**
+```santa
+dict |> assoc("key", "value")           // Add/update key
+dict |> update("key", _ + 1)            // Update with function
+dict |> keys                            // List of keys (order unspecified)
+dict |> values                          // List of values (order unspecified)
+```
+
+**Note on ordering:** Dictionaries are unordered. The order of keys/values when converting to Lists is implementation-defined and should not be relied upon.
+
+### 10.4 Ranges
+
+Lazy sequences of integers.
+
+**Types:**
+```santa
+1..10      // Exclusive: 1 to 9
+1..=10     // Inclusive: 1 to 10
+1..        // Unbounded: 1, 2, 3, ...
+```
+
+**Usage:**
+```santa
+1..5 |> map(_ * 2)         // [2, 4, 6, 8]
+1.. |> take(3)             // [1, 2, 3]
+```
+
+### 10.5 Lazy Sequences
+
+Infinite sequences with deferred computation.
+
+**Creation:**
+```santa
+iterate(|x| x * 2, 1)      // 1, 2, 4, 8, 16, ...
+repeat(5)                   // 5, 5, 5, ...
+cycle([1, 2, 3])           // 1, 2, 3, 1, 2, 3, ...
+```
+
+**Consumption:**
+```santa
+repeat(1) |> take(5)       // [1, 1, 1, 1, 1]
+iterate(_ + 1, 0) |> find(_ > 10)  // 11
+```
+
+---
+
+## 11. Built-in Functions
+
+### 11.1 Type Conversion
+
+#### `int(value)` → Integer
+Parse value to Integer. Returns `0` on failure.
+
+**Permitted types:** Integer, Decimal, String, Boolean
+
+```santa
+// Integer (identity)
+int(5)              // 5
+
+// Decimal (rounds to nearest, half away from zero)
+int(3.7)            // 4
+int(3.5)            // 4 (half rounds away from zero)
+int(-3.5)           // -4 (half rounds away from zero)
+int(-5.5)           // -6
+
+// String
+int("42")           // 42
+int("-17")          // -17
+int("abc")          // 0 (parse failure)
+
+// Boolean
+int(true)           // 1
+int(false)          // 0
+```
+
+#### `ints(string)` → List[Integer]
+Extract all parseable integers from a string using the regex pattern `(-?[0-9]+)`.
+
+**Permitted types:** String
+
+```santa
+ints("1,2,3")           // [1, 2, 3]
+ints("15a20b35")        // [15, 20, 35]
+ints("x: 10, y: -5")    // [10, -5]
+ints("no numbers")      // []
+```
+
+#### `list(value)` → List
+Convert to List representation.
+
+**Permitted types:** List, Set, Dictionary, String, Range, LazySequence
+
+```santa
+// List (identity)
+list([1, 2, 3])         // [1, 2, 3]
+
+// Set
+list({1, 2, 3})         // [1, 2, 3]
+
+// Dictionary (returns list of [key, value] tuples)
+list(#{1: 2, 3: 4})     // [[1, 2], [3, 4]]
+
+// String (each character)
+list("ab")              // ["a", "b"]
+
+// Exclusive Range
+list(1..5)              // [1, 2, 3, 4]
+
+// Inclusive Range
+list(1..=5)             // [1, 2, 3, 4, 5]
+```
+
+#### `set(value)` → Set
+Convert to Set representation.
+
+**Permitted types:** List, Set, String, Range
+
+```santa
+// List
+set([1, 2, 2, 3])       // {1, 2, 3}
+
+// Set (identity)
+set({1, 2, 3})          // {1, 2, 3}
+
+// String (each character)
+set("aab")              // {"a", "b"}
+
+// Exclusive Range
+set(1..5)               // {1, 2, 3, 4}
+
+// Inclusive Range
+set(1..=5)              // {1, 2, 3, 4, 5}
+```
+
+#### `dict(value)` → Dictionary
+Convert to Dictionary representation.
+
+**Permitted types:** List (of [key, value] tuples), Dictionary
+
+```santa
+// List of tuples
+dict([[1, 2], [3, 4]])      // #{1: 2, 3: 4}
+dict([["a", 1], ["b", 2]])  // #{"a": 1, "b": 2}
+
+// Dictionary (identity)
+dict(#{1: 2, 3: 4})         // #{1: 2, 3: 4}
+```
+
+### 11.2 Collection Access
+
+#### `get(index, collection)` → Value | Nil
+Get element at index following indexing rules. Returns `nil` if not found.
+
+**Permitted types:** List, Set, Dictionary, String, Range, LazySequence
+
+```santa
+// List
+get(1, [1, 2])              // 2
+get(5, [1, 2])              // nil (out of bounds)
+
+// Set (checks membership, returns value or nil)
+get(1, {1, 2})              // 1
+get(3, {1, 2})              // nil
+
+// Dictionary
+get(1, #{1: 2, 3: 4})       // 2
+get(5, #{1: 2, 3: 4})       // nil
+
+// String
+get(1, "ab")                // "b"
+
+// Exclusive Range
+get(1, 1..5)                // 2
+
+// Inclusive Range
+get(1, 1..=5)               // 2
+
+// Unbounded Range
+get(1, 0..)                 // 1
+```
+
+#### `size(collection)` → Integer
+Get number of elements in a collection.
+
+**Permitted types:** List, Set, Dictionary, String, Range (bounded only)
+
+```santa
+// List
+size([1, 2])                // 2
+
+// Set
+size({1, 2})                // 2
+
+// Dictionary
+size(#{1: 2, 3: 4})         // 2
+
+// String
+size("ab")                  // 2
+
+// Exclusive Range
+size(1..5)                  // 4
+
+// Inclusive Range
+size(1..=5)                 // 5
+```
+
+#### `first(collection)` → Value | Nil
+Get first element. Returns `nil` if collection is empty.
+
+**Permitted types:** List, Set, String, Range, LazySequence
+
+```santa
+// List
+first([1, 2])               // 1
+first([])                   // nil
+
+// Set
+first({1, 2})               // 1
+
+// String
+first("ab")                 // "a"
+
+// Exclusive Range
+first(1..5)                 // 1
+
+// Inclusive Range
+first(1..=5)                // 1
+
+// Unbounded Range
+first(1..)                  // 1
+
+// Lazy Sequence
+first(iterate(_ + 1, 1))    // 1
+```
+
+#### `second(collection)` → Value | Nil
+Get second element. Returns `nil` if collection has fewer than 2 elements.
+
+**Permitted types:** List, Set, String, Range, LazySequence
+
+```santa
+// List
+second([1, 2])              // 2
+second([1])                 // nil
+
+// Set
+second({1, 2})              // 2
+
+// String
+second("ab")                // "b"
+
+// Exclusive Range
+second(1..5)                // 2
+
+// Inclusive Range
+second(1..=5)               // 2
+
+// Unbounded Range
+second(1..)                 // 2
+
+// Lazy Sequence
+second(iterate(_ + 1, 1))   // 2
+```
+
+#### `last(collection)` → Value | Nil
+Get last element. Returns `nil` if collection is empty.
+
+**Permitted types:** List, Set, String, Range (bounded only)
+
+```santa
+// List
+last([1, 2])                // 2
+last([])                    // nil
+
+// Set
+last({1, 2})                // 2
+
+// String
+last("ab")                  // "b"
+
+// Exclusive Range
+last(1..5)                  // 4
+
+// Inclusive Range
+last(1..=5)                 // 5
+
+// Descending Range
+last(5..1)                  // 2
+last(5..=1)                 // 1
+```
+
+> **Note:** `last` is not supported for unbounded ranges or infinite lazy sequences as they have no end.
+
+#### `rest(collection)` → Collection
+Get all but first element. Returns empty collection if input has ≤1 element.
+
+**Permitted types:** List, Set, String, Range, LazySequence
+
+```santa
+// List
+rest([1, 2])                // [2]
+rest([1])                   // []
+
+// Set
+rest({1, 2})                // {2}
+
+// String
+rest("ab")                  // "b"
+
+// Exclusive Range
+rest(1..5)                  // [2, 3, 4]
+
+// Inclusive Range
+rest(1..=5)                 // [2, 3, 4, 5]
+
+// Unbounded Range (returns LazySequence)
+rest(1..) |> take(3)        // [2, 3, 4]
+
+// Lazy Sequence
+rest(iterate(_ + 1, 1)) |> take(3)  // [2, 3, 4]
+```
+
+#### `keys(dictionary)` → List
+Get dictionary keys as a List.
+
+**Permitted types:** Dictionary
+
+```santa
+keys(#{1: 2, 3: 4})         // [1, 3]
+keys(#{"a": 1, "b": 2})     // ["a", "b"]
+```
+
+#### `values(dictionary)` → List
+Get dictionary values as a List.
+
+**Permitted types:** Dictionary
+
+```santa
+values(#{1: 2, 3: 4})       // [2, 4]
+values(#{"a": 1, "b": 2})   // [1, 2]
+```
+
+### 11.3 Collection Modification
+
+#### `push(value, collection)` → Collection
+Add a new value to a collection.
+
+**Permitted types:** List, Set
+
+```santa
+// List (appends to end)
+push(3, [1, 2])             // [1, 2, 3]
+
+// Set
+push(3, {1, 2})             // {1, 2, 3}
+push(1, {1, 2})             // {1, 2} (already present)
+```
+
+#### `assoc(key, value, collection)` → Collection
+Associate the provided key/index with the given value.
+
+**Permitted types:** List, Dictionary
+
+```santa
+// List (replaces at index)
+assoc(0, 3, [1, 2])             // [3, 2]
+
+// List (fills with nil if index beyond current size)
+assoc(1, 1, [])                 // [nil, 1]
+
+// Dictionary (adds or replaces)
+assoc(1, 1, #{1: 2, 3: 4})      // #{1: 1, 3: 4}
+assoc(0, 1, #{1: 2, 3: 4})      // #{1: 2, 3: 4, 0: 1}
+```
+
+#### `update(key, updater, collection)` → Collection
+Update the given index/key using a pure updater function. The updater receives the current value (or `nil` if not present).
+
+**Permitted types:** List, Dictionary
+
+```santa
+// List
+update(0, _ + 1, [1, 2])        // [2, 2]
+
+// List (fills with nil if index beyond current size)
+update(1, || 1, [])             // [nil, 1]
+
+// Dictionary
+update(0, || 1, #{})            // #{0: 1}
+update(1, _ + 1, #{1: 2, 3: 4}) // #{1: 3, 3: 4}
+```
+
+#### `update_d(key, default, updater, collection)` → Collection
+Update using a pure updater function, with a default value if key doesn't exist.
+
+**Permitted types:** List, Dictionary
+
+```santa
+// List
+update_d(0, 0, _ + 1, [1, 2])   // [2, 2]
+update_d(1, 0, _ + 1, [])       // [nil, 1]
+
+// Dictionary
+update_d(0, 0, _ + 1, #{})      // #{0: 1}
+update_d(1, 0, _ + 1, #{1: 2, 3: 4})  // #{1: 3, 3: 4}
+```
+
+### 11.4 Transformation
+
+#### `map(mapper, collection)` → Collection
+Apply a pure mapper function to each element. Returns same collection type (except String → List).
+
+**Permitted types:** List, Set, Dictionary, String, Range, LazySequence
+
+```santa
+// List
+map(_ + 1, [1, 2])              // [2, 3]
+
+// Set
+map(_ + 1, {1, 2})              // {2, 3}
+
+// Dictionary (mapper receives value, returns new value)
+map(_ + 1, #{1: 2, 3: 4})       // #{1: 3, 3: 5}
+
+// Dictionary (mapper can receive both value AND key)
+map(|v, k| k + v, #{1: 2, 3: 4})  // #{1: 3, 3: 7}
+
+// String (each character, returns List)
+map(_ * 2, "ab")                // ["aa", "bb"]
+
+// Ranges return LazySequence
+map(_ + 1, 1..5) |> list        // [2, 3, 4, 5]
+map(_ + 1, 1..=5) |> list       // [2, 3, 4, 5, 6]
+map(_ + 1, 0..) |> take(3)      // [1, 2, 3]
+
+// Lazy Sequence
+map(_ + 1, repeat(1)) |> take(3)  // [2, 2, 2]
+```
+
+#### `filter(predicate, collection)` → Collection
+Keep elements where predicate returns truthy. Returns same collection type (except String → List).
+
+**Permitted types:** List, Set, Dictionary, String, Range, LazySequence
+
+```santa
+// List
+filter(_ == 1, [1, 2])          // [1]
+
+// Set
+filter(_ == 1, {1, 2})          // {1}
+
+// Dictionary (predicate receives value)
+filter(_ == 2, #{1: 2, 3: 4})   // #{1: 2}
+
+// Dictionary (predicate can receive both value AND key)
+filter(|_, k| k == 3, #{1: 2, 3: 4})  // #{3: 4}
+
+// String (each character, returns List)
+filter(_ == "a", "ab")          // ["a"]
+
+// Ranges return LazySequence
+filter(_ % 2, 1..5) |> list     // [1, 3]
+filter(_ % 2, 1..=5) |> list    // [1, 3, 5]
+filter(_ % 2, 0..) |> take(3)   // [1, 3, 5]
+
+// Lazy Sequence
+filter(_ != 2, cycle([1, 2, 3])) |> take(3)  // [1, 3, 1]
+```
+
+#### `flat_map(mapper, collection)` → List
+Apply mapper and flatten resulting lists into a single list.
+
+**Permitted types:** List, Set, Dictionary, String, Range, LazySequence
+
+```santa
+flat_map(_ * 2, [[1, 2], [3, 4]])  // [2, 4, 6, 8]
+flat_map(|x| [x, x * 2], [1, 2])   // [1, 2, 2, 4]
+```
+
+#### `filter_map(mapper, collection)` → Collection
+Map and filter in one pass - keeps only truthy mapped results.
+
+**Permitted types:** List, Set, Dictionary, String, Range, LazySequence
+
+```santa
+// List
+[1, 2, 3, 4] |> filter_map(|v| if v % 2 { v * 2 })  // [2, 6]
+
+// Set
+{1, 2, 3, 4} |> filter_map(|v| if v % 2 { v * 2 })  // {2, 6}
+
+// Dictionary (mapper receives value)
+#{1: 2, 3: 4} |> filter_map(|v| if v != 2 { v * 2 })  // #{3: 8}
+
+// Dictionary (mapper can receive both value AND key)
+#{1: 2, 3: 4} |> filter_map(|_, k| if k != 1 { k * 2 })  // #{3: 6}
+
+// String
+"ab" |> filter_map(|v| if v != "a" { v * 2 })  // ["bb"]
+
+// Ranges
+1..5 |> filter_map(|v| if v % 2 { v * 2 }) |> list   // [2, 6]
+1.. |> filter_map(|v| if v % 2 { v * 2 }) |> take(3) // [2, 6, 10]
+```
+
+#### `find_map(mapper, collection)` → Value | Nil
+Find first element where mapper returns truthy, return that mapped value.
+
+**Permitted types:** List, Set, Dictionary, String, Range, LazySequence
+
+```santa
+// List
+[1, 2] |> find_map(|v| if v % 2 { v * 2 })  // 2
+
+// Set
+{1, 2} |> find_map(|v| if v % 2 { v * 2 })  // 2
+
+// Dictionary (mapper receives value)
+#{1: 2, 3: 4} |> find_map(|v| if v != 2 { v * 2 })  // 8
+
+// Dictionary (mapper can receive both value AND key)
+#{1: 2, 3: 4} |> find_map(|_, k| if k != 1 { k * 2 })  // 6
+
+// String
+"ab" |> find_map(|v| if v != "a" { v * 2 })  // "bb"
+
+// Ranges
+1..5 |> find_map(|v| if v % 2 { v * 2 })     // 2
+1.. |> find_map(|v| if v % 2 { v * 2 })      // 2
+```
+
+### 11.5 Reduction
+
+#### `reduce(reducer, collection)` → Value
+Apply a pure reducer function, using first element as initial accumulator. **Throws RuntimeErr if collection is empty.**
+
+**Permitted types:** List, Set, Dictionary, String, Range, LazySequence
+
+```santa
+// List
+reduce(+, [1, 2])               // 3
+
+// Set
+reduce(+, {1, 2})               // 3
+
+// Dictionary (reducer receives acc, value)
+reduce(+, #{1: 2, 3: 4})        // 6
+
+// Dictionary (reducer can receive acc, value, AND key)
+reduce(|acc, _, k| acc + k, #{1: 2, 3: 4})  // 4
+
+// String (each character)
+reduce(|acc, ch| ch + acc, "ab")  // "ba"
+
+// Ranges
+reduce(+, 1..5)                 // 10
+reduce(+, 1..=5)                // 15
+
+// Unbounded (use break to terminate)
+0.. |> reduce |acc, v| {
+  if v == 10 { break acc } else { acc + v }
+}  // 45
+
+// Lazy Sequence
+iterate(_ + 1, 1) |> reduce |acc, v| {
+  if v == 10 { break acc } else { acc + v }
+}  // 45
+```
+
+#### `fold(initial, folder, collection)` → Value
+Fold with explicit initial value. Returns initial if collection is empty.
+
+**Permitted types:** List, Set, Dictionary, String, Range, LazySequence
+
+```santa
+// List
+fold(0, +, [1, 2])              // 3
+
+// Set
+fold(0, +, {1, 2})              // 3
+
+// Dictionary (folder receives acc, value)
+fold(0, +, #{1: 2, 3: 4})       // 6
+
+// Dictionary (folder can receive acc, value, AND key)
+fold(0, |acc, _, k| acc + k, #{1: 2, 3: 4})  // 4
+
+// String
+fold(0, |acc, _| acc + 1, "ab") // 2
+
+// Ranges
+fold(0, +, 1..5)                // 10
+fold(0, +, 1..=5)               // 15
+
+// Unbounded (use break to terminate)
+0.. |> fold(0) |acc, v| {
+  if v == 10 { break acc } else { acc + v }
+}  // 45
+```
+
+#### `fold_s(initial, folder, collection)` → Value
+Fold with state that passes through each step. The accumulator is a list where first element is the result and remaining elements are state. Only first element is returned.
+
+**Permitted types:** List, Set, Dictionary, String, Range, LazySequence
+
+```santa
+// Track sum and intermediate sums
+50..100 |> fold_s(
+  [0, 0, 0],
+  |[acc, x, y], val| [acc + x * y * val, val, val / 2]
+)
+
+// Fibonacci using state
+fold_s([0, 1], |[a, b], _| [b, a + b], 1..10)  // 55
+```
+
+#### `scan(initial, folder, collection)` → List
+Return all intermediate fold results as a list.
+
+**Permitted types:** List, Set, Dictionary, String, Range
+
+```santa
+// List
+scan(0, +, [1, 2])              // [1, 3]
+
+// Set
+scan(0, +, {1, 2})              // [1, 3]
+
+// Dictionary (folder receives acc, value)
+scan(0, +, #{1: 2, 3: 4})       // [2, 6]
+
+// Dictionary (folder can receive acc, value, AND key)
+scan(0, |acc, _, k| acc + k, #{1: 2, 3: 4})  // [1, 4]
+
+// String
+scan("", +, "ab")               // ["a", "ab"]
+
+// Ranges
+scan(0, +, 1..5)                // [1, 3, 6, 10]
+scan(0, +, 1..=5)               // [1, 3, 6, 10, 15]
+```
+
+### 11.6 Iteration
+
+#### `each(side_effect, collection)` → Nil
+Apply a side-effecting function to each element. Always returns `nil`. Can use `break` to terminate early.
+
+**Permitted types:** List, Set, Dictionary, String, Range, LazySequence
+
+```santa
+// List
+let mut acc = 0;
+each(|v| acc = acc + v, [1, 2]);
+acc  // 3
+
+// Set
+let mut acc = 0;
+each(|v| acc = acc + v, {1, 2});
+acc  // 3
+
+// Dictionary (receives value)
+let mut acc = 0;
+each(|v| acc = acc + v, #{1: 2, 3: 4});
+acc  // 6
+
+// Dictionary (can receive both value AND key)
+let mut acc = 0;
+each(|_, k| acc = acc + k, #{1: 2, 3: 4});
+acc  // 4
+
+// String
+let mut acc = 0;
+each(|_| acc = acc + 1, "ab");
+acc  // 2
+
+// Ranges
+let mut acc = 0;
+each(|v| acc = acc + v, 1..5);
+acc  // 10
+
+// Unbounded (use break to terminate)
+let mut acc = 0;
+0.. |> each |v| {
+  if v == 10 { break nil } else { acc = acc + v }
+};
+acc  // 45
+```
+
+### 11.7 Search
+
+#### `find(predicate, collection)` → Value | Nil
+Find first element where predicate returns truthy. Returns `nil` if not found.
+
+**Permitted types:** List, Set, Dictionary, String, Range, LazySequence
+
+```santa
+// List
+find(_ % 2, [1, 2])             // 1
+
+// Set
+find(_ % 2, {1, 2})             // 1
+
+// Dictionary (predicate receives value)
+find(_ % 2, #{1: 2, 3: 4})      // nil (no odd values)
+
+// Dictionary (predicate can receive both value AND key)
+find(|_, k| k % 2, #{1: 2, 3: 4})  // 2
+
+// String
+find(_ == "b", "ab")            // "b"
+
+// Ranges
+find(_ % 2, 1..5)               // 1
+find(_ % 2, 0..)                // 1
+
+// Lazy Sequence
+find(_ % 2, iterate(_ + 1, 1))  // 1
+```
+
+#### `count(predicate, collection)` → Integer
+Count elements where predicate returns truthy.
+
+**Permitted types:** List, Set, Dictionary, String, Range
+
+```santa
+// List
+count(_ % 2, [1, 2, 3, 4])      // 2
+
+// Set
+count(_ % 2, {1, 2, 3, 4})      // 2
+
+// Dictionary (predicate receives value)
+count(_ % 2, #{1: 2, 3: 4})     // 0
+
+// Dictionary (predicate can receive both value AND key)
+count(|_, k| k % 2, #{1: 2, 3: 4})  // 2
+
+// String
+count(_ == "a", "ab")           // 1
+
+// Ranges
+count(_ % 2, 1..5)              // 2
+count(_ % 2, 1..=5)             // 3
+```
+
+### 11.8 Aggregation
+
+#### `sum(collection)` → Integer | Decimal
+Sum all numeric elements. Returns `0` for empty collections.
+
+**Permitted types:** List, Set, Dictionary, Range, LazySequence
+
+```santa
+// List
+sum([1, 2])                     // 3
+sum([1.5, 2.5])                 // 4.0
+sum([])                         // 0
+
+// Set
+sum({1, 2})                     // 3
+
+// Dictionary (sums values)
+sum(#{1: 2, 3: 4})              // 6
+
+// Ranges
+sum(1..5)                       // 10
+sum(1..=5)                      // 15
+```
+
+#### `max(..values)` → Value | Nil
+Find the largest (maximum) element. Can be called with multiple arguments or a single collection. Returns `nil` for empty collections.
+
+**Permitted types:** List, Set, Dictionary, Range, LazySequence (or multiple arguments)
+
+```santa
+// Multiple arguments
+max(1, 2)                       // 2
+
+// Spread list
+max(1, 2) == max([1, 2])        // true
+
+// List
+max([1, 2])                     // 2
+max([])                         // nil
+
+// Set
+max({1, 2})                     // 2
+
+// Dictionary (max of values)
+max(#{1: 2, 3: 4})              // 4
+
+// Ranges
+max(1..5)                       // 4
+max(1..=5)                      // 5
+```
+
+#### `min(..values)` → Value | Nil
+Find the smallest (minimum) element. Can be called with multiple arguments or a single collection. Returns `nil` for empty collections.
+
+**Permitted types:** List, Set, Dictionary, Range, LazySequence (or multiple arguments)
+
+```santa
+// Multiple arguments
+min(1, 2)                       // 1
+
+// Spread list
+min(1, 2) == min([1, 2])        // true
+
+// List
+min([1, 2])                     // 1
+min([])                         // nil
+
+// Set
+min({1, 2})                     // 1
+
+// Dictionary (min of values)
+min(#{1: 2, 3: 4})              // 2
+
+// Ranges
+min(1..5)                       // 1
+min(1..=5)                      // 1
+```
+
+### 11.9 Sequence Manipulation
+
+#### `skip(total, collection)` → Collection
+Skip n elements. For lazy sequences, skip is applied lazily when resolved.
+
+**Permitted types:** List, Set, Range, LazySequence
+
+```santa
+// List
+skip(1, [1, 2, 3])              // [2, 3]
+
+// Set
+skip(1, {1, 2, 3})              // {2, 3}
+
+// Exclusive Range
+skip(2, 1..5)                   // [3, 4]
+
+// Inclusive Range
+skip(2, 1..=5)                  // [3, 4, 5]
+
+// Unbounded Range
+skip(2, 1..) |> take(3)         // [3, 4, 5]
+
+// Lazy Sequence
+skip(2, iterate(_ + 1, 1)) |> take(3)  // [3, 4, 5]
+```
+
+#### `take(total, collection)` → List
+Take n elements. Resolves lazy sequences.
+
+**Permitted types:** List, Set, Range, LazySequence
+
+```santa
+// List
+take(2, [1, 2, 3])              // [1, 2]
+
+// Set
+take(2, {1, 2, 3})              // [1, 2]
+
+// Exclusive Range
+take(2, 1..5)                   // [1, 2]
+
+// Inclusive Range
+take(2, 1..=5)                  // [1, 2]
+
+// Unbounded Range
+take(2, 1..)                    // [1, 2]
+
+// Lazy Sequence
+take(2, iterate(_ + 1, 1))      // [1, 2]
+```
+
+#### `sort(comparator, collection)` → List
+Sort by comparator function. Comparator can return boolean (false = a < b) or integer (negative = a < b, 0 = equal, positive = a > b).
+
+**Permitted types:** List
+
+```santa
+// Using comparison operators
+sort(>, [3, 2, 1])              // [3, 2, 1] (descending)
+sort(<, [3, 2, 1])              // [1, 2, 3] (ascending)
+
+// Using subtraction (integer comparator)
+sort(-, [3, 2, 1])              // [1, 2, 3]
+
+// Custom comparator
+sort(|a, b| a % 2 < b % 2, [1, 2, 3, 4])  // [2, 4, 1, 3] (evens first)
+```
+
+#### `reverse(collection)` → Collection
+Reverse the order of elements.
+
+**Permitted types:** List, String, Range
+
+```santa
+// List
+reverse([1, 2, 3])              // [3, 2, 1]
+
+// String
+reverse("abc")                  // "cba"
+
+// Exclusive Range
+reverse(1..5)                   // [4, 3, 2, 1]
+
+// Inclusive Range
+reverse(1..=5)                  // [5, 4, 3, 2, 1]
+```
+
+#### `rotate(steps, collection)` → List
+Rotate list by n steps. Positive = forward (last moves to start), Negative = backward (first moves to end).
+
+**Permitted types:** List
+
+```santa
+// Positive rotation
+rotate(1, [1, 2, 3])            // [3, 1, 2]
+
+// Negative rotation
+rotate(-1, [1, 2, 3])           // [2, 3, 1]
+
+// Multiple steps
+rotate(2, [1, 2, 3, 4])         // [3, 4, 1, 2]
+```
+
+#### `chunk(size, collection)` → List[List]
+Split into chunks of given size. Last chunk may be smaller.
+
+**Permitted types:** List
+
+```santa
+chunk(2, [1, 2, 3])             // [[1, 2], [3]]
+chunk(2, [1, 2, 3, 4])          // [[1, 2], [3, 4]]
+chunk(3, [1, 2, 3, 4, 5])       // [[1, 2, 3], [4, 5]]
+```
+
+### 11.10 Set Operations
+
+#### `union(..values)` → Set
+Elements found in **any** of the provided collections. Can be called with multiple arguments or a single list of collections.
+
+**Permitted types:** Any combination of List, Set, Range, String
+
+```santa
+// Multiple arguments
+union({1, 2}, [2, 3], 1..4, "abc")  // {1, 2, 3, "a", "b", "c"}
+
+// Single list of collections
+union([{1, 2}, [2, 3], 1..4])       // {1, 2, 3}
+```
+
+#### `intersection(..values)` → Set
+Elements found in **all** of the provided collections. Can be called with multiple arguments or a single list of collections.
+
+**Permitted types:** Any combination of List, Set, Range
+
+```santa
+// Multiple arguments
+intersection({1, 2}, [2, 3], 1..4)  // {2}
+
+// Single list of collections
+intersection([{1, 2}, [2, 3], 1..4])  // {2}
+```
+
+### 11.11 Predicates
+
+#### `includes?(collection, value)` → Boolean
+Check if value is present in collection.
+
+**Permitted types:** List, Set, Dictionary, String, Range, LazySequence
+
+**Note:** For Dictionary, checks if value is a **key** (not a value in the mapping).
+
+```santa
+// List
+includes?([1, 2], 1)            // true
+
+// Set
+includes?({1, 2}, 1)            // true
+
+// Dictionary (checks KEYS, not values)
+includes?(#{"a": 1, "b": 2}, "a")  // true (key exists)
+includes?(#{"a": 1, "b": 2}, 1)    // false (1 is a value, not a key)
+
+// String
+includes?("ab", "a")            // true
+
+// Exclusive Range
+includes?(1..5, 1)              // true
+includes?(1..5, 5)              // false
+
+// Inclusive Range
+includes?(1..=5, 5)             // true
+
+// Unbounded Range
+includes?(1.., 5)               // true
+
+// Lazy Sequence
+includes?(iterate(_ + 1, 1), 5) // true
+```
+
+#### `excludes?(collection, value)` → Boolean
+Check if value is NOT present in collection.
+
+**Permitted types:** List, Set, Dictionary, String, Range, LazySequence
+
+**Note:** For Dictionary, checks if value is NOT a **key** (not checking values in the mapping).
+
+```santa
+// List
+excludes?([1, 2], 3)            // true
+
+// Set
+excludes?({1, 2}, 3)            // true
+
+// Dictionary (checks KEYS, not values)
+excludes?(#{"a": 1, "b": 2}, "c")  // true (key doesn't exist)
+excludes?(#{"a": 1, "b": 2}, "a")  // false (key exists)
+
+// String
+excludes?("ab", "c")            // true
+
+// Exclusive Range
+excludes?(1..5, 6)              // true
+
+// Inclusive Range
+excludes?(1..=5, 6)             // true
+
+// Lazy Sequence
+excludes?(1..10, 20)            // true
+```
+
+#### `any?(predicate, collection)` → Boolean
+Check if **any** element matches predicate.
+
+**Permitted types:** List, Set, String, Range, LazySequence
+
+```santa
+// List
+any?(_ == 1, [1, 2])            // true
+
+// Set
+any?(_ == 1, {1, 2})            // true
+
+// String
+any?(_ == "a", "ab")            // true
+
+// Exclusive Range
+any?(_ == 1, 1..5)              // true
+
+// Inclusive Range
+any?(_ == 1, 1..=5)             // true
+
+// Unbounded Range
+any?(_ == 1, 1..)               // true
+
+// Lazy Sequence
+any?(_ == 1, iterate(_ + 1, 1)) // true
+```
+
+#### `all?(predicate, collection)` → Boolean
+Check if **all** elements match predicate.
+
+**Permitted types:** List, Set, String, Range
+
+```santa
+// List
+all?(_ > 0, [1, 2])             // true
+all?(_ > 0, [-1, 2])            // false
+
+// Set
+all?(_ > 0, {1, 2})             // true
+
+// String (each character is an element)
+all?(_ != "c", "ab")            // true
+all?(_ != "a", "ab")            // false
+
+// Exclusive Range
+all?(_ > 0, 1..5)               // true
+
+// Inclusive Range
+all?(_ > 0, 1..=5)              // true
+```
+
+**Note:** Unlike `any?`, `all?` does NOT support LazySequence or Unbounded Range because checking "all" on an infinite sequence would never terminate (unless a failing element is found early, but this is not guaranteed).
+
+### 11.12 Lazy Sequence Generation
+
+These functions generate lazy sequences for efficient iteration over potentially infinite or large data sets.
+
+#### `zip(collection, ..collections)` → List | LazySequence
+Aggregate multiple collections into tuples. Stops when the shortest collection is exhausted.
+
+**Permitted types:** Any combination of List, Set, String, Range, LazySequence
+
+**Return type:**
+- If ANY collection has finite size → returns List
+- If ALL collections are infinite (unbounded ranges or lazy sequences) → returns LazySequence
+
+```santa
+// Multiple collections
+zip(0.., "abc", [1.5, 2.5, 3.5])
+// [[0, "a", 1.5], [1, "b", 2.5], [2, "c", 3.5]]
+
+// Stops at shortest collection
+zip(0.., "abcdef", [1.5, 2.5, 3.5])
+// [[0, "a", 1.5], [1, "b", 2.5], [2, "c", 3.5]]
+
+// Two infinite sequences → LazySequence
+zip(0.., 1..) |> take(3)        // [[0, 1], [1, 2], [2, 3]]
+```
+
+#### `repeat(value)` → LazySequence
+Generate a lazy sequence that repeats value indefinitely.
+
+**Permitted types:** Any value
+
+```santa
+repeat(1) |> take(3)            // [1, 1, 1]
+repeat("x") |> take(3)          // ["x", "x", "x"]
+repeat([1, 2]) |> take(2)       // [[1, 2], [1, 2]]
+```
+
+#### `cycle(collection)` → LazySequence
+Generate a lazy sequence that cycles through elements indefinitely.
+
+**Permitted types:** List, String
+
+```santa
+// List
+cycle([1, 2, 3]) |> take(7)     // [1, 2, 3, 1, 2, 3, 1]
+
+// String (cycles through characters)
+cycle("abc") |> take(7)         // ["a", "b", "c", "a", "b", "c", "a"]
+```
+
+#### `iterate(generator, initial)` → LazySequence
+Generate a lazy sequence by repeatedly applying generator function to previous result.
+
+**Permitted types:** generator: Function, initial: Any value
+
+```santa
+// Simple increment
+iterate(_ + 1, 0) |> take(5)    // [0, 1, 2, 3, 4]
+
+// Doubling
+iterate(_ * 2, 1) |> take(5)    // [1, 2, 4, 8, 16]
+
+// Fibonacci sequence
+iterate(|[a, b]| [b, a + b], [0, 1])
+  |> skip(9)
+  |> take(1)                    // [[34, 55]]
+```
+
+#### `combinations(size, collection)` → LazySequence
+Generate all combinations of given size from collection.
+
+**Permitted types:** size: Integer, collection: List
+
+```santa
+combinations(2, [1, 2, 3]) |> list
+// [[1, 2], [1, 3], [2, 3]]
+
+combinations(3, [1, 2, 3, 4, 5]) |> list
+// [[1, 2, 3], [1, 2, 4], [1, 2, 5], [1, 3, 4], [1, 3, 5], [1, 4, 5], [2, 3, 4], [2, 3, 5], [2, 4, 5], [3, 4, 5]]
+
+// Find first combination that sums to target
+combinations(3, [1, 2, 3, 4, 5]) |> find(|x| sum(x) == 10)
+// [2, 3, 5]
+```
+
+### 11.13 Range Generation
+
+#### `range(from, to, step)` → LazySequence
+Generate a range with custom step value (instead of default +1 or -1).
+
+**Permitted types:** from: Integer, to: Integer, step: Integer
+
+**Note:** Unlike `..` and `..=` syntax which creates Range objects, `range()` returns a LazySequence.
+
+**Error conditions** (RuntimeErr):
+- Step is zero: `range(1, 10, 0)`
+- Step direction doesn't match from→to direction: `range(1, 10, -1)` or `range(10, 1, 1)`
+
+```santa
+// Ascending with step
+range(0, 10, 2) |> list         // [0, 2, 4, 6, 8]
+range(1, 10, 2) |> list         // [1, 3, 5, 7, 9]
+
+// Descending with negative step
+range(10, 0, -2) |> list        // [10, 8, 6, 4, 2]
+range(10, 1, -3) |> list        // [10, 7, 4]
+
+// Errors
+range(1, 10, -1)                // RuntimeErr: step direction mismatch
+range(1, 10, 0)                 // RuntimeErr: zero step
+```
+
+### 11.14 String Functions
+
+#### `lines(string)` → List[String]
+Split string on newline characters (`\n`).
+
+**Permitted types:** String
+
+```santa
+lines("a\nb\nc")                // ["a", "b", "c"]
+lines("single line")           // ["single line"]
+lines("")                       // [""]
+```
+
+#### `split(separator, string)` → List[String]
+Split string by separator.
+
+**Permitted types:** separator: String, string: String
+
+```santa
+split(",", "a,b,c")             // ["a", "b", "c"]
+split(" ", "hello world")       // ["hello", "world"]
+split("-", "a-b-c")             // ["a", "b", "c"]
+split("", "abc")                // ["a", "b", "c"] (split into characters)
+```
+
+#### `regex_match(pattern, string)` → List[String]
+Match and return capture groups only (NOT the full match).
+
+**Permitted types:** pattern: String (regex), string: String
+
+**Regex flavor**: PCRE (Perl Compatible Regular Expressions). Implementations should use a PCRE-compatible regex engine. The Rust reference implementation uses Rust's `regex` crate (PCRE-like). Features required: character classes (`\d`, `\w`, `\s`), quantifiers (`*`, `+`, `?`, `{n,m}`), groups and captures, alternation (`|`), anchors (`^`, `$`).
+
+```santa
+// Single capture group
+regex_match("(\\d+)", "abc123")             // ["123"]
+
+// Multiple capture groups
+regex_match("(\\w+):(\\d+)", "port:8080")   // ["port", "8080"]
+regex_match("name: (\\w+), age: (\\d+)", "name: Bob, age: 30")
+// ["Bob", "30"]
+
+// No capture groups → empty list
+regex_match("\\d+", "abc123")               // []
+
+// No match → empty list
+regex_match("(\\d+)", "no numbers")         // []
+```
+
+**Error:** Invalid regex pattern causes RuntimeErr.
+
+#### `regex_match_all(pattern, string)` → List[String]
+Match all occurrences of pattern (entire match, not just groups).
+
+**Permitted types:** pattern: String (regex), string: String
+
+```santa
+regex_match_all("\\d+", "a1b2c3")           // ["1", "2", "3"]
+regex_match_all("\\w+", "hello world")      // ["hello", "world"]
+regex_match_all("\\w+: \\w+", "name: Bob, age: 30")
+// ["name: Bob", "age: 30"]
+```
+
+#### `md5(value)` → String
+Return the MD5 hash of a string as a lowercase hexadecimal string.
+
+**Permitted types:** String
+
+```santa
+md5("hello") // "5d41402abc4b2a76b9719d911017c592"
+md5("") // "d41d8cd98f00b204e9800998ecf8427e"
+md5("Santa") // "7eb8e54e9f3ff5e3dd4e6dc90c18f1b5"
+```
+
+#### `upper(string)` → String
+Convert string to uppercase.
+
+**Permitted types:** String
+
+```santa
+upper("hello")                  // "HELLO"
+upper("Hello World")            // "HELLO WORLD"
+upper("123abc")                 // "123ABC"
+```
+
+#### `lower(string)` → String
+Convert string to lowercase.
+
+**Permitted types:** String
+
+```santa
+lower("HELLO")                  // "hello"
+lower("Hello World")            // "hello world"
+lower("123ABC")                 // "123abc"
+```
+
+#### `replace(pattern, replacement, string)` → String
+Replace all occurrences of pattern with replacement in string.
+
+**Permitted types:** pattern: String, replacement: String, string: String
+
+```santa
+replace("o", "0", "hello world")    // "hell0 w0rld"
+replace(" ", "-", "hello world")    // "hello-world"
+replace("abc", "xyz", "abcabc")     // "xyzxyz"
+replace("x", "y", "hello")          // "hello" (no match)
+```
+
+#### `join(separator, collection)` → String
+Join collection elements into a string with separator between each element.
+
+**Permitted types:** separator: String, collection: List | Set
+
+```santa
+join(", ", [1, 2, 3])               // "1, 2, 3"
+join("-", ["a", "b", "c"])          // "a-b-c"
+join("", ["h", "e", "l", "l", "o"]) // "hello"
+join(", ", #{1, 2, 3})              // "1, 2, 3" (set order may vary)
+```
+
+### 11.15 Math Functions
+
+#### `abs(value)` → Integer | Decimal
+Return the absolute value of a number.
+
+**Permitted types:** Integer, Decimal
+
+```santa
+// Integer
+abs(-5)                         // 5
+abs(5)                          // 5
+abs(0)                          // 0
+
+// Decimal
+abs(-3.7)                       // 3.7
+abs(-1.5)                       // 1.5
+```
+
+#### `signum(value)` → Integer
+Return the sign of a number: -1 (negative), 0 (zero), or 1 (positive).
+
+**Permitted types:** Integer, Decimal
+
+```santa
+// Integer
+signum(5)                       // 1
+signum(0)                       // 0
+signum(-3)                      // -1
+
+// Decimal
+signum(5.5)                     // 1
+signum(-5.5)                    // -1
+```
+
+#### `vec_add(a, b)` → List
+Vector addition: element-wise sum of two lists. Result length equals shorter list.
+
+**Permitted types:** a: List, b: List
+
+```santa
+vec_add([1, 2], [3, 4])         // [4, 6]
+vec_add([1, 2, 3], [4, 5, 6])   // [5, 7, 9]
+
+// Shorter list determines result length
+vec_add([1, 2, 3], [10, 20])    // [11, 22]
+```
+
+### 11.16 Utility Functions
+
+#### `id(value)` → Value
+Identity function: returns input unchanged. Useful for function composition.
+
+**Permitted types:** Any value
+
+```santa
+id(42)                          // 42
+id("hello")                     // "hello"
+id([1, 2, 3])                   // [1, 2, 3]
+
+// Useful in pipelines or as default mapper
+[1, 2, 3] |> map(id)            // [1, 2, 3]
+```
+
+#### `type(value)` → String
+Get the type name of a value as a String.
+
+**Permitted types:** Any value
+
+**Returns:** One of: "Nil", "Integer", "Decimal", "Boolean", "String", "List", "Set", "Dictionary", "LazySequence", "Function"
+
+```santa
+type(nil)                       // "Nil"
+type(42)                        // "Integer"
+type(3.14)                      // "Decimal"
+type(true)                      // "Boolean"
+type("hello")                   // "String"
+type([1, 2, 3])                 // "List"
+type({1, 2, 3})                 // "Set"
+type(#{a: 1})                   // "Dictionary"
+type(1..)                       // "LazySequence"
+type(|x| x)                     // "Function"
+```
+
+#### `memoize(function)` → Function
+Return a memoized version of a function. Caches results based on arguments for improved performance on repeated calls with same arguments.
+
+**Permitted types:** Function
+
+**Use case:** Trade memory for speed when a pure function is called repeatedly with the same arguments (e.g., recursive algorithms).
+
+```santa
+// Fibonacci without memoization - exponential time
+let fib_slow = |n| if n > 1 { fib_slow(n - 1) + fib_slow(n - 2) } else { n };
+
+// Fibonacci with memoization - linear time
+let fib = memoize |n| {
+  if n > 1 { fib(n - 1) + fib(n - 2) } else { n }
+};
+
+fib(30)                         // 832040 (fast)
+fib(50)                         // 12586269025 (still fast)
+```
+
+#### `or(a, b)` → Value
+Logical OR as a standalone function. Returns first truthy value or last value.
+
+**Permitted types:** Any values (uses truthiness rules)
+
+**Use case:** Can be used as a first-class function in `reduce` and other higher-order operations.
+
+```santa
+or(true, false)                 // true
+or(false, false)                // false
+or(nil, 5)                      // 5 (returns first truthy or last)
+or(0, 10)                       // 10 (0 is falsy)
+
+// As first-class function
+reduce(or, [false, false, true])  // true
+reduce(or, [nil, nil, "found"])   // "found"
+```
+
+#### `and(a, b)` → Value
+Logical AND as a standalone function. Returns first falsy value or last value.
+
+**Permitted types:** Any values (uses truthiness rules)
+
+**Use case:** Can be used as a first-class function in `reduce` and other higher-order operations.
+
+```santa
+and(true, true)                 // true
+and(true, false)                // false
+and(5, 10)                      // 10 (both truthy, returns last)
+and(nil, 5)                     // nil (returns first falsy)
+
+// As first-class function
+reduce(and, [true, true, false])  // false
+reduce(and, [1, 2, 3])            // 3
+```
+
+#### `evaluate(source)` → Value
+Evaluate a string as Santa code in a sandboxed interpreter.
+
+**Permitted types:** String (valid Santa source code)
+
+**Security note:** Runs in an isolated sandbox. Cannot access variables from the calling environment.
+
+```santa
+evaluate("1 + 2")               // 3
+evaluate("[1, 2, 3]")           // [1, 2, 3]
+evaluate("1.. |> filter(_ % 2) |> take(3)")
+// [1, 3, 5]
+
+// Complex expressions
+evaluate("let x = 10; x * 2")   // 20
+```
+
+---
+
+## 12. AOC Runner
+
+The AOC (Advent of Code) Runner provides a structured environment for solving AoC puzzles.
+
+### 12.1 Solution Structure
+
+Solutions are organized into **sections**. Sections are **top-level only** constructs and cannot be nested inside blocks or other expressions.
+
+```santa
+input: read("aoc://2022/1")
+
+part_one: {
+  // Solution expression
+}
+
+part_two: {
+  // Solution expression
+}
+
+test: {
+  input: "test data"
+  part_one: expected_value
+  part_two: expected_value
+}
+```
+
+Sections use the syntax: `identifier: expression` and can only appear at the top level of a program file.
+
+**Section Syntax Forms:**
+```santa
+// Expression form - single expression
+input: read("aoc://2022/1")
+
+// Block form - multiple statements
+part_one: {
+  let data = input |> lines;
+  data |> map(int) |> sum
+}
+```
+
+Trailing semicolons after sections are optional.
+
+### 12.2 Sections
+
+#### Input Section
+
+```santa
+input: read("aoc://year/day")
+```
+
+The `input` variable is automatically bound and available in `part_one` and `part_two` sections.
+
+**Note:** Only ONE `input` section is allowed per file. Multiple `input` sections cause a runtime error.
+
+#### Part Sections
+
+```santa
+part_one: {
+  // Return the answer
+}
+
+part_two: {
+  // Return the answer
+}
+```
+
+Parts can also be single expressions:
+
+```santa
+part_one: input |> lines |> map(int) |> sum
+```
+
+**Note:** Only ONE `part_one` and ONE `part_two` section is allowed per file. Multiple definitions cause a runtime error.
+
+#### Test Sections
+
+```santa
+test: {
+  input: "test input"
+  part_one: expected_result
+  part_two: expected_result
+}
+```
+
+Multiple test blocks can be defined:
+
+```santa
+test: {
+  input: "example 1"
+  part_one: 10
+}
+
+test: {
+  input: "example 2"
+  part_one: 20
+}
+
+test: {
+  input: read("aoc://2022/1")
+  part_one: 71300
+  part_two: 209691
+}
+```
+
+#### Slow Test Attribute
+
+Tests that are expensive or take a long time to run can be marked with the `@slow` attribute:
+
+```santa
+@slow
+test: {
+  input: read("aoc://2022/1")
+  part_one: 71300
+  part_two: 209691
+}
+```
+
+Slow tests are **skipped by default** during test execution, allowing for faster iteration during development. To include slow tests, use the `-s` or `--slow` CLI flag:
+
+```bash
+santa-cli -t -s solution.santa
+```
+
+This is useful for tests that validate against the actual puzzle input, which may be computationally expensive compared to the smaller example inputs.
+
+### 12.3 Complete Example
+
+```santa
+input: read("aoc://2022/1")
+
+let parse_inventories = split("\n\n") >> map(ints >> sum);
+
+part_one: {
+  parse_inventories(input) |> max;
+}
+
+part_two: {
+  parse_inventories(input)
+    |> sort(<)
+    |> take(3)
+    |> sum;
+}
+
+test: {
+  input: "1000
+2000
+3000
+
+4000
+
+5000
+6000
+
+7000
+8000
+9000
+
+10000"
+  part_one: 24000
+  part_two: 45000
+}
+
+test: {
+  input: read("aoc://2022/1")
+  part_one: 71300
+  part_two: 209691
+}
+```
+
+### 12.4 Runner Behavior
+
+**Solution Execution:**
+1. Evaluates all top-level statements and sections
+2. Evaluates the `input` section (if present)
+3. Binds the `input` variable in `part_one` and `part_two` scopes
+4. Evaluates `part_one` section (if present)
+5. Evaluates `part_two` section (if present)
+6. Benchmarks execution time for each part
+7. Displays results
+
+**Test Execution:**
+1. For each `test` block:
+   - Creates a fresh environment inheriting top-level definitions
+   - Evaluates the test block's `input` section
+   - Runs `part_one` with the test's input and compares to expected value
+   - Runs `part_two` with the test's input and compares to expected value
+2. Reports pass/fail status for each test case
+
+**Error Handling:**
+- Multiple `input` sections → RuntimeErr: "Expected a single 'input' section"
+- Multiple `part_one` sections → RuntimeErr: "Expected single 'part_one' solution"
+- Multiple `part_two` sections → RuntimeErr: "Expected single 'part_two' solution"
+
+### 12.5 Script Mode
+
+When a file contains **no** `part_one` or `part_two` sections, it runs as a plain script:
+
+```santa
+// script.santa - no part sections
+let data = [1, 2, 3, 4, 5];
+let result = data |> map(_ * 2) |> sum;
+result  // Returns 30
+```
+
+In script mode:
+- All statements are evaluated in order
+- The result of the last expression is returned
+- No test execution occurs
+- Useful for quick experimentation, utilities, or REPL sessions
+
+---
+
+## 13. External Functions
+
+External functions are provided by the runtime environment.
+
+### 13.1 Standard External Functions
+
+#### `read(path)` → String
+Read file contents.
+
+**Supported schemes:**
+- Local files: `read("./input.txt")`
+- HTTP(S): `read("https://example.com/data.txt")`
+- AOC: `read("aoc://year/day")` (fetches puzzle input)
+
+```santa
+let input = read("aoc://2022/1");
+let data = read("./data.txt");
+```
+
+#### `puts(..values)` → Nil
+Print values to stdout.
+
+```santa
+puts("Hello, world!");
+puts("x =", x, "y =", y);
+```
+
+### 13.2 REPL-Specific Functions
+
+#### `env()` → Nil
+Print REPL environment (variables and functions).
+
+```santa
+env()
+```
+
+### 13.3 Runtime-Specific External Functions
+
+Different runtimes may provide additional external functions:
+- **CLI**: File system access
+- **Web**: User-defined JavaScript functions
+- **Lambda**: AWS-specific functions
+
+---
+
+## 14. Semantics
+
+### 14.1 Truthy and Falsy Values
+
+Santa uses truthy/falsy semantics for conditionals:
+
+| Type          | Truthy              | Falsy            |
+|---------------|---------------------|------------------|
+| Integer       | Non-zero            | `0`              |
+| Decimal       | Non-zero            | `0.0`            |
+| String        | Non-empty           | `""`             |
+| List          | Non-empty           | `[]`             |
+| Set           | Non-empty           | `{}`             |
+| Dictionary    | Non-empty           | `#{}`            |
+| Lazy Sequence | Always truthy       | N/A              |
+| Function      | Always truthy       | N/A              |
+| Nil           | N/A                 | `nil` (falsy)    |
+
+Examples:
+```santa
+if 1 { "yes" }          // "yes"
+if 0 { "yes" }          // nil
+if "" { "yes" }         // nil
+if "hi" { "yes" }       // "yes"
+if [] { "yes" }         // nil
+if [1] { "yes" }        // "yes"
+```
+
+### 14.2 Expression Evaluation
+
+- Every construct is an expression and evaluates to a value
+- Blocks return the value of the last expression
+- If-expressions without else branches return `nil` when false
+- Match expressions return `nil` if no pattern matches
+
+### 14.3 Lazy Evaluation
+
+Ranges and lazy sequences are evaluated lazily:
+
+```santa
+1..  // Infinite range, not evaluated until consumed
+iterate(_ + 1, 0)  // Infinite sequence
+
+1.. |> take(5)  // Only evaluates first 5 elements
+```
+
+### 14.4 Persistent Data Structures
+
+All collections (List, Set, Dictionary) are persistent:
+- Operations return new collections
+- Original collections remain unchanged
+
+```santa
+let list = [1, 2, 3];
+let new_list = list |> push(4);
+list      // [1, 2, 3]
+new_list  // [1, 2, 3, 4]
+```
+
+### 14.5 Operator Precedence
+
+From highest to lowest precedence:
+
+| Level | Operators | Associativity | Description |
+|-------|-----------|---------------|-------------|
+| 1 | `[]` | Left | Indexing |
+| 2 | `()` | Left | Function call |
+| 3 | `!` `-` (unary) | Right | Prefix operators (NOT, negation) |
+| 4 | `*` `/` `%` `` ` `` | Left | Multiply, divide, modulo, infix call |
+| 5 | `+` `-` | Left | Addition, subtraction |
+| 6 | `>>` `\|>` `..` `..=` | Left | Composition, pipeline, ranges |
+| 7 | `<` `<=` `>` `>=` | Left | Comparison |
+| 8 | `==` `!=` | Left | Equality |
+| 9 | `&&` | Left | Logical AND |
+| 10 | `\|\|` | Left | Logical OR |
+| 11 | `=` | Right | Assignment |
+
+**Important notes:**
+- Pipeline `|>`, composition `>>`, and range operators `..`/`..=` share the same precedence level (Composition)
+- This means `1..5 + 1` parses as `1..(5+1)` since `+` binds tighter than `..`
+- Logical AND `&&` binds tighter than OR `||`, so `a || b && c` parses as `a || (b && c)`
+- Infix function calls using backticks have the same precedence as multiplication
+
+### 14.6 Scoping Rules
+
+- Lexical scoping (variables accessible in nested scopes)
+- Variables can be shadowed in nested scopes
+- **Built-in functions are protected** and cannot be shadowed - attempting to bind a variable with the same name as a built-in function results in a runtime error
+- Closures capture variables from enclosing scopes
+
+```santa
+let sum = |list| ...;  // Error: 'sum' is a protected built-in function
+let my_sum = |list| ...; // OK: different name
+```
+
+### 14.7 Function Application
+
+- Functions are applied eagerly (arguments evaluated before call)
+- Partial application via `_` placeholder
+- Variadic functions with `..` rest parameters
+
+---
+
+## 15. Implementation Notes
+
+### 15.1 Reference Implementations
+
+**TypeScript Implementation:**
+- Repository: `eddmann/santa-lang-ts`
+- Type: Tree-walking interpreter
+- Status: Initial implementation
+
+**Rust Implementation:**
+- Repository: `eddmann/santa-lang-rs`
+- Type: Bytecode VM (recommended)
+- Status: Performance-optimized
+
+### 15.2 Runtime Targets
+
+1. **CLI** (Linux, macOS, Docker)
+   - Execute solution files
+   - Run test suites
+   - REPL (Rust only)
+   - CPU profiling (Rust only)
+
+2. **Web** (WASM/JavaScript)
+   - Browser execution
+   - Web Worker support
+   - Node.js support
+   - User-defined external functions
+
+3. **Lambda** (AWS)
+   - AWS Lambda (provided.al2)
+   - Handler-based execution
+   - Shared initialization
+
+4. **PHP Extension** (Linux/GNU)
+   - Native PHP extension
+   - Solution/test/expression evaluation
+
+5. **Jupyter Kernel** (Linux, macOS)
+   - Jupyter Notebook integration
+   - Shared environment across cells
+
+### 15.3 Key Implementation Considerations
+
+**Parser:**
+- Expression-oriented grammar
+- Operator precedence parsing
+- Pattern matching in match expressions
+
+**Evaluator:**
+- Tree-walking (TypeScript) or bytecode VM (Rust)
+- Tail-call optimization for recursive functions
+- Lazy evaluation for ranges and sequences
+
+**Memory Management:**
+- Persistent data structures (structural sharing)
+- Garbage collection (runtime-dependent)
+
+**Type System:**
+- Dynamic typing
+- Runtime type checking
+- No static type analysis
+
+**External Functions:**
+- Runtime-specific external function registry
+- File I/O, HTTP requests, environment access
+
+**AOC Runner:**
+- Section-based execution model
+- Test harness with expected values
+- Benchmarking support
+
+### 15.4 Performance Characteristics
+
+- Tail-call optimization: O(1) stack space for tail-recursive calls
+- Persistent collections: O(log n) updates via structural sharing
+- Lazy sequences: O(1) memory for infinite sequences
+- Memoization: O(1) lookup for cached function results
+
+### 15.5 Error Handling
+
+Santa uses a **graceful degradation** approach to error handling:
+
+**Recoverable errors return `nil`:**
+- Out-of-bounds collection access: `[1, 2][10]` → `nil`
+- Missing dictionary keys: `#{a: 1}["b"]` → `nil`
+- Set membership miss: `{1, 2, 3}[99]` → `nil`
+- `find` with no match: `find(_ > 100, [1, 2, 3])` → `nil`
+- `first` on empty collection: `first([])` → `nil`
+- `second` on collection with <2 elements: `second([1])` → `nil`
+- File/resource errors: `read("nonexistent.txt")` → `nil`
+- Network errors when fetching resources → `nil`
+- Parse failures in `int()`: `int("abc")` → `0`
+- `each` always returns `nil` (side-effect only function)
+
+**Serious errors terminate execution (RuntimeErr):**
+- Invalid syntax in `evaluate()`: `evaluate("1 +")` → RuntimeErr
+- Invalid regex patterns: `regex_match("(unclosed", "x")` → RuntimeErr
+- Type mismatches in operations: `"hello" * "world"` → RuntimeErr
+- Division by zero: `10 / 0` → RuntimeErr
+- `reduce` on empty collection: `reduce(+, [])` → RuntimeErr
+- Identifier not found: `unknown_var` → RuntimeErr
+- Non-hashable value in Set: `{|x| x}` → RuntimeErr
+- Non-hashable Dictionary key: `#{(|x| x): "value"}` → RuntimeErr
+- Wrong function arity: calling `|x, y| x + y` with one argument → RuntimeErr
+- Calling a non-function as a function: `[1, 2, 3](5)` → RuntimeErr
+- `return` or `break` in invalid context → RuntimeErr
+- Shadowing built-in functions → RuntimeErr
+- `range()` with mismatched step direction or zero step → RuntimeErr
+
+Santa does not have explicit exception handling mechanisms (no try/catch).
+
+### 15.6 Future Considerations
+
+- Static type checking (optional)
+- Gradual typing
+- Compiler optimizations
+- More runtime targets
+- Standard library expansion
+
+---
+
+## Appendix A: Grammar Summary
+
+```ebnf
+(* ============ Program Structure ============ *)
+
+program          ::= (statement | section)*
+
+section          ::= identifier ":" expression
+
+statement        ::= return_stmt
+                   | break_stmt
+                   | comment
+                   | let_binding
+                   | expression_stmt
+
+return_stmt      ::= "return" expression ";"?
+break_stmt       ::= "break" expression ";"?
+comment          ::= "//" [^\n]*
+let_binding      ::= "let" "mut"? pattern "=" expression ";"?
+expression_stmt  ::= expression ";"?
+
+(* ============ Patterns ============ *)
+
+pattern          ::= "_"                           (* wildcard *)
+                   | identifier                    (* binding *)
+                   | ".." identifier               (* rest binding *)
+                   | list_pattern                  (* destructuring *)
+                   | literal_pattern               (* literal match *)
+                   | range_pattern                 (* range match *)
+
+list_pattern     ::= "[" list_pattern_items? "]"
+list_pattern_items ::= pattern ("," pattern)* ","?
+
+literal_pattern  ::= integer | decimal | string | "true" | "false" | "nil"
+
+range_pattern    ::= integer ".." integer?         (* exclusive range *)
+                   | integer "..=" integer         (* inclusive range *)
+
+(* ============ Expressions ============ *)
+
+expression       ::= assignment
+                   | or_expr
+
+assignment       ::= identifier "=" expression
+
+or_expr          ::= and_expr (("||") and_expr)*
+and_expr         ::= equality_expr (("&&") equality_expr)*
+equality_expr    ::= comparison_expr (("==" | "!=") comparison_expr)*
+comparison_expr  ::= composition_expr (("<" | "<=" | ">" | ">=") composition_expr)*
+composition_expr ::= sum_expr ((">>" | "|>" | ".." | "..=") sum_expr)*
+sum_expr         ::= product_expr (("+" | "-") product_expr)*
+product_expr     ::= prefix_expr (("*" | "/" | "%" | infix_call) prefix_expr)*
+infix_call       ::= "`" identifier "`"
+prefix_expr      ::= ("!" | "-") prefix_expr | call_expr
+call_expr        ::= index_expr ("(" args? ")" | trailing_lambda)*
+index_expr       ::= primary_expr ("[" expression "]")*
+
+primary_expr     ::= literal
+                   | identifier
+                   | rest_identifier
+                   | placeholder
+                   | grouped_expr
+                   | block
+                   | if_expr
+                   | match_expr
+                   | function
+
+(* ============ Primary Expressions ============ *)
+
+identifier       ::= [a-zA-Z][a-zA-Z0-9_?]*
+rest_identifier  ::= ".." identifier
+placeholder      ::= "_"
+
+grouped_expr     ::= "(" expression ")"
+
+block            ::= "{" statement* "}"
+
+if_expr          ::= "if" if_condition block ("else" (block | if_expr))?
+if_condition     ::= ("let" pattern "=")? expression
+
+match_expr       ::= "match" expression "{" match_arm* "}"
+match_arm        ::= match_pattern ("if" expression)? block
+match_pattern    ::= pattern
+
+function         ::= "|" params? "|" (expression | block)
+params           ::= param ("," param)* ("," ".." identifier)?
+                   | ".." identifier
+param            ::= identifier | "_"
+
+trailing_lambda  ::= "|" params? "|" (expression | block)
+
+(* ============ Literals ============ *)
+
+literal          ::= integer
+                   | decimal
+                   | string
+                   | boolean
+                   | nil
+                   | list
+                   | set
+                   | dict
+                   | range
+
+integer          ::= "-"? [0-9] ([0-9_])*
+decimal          ::= "-"? [0-9] ([0-9_])* "." [0-9] ([0-9_])*
+string           ::= '"' (escape_seq | [^"\\])* '"'
+escape_seq       ::= "\\" ("n" | "t" | "r" | "b" | "f" | "\\" | '"')
+boolean          ::= "true" | "false"
+nil              ::= "nil"
+
+list             ::= "[" list_items? "]"
+list_items       ::= list_item ("," list_item)* ","?
+list_item        ::= spread_expr | expression
+spread_expr      ::= ".." expression
+
+set              ::= "{" set_items? "}"
+set_items        ::= expression ("," expression)* ","?
+
+dict             ::= "#{" dict_items? "}"
+dict_items       ::= dict_entry ("," dict_entry)* ","?
+dict_entry       ::= expression ":" expression    (* explicit key *)
+                   | identifier                   (* shorthand: x means "x": x *)
+
+range            ::= expression ".." expression?   (* exclusive or unbounded *)
+                   | expression "..=" expression   (* inclusive *)
+
+(* ============ Function Call Arguments ============ *)
+
+args             ::= arg ("," arg)* ","?
+arg              ::= spread_expr | expression
+
+(* ============ Keywords ============ *)
+
+keyword          ::= "let" | "mut" | "if" | "else" | "match"
+                   | "return" | "break" | "true" | "false" | "nil"
+```
+
+---
+
+## Appendix B: Built-in Function Reference
+
+| Function | Signature | Description |
+|----------|-----------|-------------|
+| `int` | `(value) -> Integer` | Parse to Integer |
+| `ints` | `(string) -> List[Integer]` | Extract integers from string |
+| `list` | `(value) -> List` | Convert to List |
+| `set` | `(value) -> Set` | Convert to Set |
+| `dict` | `(value) -> Dict` | Convert to Dictionary |
+| `get` | `(index, coll) -> Value \| Nil` | Get element at index |
+| `size` | `(coll) -> Integer` | Get size |
+| `first` | `(coll) -> Value` | Get first element |
+| `second` | `(coll) -> Value` | Get second element |
+| `rest` | `(coll) -> Collection` | Get all but first |
+| `keys` | `(dict) -> List` | Get dictionary keys |
+| `values` | `(dict) -> List` | Get dictionary values |
+| `push` | `(value, coll) -> Collection` | Add value |
+| `assoc` | `(key, value, coll) -> Collection` | Associate key with value |
+| `update` | `(key, fn, coll) -> Collection` | Update using function |
+| `update_d` | `(key, default, fn, coll) -> Collection` | Update with default |
+| `map` | `(fn, coll) -> Collection` | Apply function to each |
+| `filter` | `(pred, coll) -> Collection` | Keep matching elements |
+| `flat_map` | `(fn, coll) -> Collection` | Map and flatten |
+| `filter_map` | `(fn, coll) -> Collection` | Map and filter truthy |
+| `find_map` | `(fn, coll) -> Value \| Nil` | Find first truthy mapped |
+| `reduce` | `(fn, coll) -> Value` | Reduce (first as initial) |
+| `fold` | `(init, fn, coll) -> Value` | Fold with initial |
+| `fold_s` | `(init, fn, coll) -> Value` | Fold with state |
+| `scan` | `(init, fn, coll) -> List` | All intermediate folds |
+| `each` | `(fn, coll) -> Nil` | Apply side-effect |
+| `find` | `(pred, coll) -> Value \| Nil` | Find first matching |
+| `count` | `(pred, coll) -> Integer` | Count matching |
+| `sum` | `(coll) -> Number` | Sum elements |
+| `max` | `(..values) -> Value` | Maximum value |
+| `min` | `(..values) -> Value` | Minimum value |
+| `skip` | `(n, coll) -> Collection` | Skip n elements |
+| `take` | `(n, coll) -> List` | Take n elements |
+| `sort` | `(cmp, coll) -> List` | Sort by comparator |
+| `reverse` | `(coll) -> Collection` | Reverse order |
+| `rotate` | `(steps, coll) -> List` | Rotate list |
+| `chunk` | `(size, coll) -> List[List]` | Split into chunks |
+| `union` | `(..colls) -> Set` | Set union |
+| `intersection` | `(..colls) -> Set` | Set intersection |
+| `includes?` | `(coll, value) -> Boolean` | Check presence |
+| `excludes?` | `(coll, value) -> Boolean` | Check absence |
+| `any?` | `(pred, coll) -> Boolean` | Any match |
+| `all?` | `(pred, coll) -> Boolean` | All match |
+| `zip` | `(coll, ..colls) -> LazySeq` | Zip collections |
+| `repeat` | `(value) -> LazySeq` | Repeat indefinitely |
+| `cycle` | `(list) -> LazySeq` | Cycle through list |
+| `iterate` | `(fn, init) -> LazySeq` | Generate sequence |
+| `combinations` | `(size, coll) -> LazySeq` | Generate combinations |
+| `range` | `(from, to, step) -> Range` | Custom range |
+| `lines` | `(string) -> List[String]` | Split on newlines |
+| `split` | `(sep, string) -> List[String]` | Split by separator |
+| `regex_match` | `(pattern, string) -> List \| Nil` | Match and capture |
+| `regex_match_all` | `(pattern, string) -> List` | Match all |
+| `md5` | `(string) -> String` | MD5 hash |
+| `abs` | `(value) -> Number` | Absolute value |
+| `signum` | `(value) -> Integer` | Sign of number |
+| `vec_add` | `(a, b) -> List` | Vector addition |
+| `bit_and` | `(a, b) -> Integer` | Bitwise AND |
+| `bit_or` | `(a, b) -> Integer` | Bitwise OR |
+| `bit_xor` | `(a, b) -> Integer` | Bitwise XOR |
+| `bit_not` | `(value) -> Integer` | Bitwise NOT |
+| `bit_shift_left` | `(value, shift) -> Integer` | Left shift |
+| `bit_shift_right` | `(value, shift) -> Integer` | Right shift |
+| `id` | `(value) -> Value` | Identity function |
+| `type` | `(value) -> String` | Get type |
+| `memoize` | `(fn) -> Function` | Memoize function |
+| `or` | `(a, b) -> Value` | Logical OR function |
+| `and` | `(a, b) -> Value` | Logical AND function |
+| `evaluate` | `(source) -> Value` | Evaluate code string |
+
+---
+
+## Appendix C: Operator Reference
+
+| Operator | Precedence | Associativity | Description |
+|----------|------------|---------------|-------------|
+| `[]` | 1 (highest) | Left | Indexing |
+| `()` | 2 | Left | Function call |
+| `!` `-` (unary) | 3 | Right | NOT, Negation |
+| `*` `/` `%` `` ` `` | 4 | Left | Multiply, Divide, Modulo, Infix call |
+| `+` `-` | 5 | Left | Add, Subtract |
+| `>>` `\|>` `..` `..=` | 6 | Left | Composition, Pipeline, Range |
+| `<` `>` `<=` `>=` | 7 | Left | Comparison |
+| `==` `!=` `=` | 8 | Left | Equality, Assignment |
+| `&&` `\|\|` | 9 (lowest) | Left | Logical AND, OR |
+
+---
+
+## Appendix D: Example Programs
+
+### Example 1: Fibonacci Sequence
+
+```santa
+let fib = memoize |n| {
+  if n > 1 {
+    fib(n - 1) + fib(n - 2)
+  } else {
+    n
+  }
+};
+
+fib(50)
+```
+
+### Example 2: Advent of Code 2022 Day 1
+
+```santa
+input: read("aoc://2022/1")
+
+let parse_inventories = split("\n\n") >> map(ints >> sum);
+
+part_one: {
+  parse_inventories(input) |> max;
+}
+
+part_two: {
+  parse_inventories(input)
+    |> sort(<)
+    |> take(3)
+    |> sum;
+}
+
+test: {
+  input: "1000\n2000\n3000\n\n4000\n\n5000\n6000"
+  part_one: 24000
+  part_two: 45000
+}
+```
+
+### Example 3: Word Frequency Counter
+
+```santa
+let text = read("./input.txt");
+
+text
+  |> split(" ")
+  |> fold(#{}) |freq, word| {
+    update_d(word, 0, _ + 1, freq)
+  }
+  |> list
+  |> sort(|[_, a], [_, b]| a > b)
+  |> take(10)
+```
+
+### Example 4: Prime Numbers
+
+```santa
+let is_prime = |n| {
+  if n < 2 { return false };
+  2..n |> all?(|d| n % d != 0)
+};
+
+1.. |> filter(is_prime) |> take(100)
+```
+
+### Example 5: Recursive List Sum
+
+```santa
+let sum_list = |list| match list {
+  [] { 0 }
+  [head, ..tail] { head + sum_list(tail) }
+};
+
+sum_list([1, 2, 3, 4, 5])  // 15
+```
+
+---
+
+## Conclusion
+
+This specification provides a complete reference for implementing the Santa programming language. It covers syntax, semantics, type system, operators, control flow, functions, collections, built-in functions, and the AOC Runner environment.
+
+Any implementation conforming to this specification should be able to execute all example programs found in the reference repositories.
+
+For questions or clarifications, refer to the official documentation at the Santa language repository or contact the language author.
+
+---
+
+**End of Specification**
