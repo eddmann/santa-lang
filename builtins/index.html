@@ -2496,6 +2496,8 @@ If the collection is empty then <code>nil</code> is returned.</p>
 </div>
 </div>
 </div>
+<p>!!! note
+    <code>last</code> is not supported for unbounded ranges or infinite lazy sequences as they have no end.</p>
 <h3 id="rest">rest</h3>
 <pre class="highlight"><code>rest(collection)</code></pre>
 <p>Return the collection with the first element omitted (aka <em>tail</em>).
@@ -2559,13 +2561,18 @@ If the List size is not divisible by the chunk size then the last chunk will con
 <h3 id="includes">includes?</h3>
 <pre class="highlight"><code>includes?(collection, value)</code></pre>
 <p>Predicate to assert if a value is present within a given collection, based on <a href="../language/#operators">equality</a> rules.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="36:7"><input checked="checked" id="__tabbed_36_1" name="__tabbed_36" type="radio" /><input id="__tabbed_36_2" name="__tabbed_36" type="radio" /><input id="__tabbed_36_3" name="__tabbed_36" type="radio" /><input id="__tabbed_36_4" name="__tabbed_36" type="radio" /><input id="__tabbed_36_5" name="__tabbed_36" type="radio" /><input id="__tabbed_36_6" name="__tabbed_36" type="radio" /><input id="__tabbed_36_7" name="__tabbed_36" type="radio" /><div class="tabbed-labels"><label for="__tabbed_36_1">List</label><label for="__tabbed_36_2">Set</label><label for="__tabbed_36_3">String</label><label for="__tabbed_36_4">Exclusive Range</label><label for="__tabbed_36_5">Inclusive Range</label><label for="__tabbed_36_6">Unbounded Range</label><label for="__tabbed_36_7">Lazy Sequence</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="36:8"><input checked="checked" id="__tabbed_36_1" name="__tabbed_36" type="radio" /><input id="__tabbed_36_2" name="__tabbed_36" type="radio" /><input id="__tabbed_36_3" name="__tabbed_36" type="radio" /><input id="__tabbed_36_4" name="__tabbed_36" type="radio" /><input id="__tabbed_36_5" name="__tabbed_36" type="radio" /><input id="__tabbed_36_6" name="__tabbed_36" type="radio" /><input id="__tabbed_36_7" name="__tabbed_36" type="radio" /><input id="__tabbed_36_8" name="__tabbed_36" type="radio" /><div class="tabbed-labels"><label for="__tabbed_36_1">List</label><label for="__tabbed_36_2">Set</label><label for="__tabbed_36_3">Dictionary</label><label for="__tabbed_36_4">String</label><label for="__tabbed_36_5">Exclusive Range</label><label for="__tabbed_36_6">Inclusive Range</label><label for="__tabbed_36_7">Unbounded Range</label><label for="__tabbed_36_8">Lazy Sequence</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <pre class="highlight"><code class="language-santa">includes?([1, 2], 1)</code></pre>
 </div>
 <div class="tabbed-block">
 <pre class="highlight"><code class="language-santa">includes?({1, 2}, 1)</code></pre>
+</div>
+<div class="tabbed-block">
+<p>Checks if value is a <strong>key</strong> (not a value in the mapping).</p>
+<pre class="highlight"><code class="language-santa">includes?(#{"a": 1, "b": 2}, "a") // true (key exists)
+includes?(#{"a": 1, "b": 2}, 1)   // false (1 is a value, not a key)</code></pre>
 </div>
 <div class="tabbed-block">
 <p>Each character is considered an element.</p>
@@ -2588,13 +2595,18 @@ If the List size is not divisible by the chunk size then the last chunk will con
 <h3 id="excludes">excludes?</h3>
 <pre class="highlight"><code>excludes?(collection, value)</code></pre>
 <p>Predicate to assert if a value is not present within a given collection, based on <a href="../language/#operators">equality</a> rules.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="37:5"><input checked="checked" id="__tabbed_37_1" name="__tabbed_37" type="radio" /><input id="__tabbed_37_2" name="__tabbed_37" type="radio" /><input id="__tabbed_37_3" name="__tabbed_37" type="radio" /><input id="__tabbed_37_4" name="__tabbed_37" type="radio" /><input id="__tabbed_37_5" name="__tabbed_37" type="radio" /><div class="tabbed-labels"><label for="__tabbed_37_1">List</label><label for="__tabbed_37_2">Set</label><label for="__tabbed_37_3">String</label><label for="__tabbed_37_4">Exclusive Range</label><label for="__tabbed_37_5">Inclusive Range</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="37:6"><input checked="checked" id="__tabbed_37_1" name="__tabbed_37" type="radio" /><input id="__tabbed_37_2" name="__tabbed_37" type="radio" /><input id="__tabbed_37_3" name="__tabbed_37" type="radio" /><input id="__tabbed_37_4" name="__tabbed_37" type="radio" /><input id="__tabbed_37_5" name="__tabbed_37" type="radio" /><input id="__tabbed_37_6" name="__tabbed_37" type="radio" /><div class="tabbed-labels"><label for="__tabbed_37_1">List</label><label for="__tabbed_37_2">Set</label><label for="__tabbed_37_3">Dictionary</label><label for="__tabbed_37_4">String</label><label for="__tabbed_37_5">Exclusive Range</label><label for="__tabbed_37_6">Inclusive Range</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <pre class="highlight"><code class="language-santa">excludes?([1, 2], 3)</code></pre>
 </div>
 <div class="tabbed-block">
 <pre class="highlight"><code class="language-santa">excludes?({1, 2}, 3)</code></pre>
+</div>
+<div class="tabbed-block">
+<p>Checks if value is <strong>not</strong> a key (not checking values in the mapping).</p>
+<pre class="highlight"><code class="language-santa">excludes?(#{"a": 1, "b": 2}, "c") // true (key doesn't exist)
+excludes?(#{"a": 1, "b": 2}, "a") // false (key exists)</code></pre>
 </div>
 <div class="tabbed-block">
 <p>Each character is considered an element.</p>
@@ -2823,7 +2835,19 @@ fibonacci(30)</code></pre>
 <h3 id="type">type</h3>
 <pre class="highlight"><code>type(value)</code></pre>
 <p>Return the type of the given value as a String.</p>
-<pre class="highlight"><code class="language-santa">type(1)</code></pre>
+<p>Returns one of: <code>"Nil"</code>, <code>"Integer"</code>, <code>"Decimal"</code>, <code>"Boolean"</code>, <code>"String"</code>, <code>"List"</code>, <code>"Set"</code>, <code>"Dictionary"</code>, <code>"BoundedRange"</code>, <code>"UnboundedRange"</code>, <code>"LazySequence"</code>, <code>"Function"</code></p>
+<pre class="highlight"><code class="language-santa">type(nil)                       // "Nil"
+type(42)                        // "Integer"
+type(3.14)                      // "Decimal"
+type(true)                      // "Boolean"
+type("hello")                   // "String"
+type([1, 2, 3])                 // "List"
+type({1, 2, 3})                 // "Set"
+type(#{a: 1})                   // "Dictionary"
+type(1..10)                     // "BoundedRange"
+type(1..)                       // "UnboundedRange"
+type(1.. |&gt; map(_ + 1))         // "LazySequence"
+type(|x| x)                     // "Function"</code></pre>
 
 
 

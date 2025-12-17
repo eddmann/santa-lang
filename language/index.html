@@ -1300,12 +1300,13 @@ x = 2;</code></pre>
 5 / 2.25; // 2
 5.0 / 2; // 2.5
 5.0 / 2.25; // 2.22</code></pre>
-<p>Logical <em>OR</em> and <em>AND</em> operations are supported for all values.
+<p>Logical <em>OR</em> and <em>AND</em> operations are supported for all values and always return a Boolean.
 Non-Boolean values are evaluated based on <em>truthy</em> value semantics.</p>
-<pre class="highlight"><code class="language-santa">true || false;
-1 || 0;</code></pre>
-<pre class="highlight"><code class="language-santa">true &amp;&amp; true;
-[1] &amp;&amp; {1};</code></pre>
+<pre class="highlight"><code class="language-santa">true || false; // true
+1 || 0;        // true (1 is truthy)</code></pre>
+<pre class="highlight"><code class="language-santa">true &amp;&amp; true;  // true
+[1] &amp;&amp; {1};    // true (non-empty collections are truthy)
+0 &amp;&amp; 2;        // false (0 is falsy)</code></pre>
 <p>Intuitive equality operations are support for all values.</p>
 <pre class="highlight"><code class="language-santa">1 == 1;
 1.5 == 1.5;
