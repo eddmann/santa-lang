@@ -1136,7 +1136,7 @@ let int_with_underscores = 1_000_000;</code></pre>
 <pre class="highlight"><code class="language-santa">let dec = 1.5;
 let dec_with_underscores = 1_000_000.50;</code></pre>
 <h3 id="string">String</h3>
-<p>Represents UTF-8 encoded character sequences, with support for escape sequences:</p>
+<p>Represents UTF-8 encoded character sequences. Strings are <strong>grapheme-cluster indexed</strong>, meaning each index refers to a visual character. Escape sequences are supported:</p>
 <ul>
 <li><code>\n</code> - newline</li>
 <li><code>\t</code> - tab</li>
@@ -1190,11 +1190,11 @@ set; // {1, 2, 3}</code></pre>
 <h4 id="dictionary">Dictionary</h4>
 <p>Represents an unordered association between arbitrary keys and values.</p>
 <pre class="highlight"><code class="language-santa">let homogeneous_dict = #{"a": 1, "b": 2};
-let heterogeneous_dict = #{[1]: 1.5, 2: true, homogeneous_dict};</code></pre>
+let heterogeneous_dict = #{[1]: 1.5, 2: true, homogeneous_dict};  // [1] is a list key</code></pre>
+<p>Any hashable expression can be used as a key, including integers, lists, and other dictionaries. Lazy Sequences and Functions cannot be used as keys. Note that <code>[1]</code> above is a <strong>list literal</strong> being used as a key, not JavaScript-style computed key syntax.</p>
 <pre class="highlight"><code class="language-santa">let dictionary = #{"a": 1};
 dictionary |&gt; assoc("a", 2); // #{"a": 2}
 dictionary; // #{"a": 1}</code></pre>
-<p>Most types can be used as Dictionary keys, except for Lazy Sequences and Functions.</p>
 <pre class="highlight"><code class="language-santa">let attempted_key = || 1;
 let dictionary = #{attempted_key: "one"}; // Error</code></pre>
 <h3 id="lazy-sequence">Lazy Sequence</h3>
@@ -1278,19 +1278,20 @@ Destructed bindings can be made mutable using the <code>mut</code> keyword.</p>
 <pre class="highlight"><code class="language-santa">let mut [x, y] = [1, 2];
 x = 2;</code></pre>
 <h2 id="operators">Operators</h2>
-<p>Expected arthritic operations on Integer and Decimal values are available, along with intuitive behaviour on other types.</p>
+<p>Arithmetic operations on Integer and Decimal values are available, along with intuitive behaviour on other types.</p>
+<p><strong>Type coercion rule:</strong> For mixed Integer/Decimal operations, the <strong>left operand determines the result type</strong>. If the left operand is an Integer, the result is an Integer; if the left operand is a Decimal, the result is a Decimal.</p>
 <pre class="highlight"><code class="language-santa">1 + 1; // 2
-1 + 2.5; // 3
+1 + 2.5; // 3 (left is Integer, result is Integer)
 1.5 + 3.25; // 4.75
-1.5 + 1; // 2.5
+1.5 + 1; // 2.5 (left is Decimal, result is Decimal)
 "a" + "b"; // "ab"
 [1] + [2, 3]; // [1, 2, 3]
 {1} + {1, 2}; // {1, 2}
-#{1: "one"} + #{2: "two"}; // #{1: "one", 2: "two}</code></pre>
+#{1: "one"} + #{2: "two"}; // #{1: "one", 2: "two"}</code></pre>
 <pre class="highlight"><code class="language-santa">2 - 1; // 1
-2 - 1.5; // 1
+2 - 1.5; // 1 (left is Integer, result is Integer)
 1.5 - 1.25; // 0.25
-1.5 - 1; // 0.50
+1.5 - 1; // 0.5 (left is Decimal, result is Decimal)
 {1, 2} - {1}; // {2}</code></pre>
 <pre class="highlight"><code class="language-santa">2 * 2; // 4
 2.2 * 2; // 4.4
@@ -1322,6 +1323,11 @@ true != false;
 [1, 2, 3] != [1, 2, 3, 4]
 {1, 2, 3} != {1, 2, 3, 4};
 #{"a": 1} != #{"b": 2};</code></pre>
+<p>Comparison operators (<code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>) are only supported for Integer, Decimal, and String types. Comparing other types (List, Set, Dictionary, Function, Lazy Sequence) results in a runtime error.</p>
+<pre class="highlight"><code class="language-santa">5 &lt; 10;       // true
+3.14 &gt;= 2.71; // true
+"abc" &lt; "abd"; // true (lexicographic)
+[1, 2] &lt; [3, 4]; // Runtime error!</code></pre>
 <h3 id="operator-precedence">Operator Precedence</h3>
 <p>From highest to lowest precedence:</p>
 <table>
@@ -1424,14 +1430,17 @@ If a Dictionary key is not present within the collection <code>nil</code> is ret
 dictionary["a"]; // 1
 dictionary["c"]; // nil</code></pre>
 <h3 id="string_1">String</h3>
-<p>String indexing follows much of the same semantics as List indexing, with elements instead being UTF-8 characters.
-The returned element is the single UTF-8 character as represented as a String.</p>
+<p>String indexing is <strong>grapheme-cluster indexed</strong>, meaning each index refers to a visual character (grapheme cluster), not individual bytes or code points. The returned element is a single grapheme as a String.</p>
 <pre class="highlight"><code class="language-santa">let str = "hello";
 
 str[0]; // "h"
 str[-1]; // "o"
 str[5]; // nil
-str[-6]; // nil</code></pre>
+str[-6]; // nil
+
+// Complex Unicode: family emoji is a single grapheme cluster
+let emoji = "👨‍👩‍👧‍👦";
+emoji[0]; // "👨‍👩‍👧‍👦" (entire emoji, not just first code point)</code></pre>
 <p>String slices can be achieved by-way of inclusive/exclusive range indexing, including negative indices.</p>
 <pre class="highlight"><code class="language-santa">let str = "hello";
 
@@ -1555,7 +1564,7 @@ max(..[1, 2, 3]);</code></pre>
 <p>Recursive function invocation is supported.</p>
 <pre class="highlight"><code class="language-santa">let factorial = |n| if n == 0 { 1 } else { n * factorial(n - 1) };
 factorial(10);</code></pre>
-<p>Along with <em>Tail-call optimization</em>.
+<p>Along with <em>Tail-call optimization</em> (TCO).
 To avoid exhausting the call stack, the above <code>factorial</code> function can be rewritten in a tail-recursive form.
 In this case the runtime will reuse the function call stack frame upon each iteration.</p>
 <pre class="highlight"><code class="language-santa">let factorial = |n| {
@@ -1565,6 +1574,13 @@ In this case the runtime will reuse the function call stack frame upon each iter
   recur(1, n);
 };
 factorial(10);</code></pre>
+<p><strong>TCO limitations:</strong></p>
+<ul>
+<li>TCO is available for <strong>self-recursion only</strong> (a function calling itself in tail position)</li>
+<li>Mutual recursion (function A calls B, B calls A) is NOT optimized</li>
+<li>The recursive call must be in <strong>tail position</strong> (the last expression evaluated)</li>
+<li>No operations after the recursive call (e.g., <code>1 + recur(...)</code> is NOT tail position)</li>
+</ul>
 <h3 id="composition">Composition</h3>
 <p>Functions can be <a href="https://en.wikipedia.org/wiki/Function_composition">composed</a> together using the <code>&gt;&gt;</code> syntax.</p>
 <pre class="highlight"><code class="language-santa">let inc_dbl = _ + 1 &gt;&gt; |x| x * x;
