@@ -1,0 +1,66 @@
+---
+description: Publish releases for all santa-lang implementations
+---
+
+# Publish Releases Command
+
+Publish the draft releases for all santa-lang implementations.
+
+## Implementation Repositories
+
+| Codename | GitHub Repo                |
+| -------- | -------------------------- |
+| Comet    | eddmann/santa-lang-rs      |
+| Blitzen  | eddmann/santa-lang-blitzen |
+| Prancer  | eddmann/santa-lang-ts      |
+
+## Task
+
+### 1. Gather Release Information
+
+For each implementation repository, find the draft release:
+
+```bash
+gh release list --repo eddmann/<repo> --json tagName,isDraft,name --limit 5
+```
+
+### 2. Present Summary
+
+Show the user what will be published for each repository:
+
+- Repository name (codename)
+- Release version/tag
+- Brief preview of the release notes (first few lines)
+
+Format as a clear summary table or list.
+
+### 3. Request Confirmation
+
+Ask the user: "Ready to publish these releases? (yes/no)"
+
+**Do NOT proceed without explicit user confirmation.**
+
+### 4. Publish Releases
+
+After user confirms, for each repository with a draft release:
+
+```bash
+gh release edit <draft-tag> --repo eddmann/<repo> --draft=false
+```
+
+### 5. Report Results
+
+After publishing, report:
+
+- Which releases were published successfully
+- Links to the published releases:
+  - https://github.com/eddmann/santa-lang-rs/releases/tag/<tag>
+  - https://github.com/eddmann/santa-lang-blitzen/releases/tag/<tag>
+  - https://github.com/eddmann/santa-lang-ts/releases/tag/<tag>
+
+## Important Notes
+
+- Always show what will be published BEFORE asking for confirmation
+- If a repository has no draft release, report this and skip it
+- If the user declines, do not publish anything
+- Report any errors encountered during publishing
