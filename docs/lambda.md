@@ -11,7 +11,7 @@ This does not expose the Advent of Code runner, and is only primarily concerned 
 
 | Platform     | Release                                                                                                                                      |
 | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| provided.al2 | [`santa-lang-comet-lambda-0.0.10.zip`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.10/santa-lang-comet-lambda-0.0.10.zip) |
+| provided.al2 | [`santa-lang-comet-lambda-0.0.11.zip`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.11/santa-lang-comet-lambda-0.0.11.zip) |
 
 **Note:** Prancer's Lambda runtime can be accessed via the [GitHub repository](https://github.com/eddmann/santa-lang-ts).
 
