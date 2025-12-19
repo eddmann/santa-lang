@@ -61,15 +61,23 @@ After user confirms, update all occurrences in each file. The version appears in
 
 Use find and replace to update from the old version to the new version in all target files.
 
-### 6. Show Changes
+### 6. Format Documentation
 
-After updating, show a git diff of the changes:
+After updating, run Prettier to ensure consistent formatting:
+
+```bash
+npx prettier --write docs/
+```
+
+### 7. Show Changes
+
+After formatting, show a git diff of the changes:
 
 ```bash
 git diff docs/
 ```
 
-### 7. Report Results
+### 8. Report Results
 
 Summarize:
 - Which files were updated

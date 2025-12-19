@@ -60,6 +60,16 @@ make build    # Build static site to ./site
 
 Note: Requires Docker. The runner uses the WASM build of santa-lang to enable interactive code execution in the documentation.
 
+### Formatting Documentation
+
+After making any changes to documentation files, always run Prettier to ensure consistent formatting:
+
+```bash
+npx prettier --write docs/
+```
+
+This applies to all markdown files in the `docs/` directory.
+
 ## Implementations
 
 The language has been implemented multiple times to explore different execution models and technologies. **When making cross-implementation changes (e.g., adding a new built-in function), spawn separate subagents to explore and implement in each project concurrently.**
