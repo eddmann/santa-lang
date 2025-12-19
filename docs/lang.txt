@@ -1038,19 +1038,11 @@ When the last argument to a function is a lambda, it can be written after the ca
 }
 ```
 
-**Direct trailing lambda (without pipeline):**
+**Trailing lambda after function call:**
 ```santa
-[1, 2, 3] map |x| x * 2
-// Parses as: map([1, 2, 3], |x| x * 2)
-
-[1, 2, 3] filter |x| x > 1
-// Parses as: filter([1, 2, 3], |x| x > 1)
-
 fold(0) |acc, x| acc + x
-// Trailing lambda after partial application
+// Equivalent to: fold(0, |acc, x| acc + x)
 ```
-
-The parser auto-applies the collection as the first argument when a trailing lambda follows a function name.
 
 ### 8.9 Recursion and Tail-Call Optimization
 
@@ -1322,7 +1314,12 @@ let age = 30;
 #{name, age, "city": "NYC"}   // Can mix shorthand and explicit entries
 ```
 
-**Note:** Computed key syntax (e.g., `#{[expression]: value}`) is NOT supported. Use explicit string keys or variable shorthand only.
+**Keys:** Any expression can be used as a dictionary key, including integers, strings, lists, and other hashable types:
+```santa
+#{1: "one", "two": 2, [1, 2]: "list key"}
+```
+
+**Note:** The syntax `#{[1]: value}` uses the **list** `[1]` as the key—this is NOT JavaScript-style computed key syntax. In JavaScript, `{[expr]: value}` evaluates `expr` to get the key; in Santa Lang, `#{[expr]: value}` creates a list containing `expr` and uses that list as the key.
 
 **Access:**
 ```santa

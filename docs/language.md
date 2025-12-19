@@ -51,7 +51,7 @@ let dec_with_underscores = 1_000_000.50;
 
 ### String
 
-Represents UTF-8 encoded character sequences, with support for escape sequences:
+Represents UTF-8 encoded character sequences. Strings are **grapheme-cluster indexed**, meaning each index refers to a visual character. Escape sequences are supported:
 
 - `\n` - newline
 - `\t` - tab
@@ -155,16 +155,16 @@ Represents an unordered association between arbitrary keys and values.
 
 ```santa
 let homogeneous_dict = #{"a": 1, "b": 2};
-let heterogeneous_dict = #{[1]: 1.5, 2: true, homogeneous_dict};
+let heterogeneous_dict = #{[1]: 1.5, 2: true, homogeneous_dict};  // [1] is a list key
 ```
+
+Any hashable expression can be used as a key, including integers, lists, and other dictionaries. Lazy Sequences and Functions cannot be used as keys. Note that `[1]` above is a **list literal** being used as a key, not JavaScript-style computed key syntax.
 
 ```santa
 let dictionary = #{"a": 1};
 dictionary |> assoc("a", 2); // #{"a": 2}
 dictionary; // #{"a": 1}
 ```
-
-Most types can be used as Dictionary keys, except for Lazy Sequences and Functions.
 
 ```santa
 let attempted_key = || 1;
@@ -264,24 +264,26 @@ x = 2;
 
 ## Operators
 
-Expected arthritic operations on Integer and Decimal values are available, along with intuitive behaviour on other types.
+Arithmetic operations on Integer and Decimal values are available, along with intuitive behaviour on other types.
+
+**Type coercion rule:** For mixed Integer/Decimal operations, the **left operand determines the result type**. If the left operand is an Integer, the result is an Integer; if the left operand is a Decimal, the result is a Decimal.
 
 ```santa
 1 + 1; // 2
-1 + 2.5; // 3
+1 + 2.5; // 3 (left is Integer, result is Integer)
 1.5 + 3.25; // 4.75
-1.5 + 1; // 2.5
+1.5 + 1; // 2.5 (left is Decimal, result is Decimal)
 "a" + "b"; // "ab"
 [1] + [2, 3]; // [1, 2, 3]
 {1} + {1, 2}; // {1, 2}
-#{1: "one"} + #{2: "two"}; // #{1: "one", 2: "two}
+#{1: "one"} + #{2: "two"}; // #{1: "one", 2: "two"}
 ```
 
 ```santa
 2 - 1; // 1
-2 - 1.5; // 1
+2 - 1.5; // 1 (left is Integer, result is Integer)
 1.5 - 1.25; // 0.25
-1.5 - 1; // 0.50
+1.5 - 1; // 0.5 (left is Decimal, result is Decimal)
 {1, 2} - {1}; // {2}
 ```
 
@@ -333,6 +335,15 @@ true != false;
 [1, 2, 3] != [1, 2, 3, 4]
 {1, 2, 3} != {1, 2, 3, 4};
 #{"a": 1} != #{"b": 2};
+```
+
+Comparison operators (`<`, `>`, `<=`, `>=`) are only supported for Integer, Decimal, and String types. Comparing other types (List, Set, Dictionary, Function, Lazy Sequence) results in a runtime error.
+
+```santa
+5 < 10;       // true
+3.14 >= 2.71; // true
+"abc" < "abd"; // true (lexicographic)
+[1, 2] < [3, 4]; // Runtime error!
 ```
 
 ### Operator Precedence
@@ -411,8 +422,7 @@ dictionary["c"]; // nil
 
 ### String
 
-String indexing follows much of the same semantics as List indexing, with elements instead being UTF-8 characters.
-The returned element is the single UTF-8 character as represented as a String.
+String indexing is **grapheme-cluster indexed**, meaning each index refers to a visual character (grapheme cluster), not individual bytes or code points. The returned element is a single grapheme as a String.
 
 ```santa
 let str = "hello";
@@ -421,6 +431,10 @@ str[0]; // "h"
 str[-1]; // "o"
 str[5]; // nil
 str[-6]; // nil
+
+// Complex Unicode: family emoji is a single grapheme cluster
+let emoji = "👨‍👩‍👧‍👦";
+emoji[0]; // "👨‍👩‍👧‍👦" (entire emoji, not just first code point)
 ```
 
 String slices can be achieved by-way of inclusive/exclusive range indexing, including negative indices.
@@ -633,7 +647,7 @@ let factorial = |n| if n == 0 { 1 } else { n * factorial(n - 1) };
 factorial(10);
 ```
 
-Along with _Tail-call optimization_.
+Along with _Tail-call optimization_ (TCO).
 To avoid exhausting the call stack, the above `factorial` function can be rewritten in a tail-recursive form.
 In this case the runtime will reuse the function call stack frame upon each iteration.
 
@@ -646,6 +660,13 @@ let factorial = |n| {
 };
 factorial(10);
 ```
+
+**TCO limitations:**
+
+- TCO is available for **self-recursion only** (a function calling itself in tail position)
+- Mutual recursion (function A calls B, B calls A) is NOT optimized
+- The recursive call must be in **tail position** (the last expression evaluated)
+- No operations after the recursive call (e.g., `1 + recur(...)` is NOT tail position)
 
 ### Composition
 
