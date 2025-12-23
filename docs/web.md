@@ -1,6 +1,6 @@
 # Web
 
-[![Comet](https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://github.com/eddmann/santa-lang-rs/tree/main/runtime/wasm) [![Prancer](https://img.shields.io/badge/Prancer-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://github.com/eddmann/santa-lang-ts/tree/main/src/web)
+[![Comet](https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://github.com/eddmann/santa-lang-comet/tree/main/runtime/wasm) [![Prancer](https://img.shields.io/badge/Prancer-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://github.com/eddmann/santa-lang-prancer/tree/main/src/web)
 
 The Web runtime is accessible via WebAssembly (WASM) within Comet, and bundled JavaScript within Prancer.
 This enables the interpreter to be run within the Browser, Web Worker and Node environments.
@@ -20,9 +20,9 @@ Both variants provide the following functionality:
 
 | Platform | Release                                                                                         |
 | -------- | ----------------------------------------------------------------------------------------------- |
-| WASM     | [`@eddmann/santa-lang-wasm`](https://github.com/eddmann/santa-lang-rs/pkgs/npm/santa-lang-wasm) |
+| WASM     | [`@eddmann/santa-lang-wasm`](https://github.com/eddmann/santa-lang-comet/pkgs/npm/santa-lang-wasm) |
 
-**Note:** Prancer's Web runtime can be accessed via the [GitHub repository](https://github.com/eddmann/santa-lang-ts).
+**Note:** Prancer's Web runtime can be accessed via the [GitHub repository](https://github.com/eddmann/santa-lang-prancer).
 
 ## API
 

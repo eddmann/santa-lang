@@ -76,9 +76,9 @@ The language has been implemented multiple times to explore different execution 
 
 | Codename | Type | Description | Project Location |
 |----------|------|-------------|------------------|
-| **Comet** | Rust tree-walking interpreter | The primary Rust implementation using AST interpretation | `~/Projects/santa-lang-rs` |
+| **Comet** | Rust tree-walking interpreter | The primary Rust implementation using AST interpretation | `~/Projects/santa-lang-comet` |
 | **Blitzen** | Rust bytecode VM | High-performance Rust implementation with bytecode compilation | `~/Projects/santa-lang-blitzen` |
-| **Prancer** | TypeScript tree-walking interpreter | TypeScript/JavaScript implementation for browser and Node.js | `~/Projects/santa-lang-ts` |
+| **Prancer** | TypeScript tree-walking interpreter | TypeScript/JavaScript implementation for browser and Node.js | `~/Projects/santa-lang-prancer` |
 
 ## Working with Implementations
 

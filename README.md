@@ -70,8 +70,8 @@ The language has been implemented multiple times as a way to explore different e
 
 | Codename | Description                         | Repository                                                          |
 | -------- | ----------------------------------- | ------------------------------------------------------------------- |
-| Comet    | Rust tree-walking interpreter       | [santa-lang-rs](https://github.com/eddmann/santa-lang-rs)           |
+| Comet    | Rust tree-walking interpreter       | [santa-lang-comet](https://github.com/eddmann/santa-lang-comet)     |
 | Blitzen  | Rust bytecode VM                    | [santa-lang-blitzen](https://github.com/eddmann/santa-lang-blitzen) |
-| Prancer  | TypeScript tree-walking interpreter | [santa-lang-ts](https://github.com/eddmann/santa-lang-ts)           |
+| Prancer  | TypeScript tree-walking interpreter | [santa-lang-prancer](https://github.com/eddmann/santa-lang-prancer) |
 
 There is also a [web-based editor](https://github.com/eddmann/santa-lang-editor) available to try santa-lang in the browser.

@@ -1,6 +1,6 @@
 # Jupyter Kernel
 
-[![Comet](https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://github.com/eddmann/santa-lang-rs/tree/main/runtime/jupyter)
+[![Comet](https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://github.com/eddmann/santa-lang-comet/tree/main/runtime/jupyter)
 
 This runtime exposes the language as a [kernel](https://docs.jupyter.org/en/latest/projects/kernels.html) which can be used within a [Jupyter Notebook](https://jupyter.org/).
 Evaluation of the language (and built-ins) is exposed at this time, the AoC Runner is currently not present.
@@ -14,12 +14,12 @@ The kernel is released as a standalone platform binary, which can be installed a
 
 | Platform      | Release                                                                                                                                                        |
 | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Linux (x64)   | [`santa-lang-comet-jupyter-0.0.13-linux-amd64`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.13/santa-lang-comet-jupyter-0.0.13-linux-amd64) |
-| macOS (Intel) | [`santa-lang-comet-jupyter-0.0.13-macos-amd64`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.13/santa-lang-comet-jupyter-0.0.13-macos-amd64) |
+| Linux (x64)   | [`santa-lang-comet-jupyter-0.0.13-linux-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-jupyter-0.0.13-linux-amd64) |
+| macOS (Intel) | [`santa-lang-comet-jupyter-0.0.13-macos-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-jupyter-0.0.13-macos-amd64) |
 
 ## Docker
 
-In addition to the above binaries, a [Dockerfile](https://github.com/eddmann/santa-lang-rs/blob/main/runtime/jupyter/build.Dockerfile) is provided alongside the source to run a containerized JupyterLab instance locally with the kernel pre-installed.
+In addition to the above binaries, a [Dockerfile](https://github.com/eddmann/santa-lang-comet/blob/main/runtime/jupyter/build.Dockerfile) is provided alongside the source to run a containerized JupyterLab instance locally with the kernel pre-installed.
 This eases the process of getting up and running with the Notebook environment.
 
 <figure markdown>

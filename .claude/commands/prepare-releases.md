@@ -10,9 +10,9 @@ Update the draft release descriptions for all santa-lang implementations based o
 
 | Codename | GitHub Repo                | Local Path                    |
 | -------- | -------------------------- | ----------------------------- |
-| Comet    | eddmann/santa-lang-rs      | ~/Projects/santa-lang-rs      |
+| Comet    | eddmann/santa-lang-comet   | ~/Projects/santa-lang-comet   |
 | Blitzen  | eddmann/santa-lang-blitzen | ~/Projects/santa-lang-blitzen |
-| Prancer  | eddmann/santa-lang-ts      | ~/Projects/santa-lang-ts      |
+| Prancer  | eddmann/santa-lang-prancer | ~/Projects/santa-lang-prancer |
 
 ## Task
 
@@ -67,9 +67,9 @@ Notes on the template:
    ```
 
 5. **Report results** with links to each updated draft release:
-   - https://github.com/eddmann/santa-lang-rs/releases
+   - https://github.com/eddmann/santa-lang-comet/releases
    - https://github.com/eddmann/santa-lang-blitzen/releases
-   - https://github.com/eddmann/santa-lang-ts/releases
+   - https://github.com/eddmann/santa-lang-prancer/releases
 
 ## Important Notes
 

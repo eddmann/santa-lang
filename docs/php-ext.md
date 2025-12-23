@@ -1,6 +1,6 @@
 # PHP Extension
 
-[![Comet](https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://github.com/eddmann/santa-lang-rs/tree/main/runtime/php-ext)
+[![Comet](https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://github.com/eddmann/santa-lang-comet/tree/main/runtime/php-ext)
 
 This runtime provides the ability to access the language/runner via a native PHP extension.
 It includes the following functionality:
@@ -19,7 +19,7 @@ Errors that occur within the interpreter are relayed back to the PHP runtime via
 
 | Platform    | Release                                                                                                                                                      |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Linux (x64) | [`santa-lang-comet-php-0.0.13-linux-amd64.so`](https://github.com/eddmann/santa-lang-rs/releases/download/0.0.13/santa-lang-comet-php-0.0.13-linux-amd64.so) |
+| Linux (x64) | [`santa-lang-comet-php-0.0.13-linux-amd64.so`](https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-php-0.0.13-linux-amd64.so) |
 
 ## API
 

@@ -4,7 +4,7 @@ description: Update documentation to reference the latest Comet release version
 
 # Update Documentation Versions Command
 
-Update all version references in the documentation to match the latest published Comet (santa-lang-rs) release.
+Update all version references in the documentation to match the latest published Comet (santa-lang-comet) release.
 
 ## Context
 
@@ -27,7 +27,7 @@ The documentation contains download links and version references for the Comet i
 Fetch the latest published (non-draft) release version for Comet:
 
 ```bash
-gh release list --repo eddmann/santa-lang-rs --json tagName,isDraft --limit 5 | jq -r '.[] | select(.isDraft == false) | .tagName' | head -1
+gh release list --repo eddmann/santa-lang-comet --json tagName,isDraft --limit 5 | jq -r '.[] | select(.isDraft == false) | .tagName' | head -1
 ```
 
 ### 2. Find Current Version in Docs
@@ -86,7 +86,7 @@ Summarize:
 
 ## Important Notes
 
-- Only update Comet (santa-lang-rs) version references
+- Only update Comet (santa-lang-comet) version references
 - Do NOT update `@eddmann/santa-lang-wasm` package version (this is managed separately)
 - Do NOT commit changes automatically - let the user review first
 - If current and latest versions are the same, report this and exit without changes

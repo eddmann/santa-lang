@@ -10,9 +10,9 @@ Publish the draft releases for all santa-lang implementations.
 
 | Codename | GitHub Repo                |
 | -------- | -------------------------- |
-| Comet    | eddmann/santa-lang-rs      |
+| Comet    | eddmann/santa-lang-comet   |
 | Blitzen  | eddmann/santa-lang-blitzen |
-| Prancer  | eddmann/santa-lang-ts      |
+| Prancer  | eddmann/santa-lang-prancer |
 
 ## Task
 
@@ -54,9 +54,9 @@ After publishing, report:
 
 - Which releases were published successfully
 - Links to the published releases:
-  - https://github.com/eddmann/santa-lang-rs/releases/tag/<tag>
+  - https://github.com/eddmann/santa-lang-comet/releases/tag/<tag>
   - https://github.com/eddmann/santa-lang-blitzen/releases/tag/<tag>
-  - https://github.com/eddmann/santa-lang-ts/releases/tag/<tag>
+  - https://github.com/eddmann/santa-lang-prancer/releases/tag/<tag>
 
 ## Important Notes
 
