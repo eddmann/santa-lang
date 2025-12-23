@@ -618,7 +618,7 @@
 
 
 <h1 id="cli">CLI</h1>
-<p><a href="https://github.com/eddmann/santa-lang-rs/tree/main/runtime/cli"><img alt="Comet" src="https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&amp;logo=rust&amp;logoColor=white" /></a> <a href="https://github.com/eddmann/santa-lang-blitzen/tree/main/runtime/cli"><img alt="Blitzen" src="https://img.shields.io/badge/Blitzen-%23000000.svg?style=for-the-badge&amp;logo=rust&amp;logoColor=white" /></a> <a href="https://github.com/eddmann/santa-lang-ts/tree/main/src/cli"><img alt="Prancer" src="https://img.shields.io/badge/Prancer-%23007ACC.svg?style=for-the-badge&amp;logo=typescript&amp;logoColor=white" /></a></p>
+<p><a href="https://github.com/eddmann/santa-lang-comet/tree/main/runtime/cli"><img alt="Comet" src="https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&amp;logo=rust&amp;logoColor=white" /></a> <a href="https://github.com/eddmann/santa-lang-blitzen/tree/main/runtime/cli"><img alt="Blitzen" src="https://img.shields.io/badge/Blitzen-%23000000.svg?style=for-the-badge&amp;logo=rust&amp;logoColor=white" /></a> <a href="https://github.com/eddmann/santa-lang-prancer/tree/main/src/cli"><img alt="Prancer" src="https://img.shields.io/badge/Prancer-%23007ACC.svg?style=for-the-badge&amp;logo=typescript&amp;logoColor=white" /></a></p>
 <p>This runtime provides the ability to access the language/runner via a Command Line Interface (CLI).
 It includes the following functionality:</p>
 <ul>
@@ -638,27 +638,27 @@ It includes the following functionality:</p>
 <tbody>
 <tr>
 <td>Linux (x64)</td>
-<td><a href="https://github.com/eddmann/santa-lang-rs/releases/download/0.0.11/santa-lang-comet-cli-0.0.11-linux-amd64"><code>santa-lang-comet-cli-0.0.11-linux-amd64</code></a></td>
+<td><a href="https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-cli-0.0.13-linux-amd64"><code>santa-lang-comet-cli-0.0.13-linux-amd64</code></a></td>
 </tr>
 <tr>
 <td>Linux (ARM)</td>
-<td><a href="https://github.com/eddmann/santa-lang-rs/releases/download/0.0.11/santa-lang-comet-cli-0.0.11-linux-arm64"><code>santa-lang-comet-cli-0.0.11-linux-arm64</code></a></td>
+<td><a href="https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-cli-0.0.13-linux-arm64"><code>santa-lang-comet-cli-0.0.13-linux-arm64</code></a></td>
 </tr>
 <tr>
 <td>macOS (Intel)</td>
-<td><a href="https://github.com/eddmann/santa-lang-rs/releases/download/0.0.11/santa-lang-comet-cli-0.0.11-macos-amd64"><code>santa-lang-comet-cli-0.0.11-macos-amd64</code></a></td>
+<td><a href="https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-cli-0.0.13-macos-amd64"><code>santa-lang-comet-cli-0.0.13-macos-amd64</code></a></td>
 </tr>
 <tr>
 <td>macOS (ARM)</td>
-<td><a href="https://github.com/eddmann/santa-lang-rs/releases/download/0.0.11/santa-lang-comet-cli-0.0.11-macos-arm64"><code>santa-lang-comet-cli-0.0.11-macos-arm64</code></a></td>
+<td><a href="https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-cli-0.0.13-macos-arm64"><code>santa-lang-comet-cli-0.0.13-macos-arm64</code></a></td>
 </tr>
 <tr>
 <td>Docker</td>
-<td><a href="https://github.com/eddmann/santa-lang-rs/pkgs/container/santa-lang-cli"><code>ghcr.io/eddmann/santa-lang-cli:latest</code></a></td>
+<td><a href="https://github.com/eddmann/santa-lang-comet/pkgs/container/santa-lang-cli"><code>ghcr.io/eddmann/santa-lang-cli:latest</code></a></td>
 </tr>
 </tbody>
 </table>
-<p><strong>Note:</strong> Blitzen and Prancer CLIs can be accessed via their GitHub repositories: <a href="https://github.com/eddmann/santa-lang-blitzen/releases">Blitzen</a>, <a href="https://github.com/eddmann/santa-lang-ts/releases">Prancer</a>.</p>
+<p><strong>Note:</strong> Blitzen and Prancer CLIs can be accessed via their GitHub repositories: <a href="https://github.com/eddmann/santa-lang-blitzen/releases">Blitzen</a>, <a href="https://github.com/eddmann/santa-lang-prancer/releases">Prancer</a>.</p>
 <blockquote>
 <p>The macOS release may require you to remove the <em>quarantine</em> flag from the executable: <code>xattr -d com.apple.quarantine santa-lang-comet-cli-*</code></p>
 </blockquote>
@@ -696,7 +696,7 @@ The path can either be:</p>
 <pre class="highlight"><code>env()</code></pre>
 <p>(REPL only) Prints the current environment's variables</p>
 <h2 id="formatting">Formatting</h2>
-<p><a href="https://github.com/eddmann/santa-lang-rs"><img alt="Comet" src="https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&amp;logo=rust&amp;logoColor=white" /></a></p>
+<p><a href="https://github.com/eddmann/santa-lang-comet"><img alt="Comet" src="https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&amp;logo=rust&amp;logoColor=white" /></a></p>
 <p>The CLI provides an opinionated code formatter that produces consistent, readable output. There are no configuration options - it enforces a single canonical style.</p>
 <pre class="highlight"><code class="language-bash"># Format to stdout
 santa-cli -f solution.santa
@@ -719,7 +719,7 @@ santa-cli -e "let x=1+2" -f</code></pre>
 <p><img alt="CLI Errors" src="../assets/cli-errors.png" width="500" /></p>
 </figure>
 <h2 id="profiling">Profiling</h2>
-<p>Comet's CLI can be built locally (via a Cargo <a href="https://github.com/eddmann/santa-lang-rs/blob/main/runtime/cli/Cargo.toml#L26"><code>profile</code></a> feature flag) with additional <a href="https://github.com/tikv/pprof-rs#flamegraph">flamegraph</a>/<a href="https://github.com/tikv/pprof-rs#use-with-pprof">pprof</a> CPU profiling output for a given solutions' execution.
+<p>Comet's CLI can be built locally (via a Cargo <a href="https://github.com/eddmann/santa-lang-comet/blob/main/runtime/cli/Cargo.toml#L26"><code>profile</code></a> feature flag) with additional <a href="https://github.com/tikv/pprof-rs#flamegraph">flamegraph</a>/<a href="https://github.com/tikv/pprof-rs#use-with-pprof">pprof</a> CPU profiling output for a given solutions' execution.
 This can be useful when trying to determine slow areas of a given solution, to improve its overall performance.</p>
 <figure>
 <p><img alt="CLI Profiler" src="../assets/cli-profiler.png" width="500" /></p>

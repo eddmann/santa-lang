@@ -604,7 +604,7 @@
 
 
 <h1 id="web">Web</h1>
-<p><a href="https://github.com/eddmann/santa-lang-rs/tree/main/runtime/wasm"><img alt="Comet" src="https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&amp;logo=rust&amp;logoColor=white" /></a> <a href="https://github.com/eddmann/santa-lang-ts/tree/main/src/web"><img alt="Prancer" src="https://img.shields.io/badge/Prancer-%23007ACC.svg?style=for-the-badge&amp;logo=typescript&amp;logoColor=white" /></a></p>
+<p><a href="https://github.com/eddmann/santa-lang-comet/tree/main/runtime/wasm"><img alt="Comet" src="https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&amp;logo=rust&amp;logoColor=white" /></a> <a href="https://github.com/eddmann/santa-lang-prancer/tree/main/src/web"><img alt="Prancer" src="https://img.shields.io/badge/Prancer-%23007ACC.svg?style=for-the-badge&amp;logo=typescript&amp;logoColor=white" /></a></p>
 <p>The Web runtime is accessible via WebAssembly (WASM) within Comet, and bundled JavaScript within Prancer.
 This enables the interpreter to be run within the Browser, Web Worker and Node environments.
 As expected, the WASM variant is more performant than the JavaScript implementation, due to being compiled to a lower-level language.
@@ -629,11 +629,11 @@ This variant is also used to execute the runnable examples found within this doc
 <tbody>
 <tr>
 <td>WASM</td>
-<td><a href="https://github.com/eddmann/santa-lang-rs/pkgs/npm/santa-lang-wasm"><code>@eddmann/santa-lang-wasm</code></a></td>
+<td><a href="https://github.com/eddmann/santa-lang-comet/pkgs/npm/santa-lang-wasm"><code>@eddmann/santa-lang-wasm</code></a></td>
 </tr>
 </tbody>
 </table>
-<p><strong>Note:</strong> Prancer's Web runtime can be accessed via the <a href="https://github.com/eddmann/santa-lang-ts">GitHub repository</a>.</p>
+<p><strong>Note:</strong> Prancer's Web runtime can be accessed via the <a href="https://github.com/eddmann/santa-lang-prancer">GitHub repository</a>.</p>
 <h2 id="api">API</h2>
 <p>Both variants expose the same API, shown below as TypeScript type definitions:</p>
 <pre class="highlight"><code class="language-typescript">type InteropType = string | number | object;

@@ -3134,12 +3134,12 @@ let my_sum = |list| ...; // OK: different name
 ### 15.1 Reference Implementations
 
 **TypeScript Implementation:**
-- Repository: `eddmann/santa-lang-ts`
+- Repository: `eddmann/santa-lang-prancer`
 - Type: Tree-walking interpreter
 - Status: Initial implementation
 
 **Rust Implementation:**
-- Repository: `eddmann/santa-lang-rs`
+- Repository: `eddmann/santa-lang-comet`
 - Type: Bytecode VM (recommended)
 - Status: Performance-optimized
 
