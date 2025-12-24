@@ -1278,10 +1278,11 @@ sort(comparator, collection)
 Sort the collection based on a supplied pure `comparator` function.
 The comparator function accepts two values (a, b) from the collection and can either return:
 
-An Boolean value, with `false` signifying _a < b_ and `true` signifying _a > b_.
+A Boolean value, with `true` signifying _a comes after b_ and `false` signifying _a comes before b_.
 
 ```santa
-sort(>, [3, 2, 1])
+sort(<, [3, 2, 1])  // [3, 2, 1] (descending)
+sort(>, [3, 2, 1])  // [1, 2, 3] (ascending)
 ```
 
 An Integer value, with a negative value signifying _a < b_, zero signifying _a == b_, and a positive value signifying _a > b_.
