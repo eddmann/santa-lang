@@ -1,4 +1,4 @@
-# Santa Programming Language Specification
+# santa-lang Programming Language Specification
 
 Version: 1.0
 Authors: Edd Mann
@@ -2202,14 +2202,14 @@ take(2, iterate(_ + 1, 1))      // [1, 2]
 ```
 
 #### `sort(comparator, collection)` → List
-Sort by comparator function. Comparator can return boolean (false = a < b) or integer (negative = a < b, 0 = equal, positive = a > b).
+Sort by comparator function. Comparator can return boolean (true = a comes after b) or integer (negative = a < b, 0 = equal, positive = a > b).
 
 **Permitted types:** List
 
 ```santa
 // Using comparison operators
-sort(>, [3, 2, 1])              // [3, 2, 1] (descending)
-sort(<, [3, 2, 1])              // [1, 2, 3] (ascending)
+sort(<, [3, 2, 1])              // [3, 2, 1] (descending)
+sort(>, [3, 2, 1])              // [1, 2, 3] (ascending)
 
 // Using subtraction (integer comparator)
 sort(-, [3, 2, 1])              // [1, 2, 3]

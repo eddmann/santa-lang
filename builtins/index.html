@@ -2356,8 +2356,9 @@ If the collection is a Lazy Sequence then the collection is resolved with any ou
 <pre class="highlight"><code>sort(comparator, collection)</code></pre>
 <p>Sort the collection based on a supplied pure <code>comparator</code> function.
 The comparator function accepts two values (a, b) from the collection and can either return:</p>
-<p>An Boolean value, with <code>false</code> signifying <em>a &lt; b</em> and <code>true</code> signifying <em>a &gt; b</em>.</p>
-<pre class="highlight"><code class="language-santa">sort(&gt;, [3, 2, 1])</code></pre>
+<p>A Boolean value, with <code>true</code> signifying <em>a comes after b</em> and <code>false</code> signifying <em>a comes before b</em>.</p>
+<pre class="highlight"><code class="language-santa">sort(&lt;, [3, 2, 1])  // [3, 2, 1] (descending)
+sort(&gt;, [3, 2, 1])  // [1, 2, 3] (ascending)</code></pre>
 <p>An Integer value, with a negative value signifying <em>a &lt; b</em>, zero signifying <em>a == b</em>, and a positive value signifying <em>a &gt; b</em>.</p>
 <pre class="highlight"><code class="language-santa">sort(-, [3, 2, 1])</code></pre>
 <h3 id="reverse">reverse</h3>
