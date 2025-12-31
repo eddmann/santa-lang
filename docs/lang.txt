@@ -3112,13 +3112,12 @@ From highest to lowest precedence:
 ### 14.6 Scoping Rules
 
 - Lexical scoping (variables accessible in nested scopes)
-- Variables can be shadowed in nested scopes
-- **Built-in functions are protected** and cannot be shadowed - attempting to bind a variable with the same name as a built-in function results in a runtime error
+- Variables can be shadowed in nested scopes, including built-in function names
 - Closures capture variables from enclosing scopes
 
 ```santa
-let sum = |list| ...;  // Error: 'sum' is a protected built-in function
-let my_sum = |list| ...; // OK: different name
+let sum = |list| list |> fold(0, +);  // OK: shadows built-in 'sum'
+sum([1, 2, 3])  // Calls local 'sum', not built-in
 ```
 
 ### 14.7 Function Application
@@ -3235,7 +3234,6 @@ Santa uses a **graceful degradation** approach to error handling:
 - Wrong function arity: calling `|x, y| x + y` with one argument → RuntimeErr
 - Calling a non-function as a function: `[1, 2, 3](5)` → RuntimeErr
 - `return` or `break` in invalid context → RuntimeErr
-- Shadowing built-in functions → RuntimeErr
 - `range()` with mismatched step direction or zero step → RuntimeErr
 
 Santa does not have explicit exception handling mechanisms (no try/catch).
