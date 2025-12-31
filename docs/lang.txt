@@ -2642,7 +2642,7 @@ Join collection elements into a string with separator between each element.
 join(", ", [1, 2, 3])               // "1, 2, 3"
 join("-", ["a", "b", "c"])          // "a-b-c"
 join("", ["h", "e", "l", "l", "o"]) // "hello"
-join(", ", #{1, 2, 3})              // "1, 2, 3" (set order may vary)
+join(", ", {1, 2, 3})              // "1, 2, 3" (set order may vary)
 ```
 
 ### 11.15 Math Functions
