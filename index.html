@@ -699,9 +699,10 @@ Type inference enables specialization for native LLVM operations, with unknown t
 <p><strong>Runtimes:</strong> CLI</p>
 <h3 id="vixen-c">Vixen (C)</h3>
 <p><strong>Repository:</strong> <a href="https://github.com/eddmann/santa-lang-vixen">eddmann/santa-lang-vixen</a></p>
-<p>Vixen is a lightweight bytecode VM implementation designed for embedded systems.
+<p>Vixen is a lightweight bytecode VM implementing a <strong>subset of santa-lang</strong> designed for embedded systems.
 It compiles santa-lang directly to bytecode and executes on a stack-based virtual machine, targeting microcontrollers like ESP32 and Raspberry Pi Pico.
 This enables running santa-lang on resource-constrained devices with fast startup times.</p>
+<p>To meet MCU memory constraints, Vixen omits <code>regex_match</code> and <code>regex_match_all</code>, uses UTF-8 codepoint indexing for strings (instead of grapheme-cluster), uses float32 for decimals (instead of float64), and limits the <code>memoize</code> cache to 256 entries.</p>
 <p><strong>Runtimes:</strong> CLI (Host, ESP32, RP2040)</p>
 <h3 id="prancer-typescript">Prancer (TypeScript)</h3>
 <p><strong>Repository:</strong> <a href="https://github.com/eddmann/santa-lang-prancer">eddmann/santa-lang-prancer</a></p>
