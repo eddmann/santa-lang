@@ -75,9 +75,11 @@ Type inference enables specialization for native LLVM operations, with unknown t
 
 **Repository:** [eddmann/santa-lang-vixen](https://github.com/eddmann/santa-lang-vixen)
 
-Vixen is a lightweight bytecode VM implementation designed for embedded systems.
+Vixen is a lightweight bytecode VM implementing a **subset of santa-lang** designed for embedded systems.
 It compiles santa-lang directly to bytecode and executes on a stack-based virtual machine, targeting microcontrollers like ESP32 and Raspberry Pi Pico.
 This enables running santa-lang on resource-constrained devices with fast startup times.
+
+To meet MCU memory constraints, Vixen omits `regex_match` and `regex_match_all`, uses UTF-8 codepoint indexing for strings (instead of grapheme-cluster), uses float32 for decimals (instead of float64), and limits the `memoize` cache to 256 entries.
 
 **Runtimes:** CLI (Host, ESP32, RP2040)
 
