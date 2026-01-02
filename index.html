@@ -278,6 +278,20 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#dasher-rust" class="md-nav__link">
+    Dasher (Rust)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vixen-c" class="md-nav__link">
+    Vixen (C)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#prancer-typescript" class="md-nav__link">
     Prancer (TypeScript)
   </a>
@@ -542,6 +556,20 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#dasher-rust" class="md-nav__link">
+    Dasher (Rust)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vixen-c" class="md-nav__link">
+    Vixen (C)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#prancer-typescript" class="md-nav__link">
     Prancer (TypeScript)
   </a>
@@ -640,7 +668,7 @@
 </tr>
 </tbody>
 </table>
-<p>See <a href="#implementations">Implementations</a> below for alternative implementations (Blitzen, Prancer).</p>
+<p>See <a href="#implementations">Implementations</a> below for alternative implementations (Blitzen, Dasher, Vixen, Prancer).</p>
 <h2 id="why">Why?</h2>
 <p>Over the past several years I have been slowly working through the previous Advent of Code calendars.
 For each calendar I opt to solve the puzzles in a new programming language, to familiarise myself with other ways of understanding and working.
@@ -663,6 +691,18 @@ Along with performance considerations, during its development, there was the add
 <p>Blitzen takes a different approach by compiling santa-lang to FrostByte bytecode and executing it on a stack-based virtual machine.
 This bytecode compilation approach explores a different execution model for potential performance improvements over tree-walking interpretation, particularly for computationally intensive puzzles.</p>
 <p><strong>Runtimes:</strong> CLI</p>
+<h3 id="dasher-rust">Dasher (Rust)</h3>
+<p><strong>Repository:</strong> <a href="https://github.com/eddmann/santa-lang-dasher">eddmann/santa-lang-dasher</a></p>
+<p>Dasher takes an ahead-of-time compilation approach, using LLVM to compile santa-lang to native machine code.
+This provides significant performance improvements for computationally intensive puzzles by generating optimized native executables.
+Type inference enables specialization for native LLVM operations, with unknown types falling back to runtime library calls.</p>
+<p><strong>Runtimes:</strong> CLI</p>
+<h3 id="vixen-c">Vixen (C)</h3>
+<p><strong>Repository:</strong> <a href="https://github.com/eddmann/santa-lang-vixen">eddmann/santa-lang-vixen</a></p>
+<p>Vixen is a lightweight bytecode VM implementation designed for embedded systems.
+It compiles santa-lang directly to bytecode and executes on a stack-based virtual machine, targeting microcontrollers like ESP32 and Raspberry Pi Pico.
+This enables running santa-lang on resource-constrained devices with fast startup times.</p>
+<p><strong>Runtimes:</strong> CLI (Host, ESP32, RP2040)</p>
 <h3 id="prancer-typescript">Prancer (TypeScript)</h3>
 <p><strong>Repository:</strong> <a href="https://github.com/eddmann/santa-lang-prancer">eddmann/santa-lang-prancer</a></p>
 <p>Prancer was the initial <a href="https://en.wikipedia.org/wiki/Interpreter_(computing)">tree-walking interpreted</a> reference implementation used whilst creating of the language and runner.

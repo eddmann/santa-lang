@@ -2750,23 +2750,6 @@ fib(30)                         // 832040 (fast)
 fib(50)                         // 12586269025 (still fast)
 ```
 
-#### `evaluate(source)` → Value
-Evaluate a string as Santa code in a sandboxed interpreter.
-
-**Permitted types:** String (valid Santa source code)
-
-**Security note:** Runs in an isolated sandbox. Cannot access variables from the calling environment.
-
-```santa
-evaluate("1 + 2")               // 3
-evaluate("[1, 2, 3]")           // [1, 2, 3]
-evaluate("1.. |> filter(_ % 2) |> take(3)")
-// [1, 3, 5]
-
-// Complex expressions
-evaluate("let x = 10; x * 2")   // 20
-```
-
 ---
 
 ## 12. AOC Runner
@@ -3223,7 +3206,6 @@ Santa uses a **graceful degradation** approach to error handling:
 - `each` always returns `nil` (side-effect only function)
 
 **Serious errors terminate execution (RuntimeErr):**
-- Invalid syntax in `evaluate()`: `evaluate("1 +")` → RuntimeErr
 - Invalid regex patterns: `regex_match("(unclosed", "x")` → RuntimeErr
 - Type mismatches in operations: `"hello" * "world"` → RuntimeErr
 - Division by zero: `10 / 0` → RuntimeErr
@@ -3457,7 +3439,6 @@ keyword          ::= "let" | "mut" | "if" | "else" | "match"
 | `id` | `(value) -> Value` | Identity function |
 | `type` | `(value) -> String` | Get type |
 | `memoize` | `(fn) -> Function` | Memoize function |
-| `evaluate` | `(source) -> Value` | Evaluate code string |
 
 ---
 

@@ -824,13 +824,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#evaluate" class="md-nav__link">
-    evaluate
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#type" class="md-nav__link">
     type
   </a>
@@ -1574,13 +1567,6 @@
           <li class="md-nav__item">
   <a href="#memoize" class="md-nav__link">
     memoize
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#evaluate" class="md-nav__link">
-    evaluate
   </a>
   
 </li>
@@ -2497,8 +2483,9 @@ If the collection is empty then <code>nil</code> is returned.</p>
 </div>
 </div>
 </div>
-<p>!!! note
-    <code>last</code> is not supported for unbounded ranges or infinite lazy sequences as they have no end.</p>
+<!-- prettier-ignore -->
+<p>!!! note</p>
+<pre class="highlight"><code>`last` is not supported for unbounded ranges or infinite lazy sequences as they have no end.</code></pre>
 <h3 id="rest">rest</h3>
 <pre class="highlight"><code>rest(collection)</code></pre>
 <p>Return the collection with the first element omitted (aka <em>tail</em>).
@@ -2829,10 +2816,6 @@ This is a trade-off between space and time complexity.</p>
   }
 };
 fibonacci(30)</code></pre>
-<h3 id="evaluate">evaluate</h3>
-<pre class="highlight"><code>evaluate(source)</code></pre>
-<p>Evaluates the provided String expression within a sandbox <em>santa-lang</em> interpreter.</p>
-<pre class="highlight"><code class="language-santa">evaluate("1.. |&gt; filter(_ % 2) |&gt; take(3)")</code></pre>
 <h3 id="type">type</h3>
 <pre class="highlight"><code>type(value)</code></pre>
 <p>Return the type of the given value as a String.</p>
