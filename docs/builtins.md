@@ -1546,7 +1546,9 @@ If the collection is empty then `nil` is returned.
     last(1..=5)
     ```
 
+<!-- prettier-ignore -->
 !!! note
+
     `last` is not supported for unbounded ranges or infinite lazy sequences as they have no end.
 
 ### rest
@@ -2243,18 +2245,6 @@ let fibonacci = memoize |n| {
   }
 };
 fibonacci(30)
-```
-
-### evaluate
-
-```
-evaluate(source)
-```
-
-Evaluates the provided String expression within a sandbox _santa-lang_ interpreter.
-
-```santa
-evaluate("1.. |> filter(_ % 2) |> take(3)")
 ```
 
 ### type

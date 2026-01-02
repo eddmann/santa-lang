@@ -116,7 +116,7 @@ The language provides built-in functions across these categories:
 - **Math**: `abs`, `vec_add`, `signum`
 - **Bitwise**: `bit_and`, `bit_or`, `bit_xor`, `bit_shift_left`, `bit_shift_right`, `bit_not`
 - **String**: `int`, `ints`, `lines`, `split`, `regex_match`, `regex_match_all`, `md5`, `upper`, `lower`, `replace`, `join`
-- **Miscellaneous**: `range`, `id`, `memoize`, `evaluate`, `type`
+- **Miscellaneous**: `range`, `id`, `memoize`, `type`
 
 ## External Functions (Runtime-Specific)
 
