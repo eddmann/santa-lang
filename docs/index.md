@@ -11,8 +11,8 @@ _Influenced by:_ Rust, Python, Clojure, F#, Scala
 
 The recommended implementation is [Comet](#comet-rust) (Rust tree-walking interpreter).
 
-| Runtime | Platform      | Release                                                                                                                                                        |
-| ------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Runtime | Platform      | Release                                                                                                                                                           |
+| ------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | CLI     | Linux (x64)   | [`santa-lang-comet-cli-0.0.13-linux-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-cli-0.0.13-linux-amd64)         |
 | CLI     | Linux (ARM)   | [`santa-lang-comet-cli-0.0.13-linux-arm64`](https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-cli-0.0.13-linux-arm64)         |
 | CLI     | macOS (Intel) | [`santa-lang-comet-cli-0.0.13-macos-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-cli-0.0.13-macos-amd64)         |
@@ -24,7 +24,7 @@ The recommended implementation is [Comet](#comet-rust) (Rust tree-walking interp
 | Jupyter | Linux (x64)   | [`santa-lang-comet-jupyter-0.0.13-linux-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-jupyter-0.0.13-linux-amd64) |
 | Jupyter | macOS (Intel) | [`santa-lang-comet-jupyter-0.0.13-macos-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-jupyter-0.0.13-macos-amd64) |
 
-See [Implementations](#implementations) below for alternative implementations (Blitzen, Prancer).
+See [Implementations](#implementations) below for alternative implementations (Blitzen, Dasher, Vixen, Prancer).
 
 ## Why?
 
@@ -60,6 +60,26 @@ Blitzen takes a different approach by compiling santa-lang to FrostByte bytecode
 This bytecode compilation approach explores a different execution model for potential performance improvements over tree-walking interpretation, particularly for computationally intensive puzzles.
 
 **Runtimes:** CLI
+
+### Dasher (Rust)
+
+**Repository:** [eddmann/santa-lang-dasher](https://github.com/eddmann/santa-lang-dasher)
+
+Dasher takes an ahead-of-time compilation approach, using LLVM to compile santa-lang to native machine code.
+This provides significant performance improvements for computationally intensive puzzles by generating optimized native executables.
+Type inference enables specialization for native LLVM operations, with unknown types falling back to runtime library calls.
+
+**Runtimes:** CLI
+
+### Vixen (C)
+
+**Repository:** [eddmann/santa-lang-vixen](https://github.com/eddmann/santa-lang-vixen)
+
+Vixen is a lightweight bytecode VM implementation designed for embedded systems.
+It compiles santa-lang directly to bytecode and executes on a stack-based virtual machine, targeting microcontrollers like ESP32 and Raspberry Pi Pico.
+This enables running santa-lang on resource-constrained devices with fast startup times.
+
+**Runtimes:** CLI (Host, ESP32, RP2040)
 
 ### Prancer (TypeScript)
 

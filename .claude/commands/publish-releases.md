@@ -12,6 +12,8 @@ Publish the draft releases for all santa-lang implementations.
 | -------- | -------------------------- |
 | Comet    | eddmann/santa-lang-comet   |
 | Blitzen  | eddmann/santa-lang-blitzen |
+| Dasher   | eddmann/santa-lang-dasher  |
+| Vixen    | eddmann/santa-lang-vixen   |
 | Prancer  | eddmann/santa-lang-prancer |
 
 ## Task
@@ -56,6 +58,8 @@ After publishing, report:
 - Links to the published releases:
   - https://github.com/eddmann/santa-lang-comet/releases/tag/<tag>
   - https://github.com/eddmann/santa-lang-blitzen/releases/tag/<tag>
+  - https://github.com/eddmann/santa-lang-dasher/releases/tag/<tag>
+  - https://github.com/eddmann/santa-lang-vixen/releases/tag/<tag>
   - https://github.com/eddmann/santa-lang-prancer/releases/tag/<tag>
 
 ## Important Notes

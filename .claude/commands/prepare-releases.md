@@ -12,6 +12,8 @@ Update the draft release descriptions for all santa-lang implementations based o
 | -------- | -------------------------- | ----------------------------- |
 | Comet    | eddmann/santa-lang-comet   | ~/Projects/santa-lang-comet   |
 | Blitzen  | eddmann/santa-lang-blitzen | ~/Projects/santa-lang-blitzen |
+| Dasher   | eddmann/santa-lang-dasher  | ~/Projects/santa-lang-dasher  |
+| Vixen    | eddmann/santa-lang-vixen   | ~/Projects/santa-lang-vixen   |
 | Prancer  | eddmann/santa-lang-prancer | ~/Projects/santa-lang-prancer |
 
 ## Task
@@ -69,6 +71,8 @@ Notes on the template:
 5. **Report results** with links to each updated draft release:
    - https://github.com/eddmann/santa-lang-comet/releases
    - https://github.com/eddmann/santa-lang-blitzen/releases
+   - https://github.com/eddmann/santa-lang-dasher/releases
+   - https://github.com/eddmann/santa-lang-vixen/releases
    - https://github.com/eddmann/santa-lang-prancer/releases
 
 ## Important Notes
