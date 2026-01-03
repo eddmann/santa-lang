@@ -79,6 +79,7 @@ The language has been implemented multiple times to explore different execution 
 | **Comet** | Rust tree-walking interpreter | The primary Rust implementation using AST interpretation | `~/Projects/santa-lang-comet` |
 | **Blitzen** | Rust bytecode VM | High-performance Rust implementation with bytecode compilation | `~/Projects/santa-lang-blitzen` |
 | **Dasher** | Rust LLVM-based native compiler | AOT compiler generating native executables via LLVM | `~/Projects/santa-lang-dasher` |
+| **Donner** | Kotlin JVM bytecode compiler | AOT compiler generating JVM bytecode via ASM | `~/Projects/santa-lang-donner` |
 | **Vixen** | C embedded bytecode VM | Lightweight subset VM for microcontrollers (ESP32, Raspberry Pi Pico) | `~/Projects/santa-lang-vixen` |
 | **Prancer** | TypeScript tree-walking interpreter | TypeScript/JavaScript implementation for browser and Node.js | `~/Projects/santa-lang-prancer` |
 

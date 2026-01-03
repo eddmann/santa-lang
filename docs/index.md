@@ -24,7 +24,7 @@ The recommended implementation is [Comet](#comet-rust) (Rust tree-walking interp
 | Jupyter | Linux (x64)   | [`santa-lang-comet-jupyter-0.0.13-linux-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-jupyter-0.0.13-linux-amd64) |
 | Jupyter | macOS (Intel) | [`santa-lang-comet-jupyter-0.0.13-macos-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-jupyter-0.0.13-macos-amd64) |
 
-See [Implementations](#implementations) below for alternative implementations (Blitzen, Dasher, Vixen, Prancer).
+See [Implementations](#implementations) below for alternative implementations (Blitzen, Dasher, Donner, Vixen, Prancer).
 
 ## Why?
 
@@ -39,7 +39,7 @@ Welcome **santa-lang**, my programming language designed to help tackle Advent o
 ## Implementations
 
 The language specification and runtime implementation can be seen as two separate concerns; similar to how the Python language has been implemented within [CPython](https://github.com/python/cpython)/[JPython](https://www.jython.org/), and ECMAScript within [V8](https://v8.dev/)/[SpiderMonkey](https://spidermonkey.dev/).
-There are three implementations of the language (and runner), all of which follow the (informal) specification laid out in this documentation.
+There are multiple implementations of the language (and runner), all of which follow the (informal) specification laid out in this documentation.
 There is feature parity in-regard to the core language, data types and [70+ builtin functions](builtins.md).
 
 ### Comet (Rust)
@@ -68,6 +68,16 @@ This bytecode compilation approach explores a different execution model for pote
 Dasher takes an ahead-of-time compilation approach, using LLVM to compile santa-lang to native machine code.
 This provides significant performance improvements for computationally intensive puzzles by generating optimized native executables.
 Type inference enables specialization for native LLVM operations, with unknown types falling back to runtime library calls.
+
+**Runtimes:** CLI
+
+### Donner (Kotlin)
+
+**Repository:** [eddmann/santa-lang-donner](https://github.com/eddmann/santa-lang-donner)
+
+Donner compiles santa-lang directly to JVM bytecode using the ASM library.
+Programs are compiled to Java `.class` files that run on any Java 21+ runtime, benefiting from JVM optimizations and JIT compilation.
+The implementation uses persistent data structures throughout and includes full support for the AOC runner with test blocks and memoization.
 
 **Runtimes:** CLI
 
