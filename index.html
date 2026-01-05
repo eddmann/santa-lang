@@ -285,6 +285,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#donner-kotlin" class="md-nav__link">
+    Donner (Kotlin)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#vixen-c" class="md-nav__link">
     Vixen (C)
   </a>
@@ -563,6 +570,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#donner-kotlin" class="md-nav__link">
+    Donner (Kotlin)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#vixen-c" class="md-nav__link">
     Vixen (C)
   </a>
@@ -668,7 +682,7 @@
 </tr>
 </tbody>
 </table>
-<p>See <a href="#implementations">Implementations</a> below for alternative implementations (Blitzen, Dasher, Vixen, Prancer).</p>
+<p>See <a href="#implementations">Implementations</a> below for alternative implementations (Blitzen, Dasher, Donner, Vixen, Prancer).</p>
 <h2 id="why">Why?</h2>
 <p>Over the past several years I have been slowly working through the previous Advent of Code calendars.
 For each calendar I opt to solve the puzzles in a new programming language, to familiarise myself with other ways of understanding and working.
@@ -678,7 +692,7 @@ That way if I grow to dislike this language, I only have myself to blame!</p>
 <p>Welcome <strong>santa-lang</strong>, my programming language designed to help tackle Advent of Code puzzles.</p>
 <h2 id="implementations">Implementations</h2>
 <p>The language specification and runtime implementation can be seen as two separate concerns; similar to how the Python language has been implemented within <a href="https://github.com/python/cpython">CPython</a>/<a href="https://www.jython.org/">JPython</a>, and ECMAScript within <a href="https://v8.dev/">V8</a>/<a href="https://spidermonkey.dev/">SpiderMonkey</a>.
-There are three implementations of the language (and runner), all of which follow the (informal) specification laid out in this documentation.
+There are multiple implementations of the language (and runner), all of which follow the (informal) specification laid out in this documentation.
 There is feature parity in-regard to the core language, data types and <a href="builtins/">70+ builtin functions</a>.</p>
 <h3 id="comet-rust">Comet (Rust)</h3>
 <p><strong>Repository:</strong> <a href="https://github.com/eddmann/santa-lang-comet">eddmann/santa-lang-comet</a> ⭐ <em>Recommended</em></p>
@@ -696,6 +710,12 @@ This bytecode compilation approach explores a different execution model for pote
 <p>Dasher takes an ahead-of-time compilation approach, using LLVM to compile santa-lang to native machine code.
 This provides significant performance improvements for computationally intensive puzzles by generating optimized native executables.
 Type inference enables specialization for native LLVM operations, with unknown types falling back to runtime library calls.</p>
+<p><strong>Runtimes:</strong> CLI</p>
+<h3 id="donner-kotlin">Donner (Kotlin)</h3>
+<p><strong>Repository:</strong> <a href="https://github.com/eddmann/santa-lang-donner">eddmann/santa-lang-donner</a></p>
+<p>Donner compiles santa-lang directly to JVM bytecode using the ASM library.
+Programs are compiled to Java <code>.class</code> files that run on any Java 21+ runtime, benefiting from JVM optimizations and JIT compilation.
+The implementation uses persistent data structures throughout and includes full support for the AOC runner with test blocks and memoization.</p>
 <p><strong>Runtimes:</strong> CLI</p>
 <h3 id="vixen-c">Vixen (C)</h3>
 <p><strong>Repository:</strong> <a href="https://github.com/eddmann/santa-lang-vixen">eddmann/santa-lang-vixen</a></p>

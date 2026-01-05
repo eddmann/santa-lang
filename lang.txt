@@ -21,6 +21,7 @@ Last Updated: 2025
 13. [External Functions](#external-functions)
 14. [Semantics](#semantics)
 15. [Implementation Notes](#implementation-notes)
+16. [CLI Output Format Specification](#cli-output-format-specification)
 
 ---
 
@@ -2930,7 +2931,7 @@ test: {
 4. Evaluates `part_one` section (if present)
 5. Evaluates `part_two` section (if present)
 6. Benchmarks execution time for each part
-7. Displays results
+7. Displays results (format depends on CLI flags: text, JSON, or streaming JSONL)
 
 **Test Execution:**
 1. For each `test` block:
@@ -2984,12 +2985,16 @@ let data = read("./data.txt");
 ```
 
 #### `puts(..values)` → Nil
-Print values to stdout.
+Print values to stdout. Values are space-separated in their display format.
 
 ```santa
 puts("Hello, world!");
 puts("x =", x, "y =", y);
 ```
+
+If called with no arguments, no output is produced.
+
+In structured output modes (JSON/JSONL), `puts()` output is captured in the `console` array. See Section 16.3.4 for the console array format and Section 16.4.5 for streaming behavior.
 
 ### 13.2 REPL-Specific Functions
 
@@ -3227,6 +3232,343 @@ Santa does not have explicit exception handling mechanisms (no try/catch).
 - Compiler optimizations
 - More runtime targets
 - Standard library expansion
+
+---
+
+## 16. CLI Output Format Specification
+
+This section defines the machine-readable output formats for CLI implementations. All CLI implementations (Comet, Blitzen, Dasher, Donner, Vixen, Prancer) should produce consistent output following this specification.
+
+### 16.1 Output Modes
+
+The CLI supports three output modes:
+
+| Mode | Flag | Description |
+|------|------|-------------|
+| Text | (default) | Human-readable output with ANSI colors |
+| JSON | `-o json` | Single JSON object after execution completes |
+| JSONL | `-o jsonl` | Real-time streaming with JSON Lines |
+
+**Status Values:**
+
+The `status` field indicates execution state. In JSON batch mode, only `"complete"` or `"error"` appear (execution finishes before output). In JSONL streaming mode, all values appear as execution progresses.
+
+| Level | Valid Status Values | Notes |
+|-------|---------------------|-------|
+| Top-level (solution/script/test) | `"pending"`, `"running"`, `"complete"`, `"error"` | `"error"` replaces entire output in JSON mode |
+| Part (part_one/part_two) | `"pending"`, `"running"`, `"complete"` | Parts don't have individual error status |
+| Individual test | `"pending"`, `"running"`, `"complete"`, `"skipped"` | `"skipped"` for `@slow` tests without `-s` flag |
+
+**Timing:**
+
+All `timestamp_ms` and `duration_ms` values are whole numbers (integers). The `timestamp_ms` clock starts when the CLI begins execution, before any parsing or evaluation occurs.
+
+### 16.2 Output Type Detection
+
+The output type is determined by the source content and CLI flags:
+
+| Type | Condition |
+|------|-----------|
+| `"solution"` | Source contains `part_one` and/or `part_two` sections (default execution) |
+| `"script"` | Source contains no `part_one`/`part_two` sections (default execution) |
+| `"test"` | Running with `-t` flag |
+| `"error"` | An error occurred during execution (JSON mode only) |
+
+Inline expressions (`-e`) follow the same detection rules as files.
+
+### 16.3 JSON Batch Format
+
+Outputs a single JSON object after execution completes. Useful for integration with editors, CI systems, and other tools.
+
+**Value Representation:** All values are serialized as strings. This includes `nil` (as `"nil"`), numbers, lists (e.g., `"[1, 2, 3]"`), and all other types using their display format.
+
+#### 16.3.1 Solution Output
+
+```json
+{
+  "type": "solution",
+  "status": "complete",
+  "part_one": { "status": "complete", "value": "232", "duration_ms": 5 },
+  "part_two": { "status": "complete", "value": "1783", "duration_ms": 12 },
+  "console": []
+}
+```
+
+If a solution only defines `part_one` (no `part_two`), the `part_two` field is **omitted entirely** from the output. Similarly, if a solution only defines `part_two` (no `part_one`), the `part_one` field is omitted.
+
+#### 16.3.2 Script Output
+
+When no `part_one`/`part_two` sections are defined:
+
+```json
+{
+  "type": "script",
+  "status": "complete",
+  "value": "42",
+  "duration_ms": 1,
+  "console": [{ "timestamp_ms": 0, "message": "debug: processing input" }]
+}
+```
+
+The `value` is the result of the last expression. For empty files or files with only comments, the value is `"nil"`.
+
+#### 16.3.3 Test Output
+
+```json
+{
+  "type": "test",
+  "status": "complete",
+  "success": false,
+  "summary": {
+    "total": 3,
+    "passed": 1,
+    "failed": 1,
+    "skipped": 1
+  },
+  "tests": [
+    {
+      "index": 1,
+      "slow": false,
+      "status": "complete",
+      "part_one": { "passed": true, "expected": "6", "actual": "6" },
+      "part_two": { "passed": true, "expected": "6", "actual": "6" }
+    },
+    {
+      "index": 2,
+      "slow": false,
+      "status": "complete",
+      "part_one": { "passed": true, "expected": "3", "actual": "3" },
+      "part_two": { "passed": false, "expected": "99", "actual": "2" }
+    },
+    {
+      "index": 3,
+      "slow": true,
+      "status": "skipped"
+    }
+  ],
+  "console": []
+}
+```
+
+**Summary counts:** A test is counted as `passed` only if **all** its parts pass. If any part fails, the test is counted as `failed`. Tests marked `@slow` that are skipped are counted as `skipped`.
+
+**Test index:** Test `index` values are **1-indexed** for human readability.
+
+**Test status values:**
+- `"complete"`: Test ran successfully (may have passed or failed assertions)
+- `"skipped"`: Test marked with `@slow` and `-s` flag not provided
+
+**Test part fields:** Test part fields (`part_one`, `part_two`) are included based on what the **solution** defines, not what the test expects. If the solution only defines `part_one` (no `part_two`), the `part_two` field is omitted from all test results. Similarly, if a test block expects a part that the solution doesn't define, that expectation is ignored.
+
+**Empty test results:** If no `test:` sections are defined and `-t` is used:
+
+```json
+{
+  "type": "test",
+  "status": "complete",
+  "success": true,
+  "summary": {
+    "total": 0,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0
+  },
+  "tests": [],
+  "console": []
+}
+```
+
+#### 16.3.4 Console Array
+
+The `console` array contains all output from `puts()` calls during execution, in chronological order. Each element is an object with:
+
+- `timestamp_ms`: Milliseconds (whole numbers) since execution started
+- `message`: The string representation of all values passed to `puts()`, space-separated
+
+Example: `puts(1, nil, [1, 2])` produces `{"timestamp_ms": 5, "message": "1 nil [1, 2]"}`.
+
+If `puts()` is called with no arguments, no console event is emitted. Console output is accumulated globally across all test executions in chronological order.
+
+#### 16.3.5 Error Output
+
+When an error occurs during execution, the entire output is replaced with an error object. No partial results are included:
+
+```json
+{
+  "type": "error",
+  "message": "Division by zero",
+  "location": { "line": 15, "column": 8 },
+  "stack": [
+    { "function": "calculate", "line": 15, "column": 8 },
+    { "function": "part_two", "line": 22, "column": 5 },
+    { "function": "<top-level>", "line": 1, "column": 1 }
+  ]
+}
+```
+
+**Location details:**
+- `line` and `column` are **1-indexed** (human-readable, matching editor conventions)
+- Stack frames are ordered innermost-first (index 0 is where the error occurred)
+- Anonymous functions use `"<lambda>"` as the function name
+- Top-level code uses `"<top-level>"` as the function name
+
+**Parse Errors** (syntax errors before execution) have the same structure but with an empty `stack` array since no code has executed:
+
+```json
+{
+  "type": "error",
+  "message": "Unexpected token '}'",
+  "location": { "line": 3, "column": 1 },
+  "stack": []
+}
+```
+
+### 16.4 JSONL Streaming Format
+
+Outputs JSON Lines for real-time progress updates. The first line contains the initial state template with `"status": "pending"` fields, followed by [RFC 6902 JSON Patch](https://datatracker.ietf.org/doc/html/rfc6902) arrays as execution progresses. This enables editors and tools to show live progress as parts execute.
+
+**Line Types:**
+- **Initial state** (first line): JSON object with `"type"` field (`"solution"`, `"script"`, or `"test"`)
+- **Patch arrays**: Arrays starting with `[` containing RFC 6902 operations
+
+All subsequent lines after the initial state are patch arrays. Apply patches sequentially to build the final state.
+
+#### 16.4.1 Solution Streaming
+
+**Two-Part Solution:**
+
+```jsonl
+{"type":"solution","status":"pending","part_one":{"status":"pending","value":null,"duration_ms":null},"part_two":{"status":"pending","value":null,"duration_ms":null},"console":[]}
+[{"op":"replace","path":"/status","value":"running"}]
+[{"op":"replace","path":"/part_one/status","value":"running"}]
+[{"op":"replace","path":"/part_one/status","value":"complete"},{"op":"replace","path":"/part_one/value","value":"232"},{"op":"replace","path":"/part_one/duration_ms","value":5}]
+[{"op":"replace","path":"/part_two/status","value":"running"}]
+[{"op":"replace","path":"/part_two/status","value":"complete"},{"op":"replace","path":"/part_two/value","value":"1783"},{"op":"replace","path":"/part_two/duration_ms","value":12}]
+[{"op":"replace","path":"/status","value":"complete"}]
+```
+
+If a solution only defines `part_one` (no `part_two`), the `part_two` field is **omitted** from the initial state, and vice versa.
+
+**Single-Part Solution:**
+
+```jsonl
+{"type":"solution","status":"pending","part_one":{"status":"pending","value":null,"duration_ms":null},"console":[]}
+[{"op":"replace","path":"/status","value":"running"}]
+[{"op":"replace","path":"/part_one/status","value":"running"}]
+[{"op":"replace","path":"/part_one/status","value":"complete"},{"op":"replace","path":"/part_one/value","value":"232"},{"op":"replace","path":"/part_one/duration_ms","value":5}]
+[{"op":"replace","path":"/status","value":"complete"}]
+```
+
+#### 16.4.2 Script Streaming
+
+```jsonl
+{"type":"script","status":"pending","value":null,"duration_ms":null,"console":[]}
+[{"op":"replace","path":"/status","value":"running"}]
+[{"op":"add","path":"/console/-","value":{"timestamp_ms":5,"message":"processing..."}}]
+[{"op":"replace","path":"/status","value":"complete"},{"op":"replace","path":"/value","value":"42"},{"op":"replace","path":"/duration_ms","value":15}]
+```
+
+#### 16.4.3 Test Streaming
+
+```jsonl
+{"type":"test","status":"pending","success":null,"summary":{"total":2,"passed":0,"failed":0,"skipped":0},"tests":[{"index":1,"slow":false,"status":"pending","part_one":null,"part_two":null},{"index":2,"slow":true,"status":"pending","part_one":null,"part_two":null}],"console":[]}
+[{"op":"replace","path":"/status","value":"running"}]
+[{"op":"replace","path":"/tests/0/status","value":"running"}]
+[{"op":"replace","path":"/tests/0/status","value":"complete"},{"op":"replace","path":"/tests/0/part_one","value":{"passed":true,"expected":"6","actual":"6"}},{"op":"replace","path":"/summary/passed","value":1}]
+[{"op":"replace","path":"/tests/1/status","value":"skipped"},{"op":"replace","path":"/summary/skipped","value":1}]
+[{"op":"replace","path":"/status","value":"complete"},{"op":"replace","path":"/success","value":true}]
+```
+
+Tests marked with `@slow` receive `status: "skipped"` when run without the `-s` flag.
+
+**Index convention:** JSON Patch paths use **0-indexed** array positions per RFC 6902 (e.g., `/tests/0` refers to the first test), while the `index` field in the test object is **1-indexed** for human readability.
+
+#### 16.4.4 Error During Streaming
+
+If an error occurs during execution, an error patch is emitted using the `"add"` operation. Unlike JSON batch mode, **partial results are preserved** in JSONL streaming mode. Any parts that completed successfully before the error remain in the state.
+
+**Solution Error:**
+
+```jsonl
+{"type":"solution","status":"pending","part_one":{"status":"pending","value":null,"duration_ms":null},"part_two":{"status":"pending","value":null,"duration_ms":null},"console":[]}
+[{"op":"replace","path":"/status","value":"running"}]
+[{"op":"replace","path":"/part_one/status","value":"running"}]
+[{"op":"replace","path":"/part_one/status","value":"complete"},{"op":"replace","path":"/part_one/value","value":"232"},{"op":"replace","path":"/part_one/duration_ms","value":5}]
+[{"op":"replace","path":"/part_two/status","value":"running"}]
+[{"op":"replace","path":"/status","value":"error"},{"op":"add","path":"/error","value":{"message":"Division by zero","location":{"line":15,"column":8},"stack":[{"function":"calculate","line":15,"column":8}]}}]
+```
+
+After applying all patches, the final state shows part_one completed successfully while part_two was interrupted:
+
+```json
+{
+  "type": "solution",
+  "status": "error",
+  "part_one": { "status": "complete", "value": "232", "duration_ms": 5 },
+  "part_two": { "status": "running", "value": null, "duration_ms": null },
+  "console": [],
+  "error": {
+    "message": "Division by zero",
+    "location": { "line": 15, "column": 8 },
+    "stack": [{ "function": "calculate", "line": 15, "column": 8 }]
+  }
+}
+```
+
+**Script Error:**
+
+```jsonl
+{"type":"script","status":"pending","value":null,"duration_ms":null,"console":[]}
+[{"op":"replace","path":"/status","value":"running"}]
+[{"op":"add","path":"/console/-","value":{"timestamp_ms":5,"message":"processing..."}}]
+[{"op":"replace","path":"/status","value":"error"},{"op":"add","path":"/error","value":{"message":"Division by zero","location":{"line":10,"column":5},"stack":[{"function":"calculate","line":10,"column":5}]}}]
+```
+
+**Test Error:**
+
+When an error occurs during test execution, the entire test run becomes an error:
+
+```jsonl
+{"type":"test","status":"pending","success":null,"summary":{"total":2,"passed":0,"failed":0,"skipped":0},"tests":[{"index":1,"slow":false,"status":"pending","part_one":null,"part_two":null},{"index":2,"slow":false,"status":"pending","part_one":null,"part_two":null}],"console":[]}
+[{"op":"replace","path":"/status","value":"running"}]
+[{"op":"replace","path":"/tests/0/status","value":"running"}]
+[{"op":"replace","path":"/tests/0/status","value":"complete"},{"op":"replace","path":"/tests/0/part_one","value":{"passed":true,"expected":"6","actual":"6"}},{"op":"replace","path":"/summary/passed","value":1}]
+[{"op":"replace","path":"/tests/1/status","value":"running"}]
+[{"op":"replace","path":"/status","value":"error"},{"op":"add","path":"/error","value":{"message":"Division by zero","location":{"line":5,"column":12},"stack":[{"function":"calculate","line":5,"column":12}]}}]
+```
+
+The first test completed successfully, but an error during the second test halts execution. The second test remains in `"running"` status.
+
+#### 16.4.5 Console Output Streaming
+
+When `puts()` is called during execution, a patch is emitted that appends to the `console` array using the RFC 6902 `"add"` operation with path `/console/-` (append to array):
+
+```jsonl
+{"type":"solution","status":"pending","part_one":{"status":"pending","value":null,"duration_ms":null},"console":[]}
+[{"op":"replace","path":"/status","value":"running"}]
+[{"op":"replace","path":"/part_one/status","value":"running"}]
+[{"op":"add","path":"/console/-","value":{"timestamp_ms":12,"message":"Processing input..."}}]
+[{"op":"add","path":"/console/-","value":{"timestamp_ms":45,"message":"Found 42 items"}}]
+[{"op":"replace","path":"/part_one/status","value":"complete"},{"op":"replace","path":"/part_one/value","value":"232"},{"op":"replace","path":"/part_one/duration_ms","value":5}]
+[{"op":"replace","path":"/status","value":"complete"}]
+```
+
+Each console entry contains:
+- `timestamp_ms`: Milliseconds (whole numbers) since execution started
+- `message`: The string representation of all values passed to `puts()`, space-separated
+
+If `puts()` is called with no arguments, no patch is emitted.
+
+### 16.5 Exit Codes
+
+Exit codes are consistent regardless of output format:
+
+| Code | Meaning |
+|------|---------|
+| 0 | Success |
+| 1 | Argument/usage error |
+| 2 | Runtime/parse error |
+| 3 | Test failure |
 
 ---
 
