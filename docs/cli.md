@@ -110,6 +110,38 @@ santa-cli -e "let x=1+2" -f
 
 See the [Formatter](formatter.md) documentation for details on formatting rules.
 
+## Output Formats
+
+The CLI supports three output formats:
+
+| Format | Flag       | Description                                  |
+| ------ | ---------- | -------------------------------------------- |
+| Text   | (default)  | Human-readable output with ANSI colors       |
+| JSON   | `-o json`  | Single JSON object after execution completes |
+| JSONL  | `-o jsonl` | Real-time streaming with JSON Lines          |
+
+```bash
+# Default human-readable output
+santa-cli solution.santa
+
+# JSON output (complete object after execution)
+santa-cli -o json solution.santa
+
+# JSONL streaming output (real-time updates)
+santa-cli -o jsonl solution.santa
+```
+
+The JSON and JSONL formats are useful for integration with editors, CI systems, and other tools. JSONL provides real-time progress updates using [RFC 6902 JSON Patch](https://datatracker.ietf.org/doc/html/rfc6902).
+
+### Exit Codes
+
+| Code | Meaning              |
+| ---- | -------------------- |
+| 0    | Success              |
+| 1    | Argument/usage error |
+| 2    | Runtime/parse error  |
+| 3    | Test failure         |
+
 ## Errors
 
 If an error occurrs during execution the the program is immediately halted; with the error message and associated call stack trace presented to the user, as shown below:
