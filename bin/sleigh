@@ -1,0 +1,764 @@
+#!/bin/bash
+
+# sleigh: Take your santa-lang solutions for a ride across all reindeer
+#
+# Usage: sleigh <directory|file> [options] [-- <cli-args>]
+
+set -o pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+CACHE_DIR="${HOME}/.cache/santa-lang/bin"
+
+# The reindeer
+REINDEER="comet blitzen prancer dasher donner"
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+DIM='\033[2m'
+NC='\033[0m'
+
+# Default options
+BUILD_MODE=0
+VERBOSE=0
+NO_CACHE=0
+JSON_OUTPUT=0
+TIMEOUT=600
+SELECTED_REINDEER=""
+CLI_ARGS=""
+TARGET=""
+
+# Storage for CLI paths (using files to avoid associative arrays)
+CLI_PATHS_DIR=""
+
+usage() {
+    cat <<EOF
+sleigh - Take your santa-lang solutions for a ride across all reindeer
+
+santa-lang has multiple implementations, each named after one of Santa's reindeer.
+This tool runs your solutions across all of them in parallel, comparing outputs
+to verify consistency and correctness.
+
+By default, sleigh downloads pre-built binaries from GitHub releases and caches
+them locally. Use --build to compile from source projects instead.
+
+Usage:
+  $(basename "$0") <directory|file> [options] [-- <cli-args>]
+
+Options:
+  -h, --help        Show this help message
+  --build           Build reindeer from source projects
+  --reindeer=LIST   Comma-separated reindeer to run (default: all)
+                    Available: comet, blitzen, prancer, dasher, donner
+  --timeout=SECS    Timeout per solution in seconds (default: 600)
+  --verbose         Show detailed output on failures
+  --no-cache        Re-download binaries even if cached
+  --json            Output results as JSON instead of table
+  -- <args>         Arguments passed through to each santa-cli
+
+Examples:
+  $(basename "$0") ~/advent-of-code/2023/santa-lang
+  $(basename "$0") ~/advent-of-code/2023/santa-lang --build
+  $(basename "$0") ~/advent-of-code/2023/santa-lang -- --test --slow
+  $(basename "$0") ~/advent-of-code/2023/santa-lang --reindeer=comet,blitzen
+EOF
+}
+
+show_help() {
+    usage
+    exit 0
+}
+
+show_error_usage() {
+    usage >&2
+    exit 1
+}
+
+# Get GitHub repo for a reindeer
+get_reindeer_repo() {
+    case "$1" in
+        comet) echo "eddmann/santa-lang-comet" ;;
+        blitzen) echo "eddmann/santa-lang-blitzen" ;;
+        prancer) echo "eddmann/santa-lang-prancer" ;;
+        dasher) echo "eddmann/santa-lang-dasher" ;;
+        donner) echo "eddmann/santa-lang-donner" ;;
+    esac
+}
+
+# Get project path for a reindeer
+get_reindeer_project() {
+    case "$1" in
+        comet) echo "${HOME}/Projects/santa-lang-comet" ;;
+        blitzen) echo "${HOME}/Projects/santa-lang-blitzen" ;;
+        prancer) echo "${HOME}/Projects/santa-lang-prancer" ;;
+        dasher) echo "${HOME}/Projects/santa-lang-dasher" ;;
+        donner) echo "${HOME}/Projects/santa-lang-donner" ;;
+    esac
+}
+
+# Detect current platform
+detect_platform() {
+    local os arch
+    os="$(uname -s | tr '[:upper:]' '[:lower:]')"
+    arch="$(uname -m)"
+
+    case "$os" in
+        darwin) os="darwin" ;;
+        linux) os="linux" ;;
+        *) echo "Unsupported OS: $os" >&2; exit 2 ;;
+    esac
+
+    case "$arch" in
+        x86_64|amd64) arch="amd64" ;;
+        arm64|aarch64) arch="arm64" ;;
+        *) echo "Unsupported architecture: $arch" >&2; exit 2 ;;
+    esac
+
+    echo "${os}-${arch}"
+}
+
+# Map platform to reindeer-specific platform string
+get_reindeer_platform() {
+    local reindeer="$1"
+    local platform="$2"
+
+    case "$platform" in
+        darwin-arm64) echo "macos-arm64" ;;
+        darwin-amd64) echo "macos-amd64" ;;
+        linux-amd64) echo "linux-amd64" ;;
+        linux-arm64)
+            # Dasher and Donner don't support linux-arm64
+            if [ "$reindeer" = "dasher" ] || [ "$reindeer" = "donner" ]; then
+                echo ""
+            else
+                echo "linux-arm64"
+            fi
+            ;;
+        *) echo "" ;;
+    esac
+}
+
+# Get latest release version from GitHub
+get_latest_release() {
+    local reindeer="$1"
+    local repo
+    repo=$(get_reindeer_repo "$reindeer")
+
+    curl -sL "https://api.github.com/repos/${repo}/releases/latest" 2>/dev/null | \
+        grep '"tag_name"' | \
+        sed -E 's/.*"tag_name": *"([^"]+)".*/\1/'
+}
+
+# Download binary for a reindeer
+download_binary() {
+    local reindeer="$1"
+    local version="$2"
+    local platform="$3"
+    local reindeer_platform
+    reindeer_platform=$(get_reindeer_platform "$reindeer" "$platform")
+
+    if [ -z "$reindeer_platform" ]; then
+        return 1
+    fi
+
+    local repo
+    repo=$(get_reindeer_repo "$reindeer")
+    local cache_path="${CACHE_DIR}/${reindeer}-${version}-${reindeer_platform}"
+    local url artifact_name
+
+    # Check if already cached
+    if [ -x "$cache_path" ] && [ $NO_CACHE -eq 0 ]; then
+        echo "$cache_path"
+        return 0
+    fi
+
+    mkdir -p "$CACHE_DIR"
+
+    # Build download URL
+    if [ "$reindeer" = "donner" ]; then
+        # Donner uses tar.gz archives
+        artifact_name="santa-lang-donner-cli-${version}-${reindeer_platform}.tar.gz"
+        url="https://github.com/${repo}/releases/download/${version}/${artifact_name}"
+
+        local tmpdir
+        tmpdir=$(mktemp -d)
+
+        if ! curl -sL "$url" -o "${tmpdir}/${artifact_name}" 2>/dev/null; then
+            rm -rf "$tmpdir"
+            return 1
+        fi
+
+        # Extract archive
+        if ! tar -xzf "${tmpdir}/${artifact_name}" -C "$tmpdir" 2>/dev/null; then
+            rm -rf "$tmpdir"
+            return 1
+        fi
+
+        # Find binary (different paths for macOS app bundle vs Linux)
+        local binary_path
+        if [ -d "${tmpdir}/santa-cli.app" ]; then
+            binary_path="${tmpdir}/santa-cli.app/Contents/MacOS/santa-cli"
+        elif [ -d "${tmpdir}/santa-cli" ]; then
+            binary_path="${tmpdir}/santa-cli/bin/santa-cli"
+        else
+            rm -rf "$tmpdir"
+            return 1
+        fi
+
+        cp "$binary_path" "$cache_path"
+        rm -rf "$tmpdir"
+    else
+        # Direct binary download
+        artifact_name="santa-lang-${reindeer}-cli-${version}-${reindeer_platform}"
+        url="https://github.com/${repo}/releases/download/${version}/${artifact_name}"
+
+        if ! curl -sL "$url" -o "$cache_path" 2>/dev/null; then
+            rm -f "$cache_path"
+            return 1
+        fi
+    fi
+
+    chmod +x "$cache_path"
+
+    # Clear macOS quarantine if present
+    if [ "$(uname -s)" = "Darwin" ]; then
+        xattr -d com.apple.quarantine "$cache_path" 2>/dev/null || true
+    fi
+
+    echo "$cache_path"
+}
+
+# Build a reindeer from source
+build_reindeer() {
+    local reindeer="$1"
+    local platform="$2"
+    local project
+    project=$(get_reindeer_project "$reindeer")
+
+    if [ ! -d "$project" ]; then
+        echo "Project not found: $project" >&2
+        return 1
+    fi
+
+    case "$reindeer" in
+        comet|blitzen|dasher)
+            (cd "$project" && cargo build --release 2>/dev/null) || return 1
+            echo "${project}/target/release/santa-cli"
+            ;;
+        prancer)
+            (cd "$project" && make cli/build >/dev/null 2>&1) || return 1
+            # Find the built binary for current platform
+            local reindeer_platform
+            reindeer_platform=$(get_reindeer_platform "$reindeer" "$platform")
+            echo "${project}/src/cli/dist/santa-cli-${reindeer_platform}"
+            ;;
+        donner)
+            (cd "$project" && ./gradlew :cli:installDist >/dev/null 2>&1) || return 1
+            echo "${project}/cli/build/install/santa-cli/bin/santa-cli"
+            ;;
+        *)
+            return 1
+            ;;
+    esac
+}
+
+# Get CLI path for a reindeer
+get_cli_path() {
+    local reindeer="$1"
+    local platform="$2"
+
+    if [ $BUILD_MODE -eq 1 ]; then
+        build_reindeer "$reindeer" "$platform"
+    else
+        local version
+        version=$(get_latest_release "$reindeer")
+        if [ -z "$version" ]; then
+            return 1
+        fi
+        download_binary "$reindeer" "$version" "$platform"
+    fi
+}
+
+# Store CLI path for a reindeer
+store_cli_path() {
+    local reindeer="$1"
+    local path="$2"
+    echo "$path" > "${CLI_PATHS_DIR}/${reindeer}"
+}
+
+# Get stored CLI path for a reindeer
+get_stored_cli_path() {
+    local reindeer="$1"
+    cat "${CLI_PATHS_DIR}/${reindeer}" 2>/dev/null
+}
+
+# Run a single solution with a reindeer
+run_solution() {
+    local file="$1"
+    local reindeer="$2"
+    local cli_path="$3"
+    local cli_args="$4"
+    local output_file="$5"
+    local time_file="$6"
+
+    local start end
+    start=$(perl -MTime::HiRes=time -e 'printf "%.3f", time')
+
+    # Run with JSON output for structured results
+    timeout "$TIMEOUT" "$cli_path" -o json $cli_args "$file" > "$output_file" 2>&1
+    local rc=$?
+
+    end=$(perl -MTime::HiRes=time -e 'printf "%.3f", time')
+    echo "scale=3; $end - $start" | bc > "$time_file"
+    echo "$rc" >> "$time_file"
+}
+
+# Compare results across reindeer
+compare_results() {
+    local tmpdir="$1"
+    shift
+    local reindeer_list="$*"
+
+    local first_result=""
+    local all_passed=1
+    local has_mismatch=0
+
+    for reindeer in $reindeer_list; do
+        local output_file="${tmpdir}/${reindeer}.out"
+        local time_file="${tmpdir}/${reindeer}.time"
+
+        if [ ! -f "$output_file" ]; then
+            continue
+        fi
+
+        local rc
+        rc=$(tail -1 "$time_file" 2>/dev/null || echo "1")
+
+        if [ "$rc" != "0" ]; then
+            all_passed=0
+            continue
+        fi
+
+        # Extract part_one and part_two values from JSON output
+        local result
+        result=$(jq -r '[.part_one.value // "", .part_two.value // ""] | join(",")' "$output_file" 2>/dev/null || echo "")
+
+        if [ -z "$first_result" ]; then
+            first_result="$result"
+        elif [ "$result" != "$first_result" ]; then
+            has_mismatch=1
+        fi
+    done
+
+    if [ $all_passed -eq 0 ]; then
+        echo "fail"
+    elif [ $has_mismatch -eq 1 ]; then
+        echo "mismatch"
+    else
+        echo "ok"
+    fi
+}
+
+# Format a result cell for table output
+format_cell() {
+    local reindeer="$1"
+    local tmpdir="$2"
+    local width="${3:-10}"
+
+    local output_file="${tmpdir}/${reindeer}.out"
+    local time_file="${tmpdir}/${reindeer}.time"
+
+    if [ ! -f "$time_file" ]; then
+        printf "${DIM}%-${width}s${NC}" "N/A"
+        return
+    fi
+
+    local duration rc
+    duration=$(head -1 "$time_file" 2>/dev/null || echo "0")
+    rc=$(tail -1 "$time_file" 2>/dev/null || echo "1")
+
+    if [ "$rc" = "0" ]; then
+        local formatted
+        formatted=$(printf "%.2fs" "$duration")
+        printf "${GREEN}%-${width}s${NC}" "$formatted"
+    elif [ "$rc" = "124" ]; then
+        printf "${YELLOW}%-${width}s${NC}" "TIMEOUT"
+    else
+        printf "${RED}%-${width}s${NC}" "FAIL"
+    fi
+}
+
+# Format status for table output
+format_status() {
+    local status="$1"
+    case "$status" in
+        ok) printf "${GREEN}OK${NC}" ;;
+        fail) printf "${RED}FAIL${NC}" ;;
+        mismatch) printf "${YELLOW}MISMATCH${NC}" ;;
+        *) printf "%s" "$status" ;;
+    esac
+}
+
+# Build JSON output for a single file
+build_json_result() {
+    local file="$1"
+    local status="$2"
+    local tmpdir="$3"
+    shift 3
+    local reindeer_list="$*"
+
+    local reindeer_results="{"
+    local first=1
+
+    for reindeer in $reindeer_list; do
+        local output_file="${tmpdir}/${reindeer}.out"
+        local time_file="${tmpdir}/${reindeer}.time"
+
+        if [ ! -f "$time_file" ]; then
+            continue
+        fi
+
+        local duration rc reindeer_status output_json
+        duration=$(head -1 "$time_file" 2>/dev/null || echo "0")
+        rc=$(tail -1 "$time_file" 2>/dev/null || echo "1")
+
+        if [ "$rc" = "0" ]; then
+            reindeer_status="pass"
+            output_json=$(cat "$output_file" 2>/dev/null || echo "{}")
+        elif [ "$rc" = "124" ]; then
+            reindeer_status="timeout"
+            output_json="{}"
+        else
+            reindeer_status="fail"
+            output_json="{}"
+        fi
+
+        local duration_ms
+        duration_ms=$(echo "$duration * 1000" | bc | cut -d. -f1)
+
+        if [ $first -eq 0 ]; then
+            reindeer_results+=","
+        fi
+        first=0
+
+        reindeer_results+="\"$reindeer\":{\"status\":\"$reindeer_status\",\"duration_ms\":$duration_ms,\"output\":$output_json}"
+    done
+
+    reindeer_results+="}"
+
+    echo "{\"file\":\"$(basename "$file")\",\"reindeer\":$reindeer_results,\"status\":\"$status\"}"
+}
+
+# Main execution
+main() {
+    local platform
+    platform=$(detect_platform)
+
+    # Parse arguments
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            -h|--help)
+                show_help
+                ;;
+            --build)
+                BUILD_MODE=1
+                shift
+                ;;
+            --reindeer=*)
+                SELECTED_REINDEER="${1#*=}"
+                shift
+                ;;
+            --timeout=*)
+                TIMEOUT="${1#*=}"
+                shift
+                ;;
+            --verbose)
+                VERBOSE=1
+                shift
+                ;;
+            --no-cache)
+                NO_CACHE=1
+                shift
+                ;;
+            --json)
+                JSON_OUTPUT=1
+                shift
+                ;;
+            --)
+                shift
+                CLI_ARGS="$*"
+                break
+                ;;
+            -*)
+                echo "Unknown option: $1" >&2
+                show_error_usage
+                ;;
+            *)
+                if [ -z "$TARGET" ]; then
+                    TARGET="$1"
+                else
+                    echo "Unexpected argument: $1" >&2
+                    show_error_usage
+                fi
+                shift
+                ;;
+        esac
+    done
+
+    if [ -z "$TARGET" ]; then
+        echo "Error: No directory or file specified" >&2
+        show_error_usage
+    fi
+
+    # Resolve target path
+    if [ -d "$TARGET" ]; then
+        TARGET=$(cd "$TARGET" && pwd)
+    else
+        TARGET=$(cd "$(dirname "$TARGET")" && pwd)/$(basename "$TARGET")
+    fi
+
+    if [ ! -e "$TARGET" ]; then
+        echo "Error: Target not found: $TARGET" >&2
+        exit 2
+    fi
+
+    # Build list of reindeer to run
+    local active_reindeer
+    if [ -n "$SELECTED_REINDEER" ]; then
+        active_reindeer=$(echo "$SELECTED_REINDEER" | tr ',' ' ')
+    else
+        active_reindeer="$REINDEER"
+    fi
+
+    # Filter reindeer based on platform support
+    local available_reindeer=""
+    for reindeer in $active_reindeer; do
+        local reindeer_platform
+        reindeer_platform=$(get_reindeer_platform "$reindeer" "$platform")
+        if [ -n "$reindeer_platform" ]; then
+            available_reindeer="$available_reindeer $reindeer"
+        fi
+    done
+    available_reindeer=$(echo "$available_reindeer" | xargs)
+
+    if [ -z "$available_reindeer" ]; then
+        echo "Error: No reindeer available for platform $platform" >&2
+        exit 2
+    fi
+
+    # Create temp directories
+    local tmpdir
+    tmpdir=$(mktemp -d)
+    CLI_PATHS_DIR="${tmpdir}/cli_paths"
+    mkdir -p "$CLI_PATHS_DIR"
+    trap "rm -rf '$tmpdir'" EXIT
+
+    # Get CLI paths for all reindeer
+    local mode_desc
+    if [ $BUILD_MODE -eq 1 ]; then
+        mode_desc="building from source"
+    else
+        mode_desc="downloading binaries"
+    fi
+
+    if [ $JSON_OUTPUT -eq 0 ]; then
+        echo -e "${BLUE}Harnessing the reindeer...${NC}"
+    fi
+
+    for reindeer in $available_reindeer; do
+        if [ $JSON_OUTPUT -eq 0 ]; then
+            echo -n "  $reindeer: "
+        fi
+
+        local cli_path
+        cli_path=$(get_cli_path "$reindeer" "$platform" 2>/dev/null)
+
+        if [ -n "$cli_path" ] && [ -x "$cli_path" ]; then
+            store_cli_path "$reindeer" "$cli_path"
+            if [ $JSON_OUTPUT -eq 0 ]; then
+                echo -e "${GREEN}ready${NC}"
+            fi
+        else
+            if [ $JSON_OUTPUT -eq 0 ]; then
+                echo -e "${RED}failed${NC}"
+            fi
+        fi
+    done
+
+    # Filter to only reindeer with valid CLI paths
+    local ready_reindeer=""
+    for reindeer in $available_reindeer; do
+        local path
+        path=$(get_stored_cli_path "$reindeer")
+        if [ -n "$path" ]; then
+            ready_reindeer="$ready_reindeer $reindeer"
+        fi
+    done
+    ready_reindeer=$(echo "$ready_reindeer" | xargs)
+
+    if [ -z "$ready_reindeer" ]; then
+        echo "Error: No reindeer ready to run" >&2
+        exit 2
+    fi
+
+    # Find solution files
+    local solutions=""
+    if [ -d "$TARGET" ]; then
+        solutions=$(find "$TARGET" -name "*.santa" -type f | sort)
+    else
+        solutions="$TARGET"
+    fi
+
+    if [ -z "$solutions" ]; then
+        echo "Error: No .santa files found" >&2
+        exit 2
+    fi
+
+    # Track results
+    local total=0
+    local passed=0
+    local failed=0
+    local mismatched=0
+    local json_results_file="${tmpdir}/json_results"
+
+    # Print header
+    if [ $JSON_OUTPUT -eq 0 ]; then
+        echo ""
+        echo "Running santa-lang solutions across reindeer"
+        echo "Directory: $TARGET"
+        echo "Mode: $mode_desc"
+        if [ -n "$CLI_ARGS" ]; then
+            echo "CLI args: $CLI_ARGS"
+        fi
+        echo ""
+
+        # Table header
+        printf "%-20s" "File"
+        for reindeer in $ready_reindeer; do
+            printf " %-10s" "$reindeer"
+        done
+        printf " %s\n" "Status"
+
+        printf "%-20s" "--------------------"
+        for reindeer in $ready_reindeer; do
+            printf " %-10s" "----------"
+        done
+        printf " %s\n" "--------"
+    fi
+
+    # Run solutions
+    for solution in $solutions; do
+        total=$((total + 1))
+        local filename
+        filename=$(basename "$solution")
+        local solution_tmpdir="${tmpdir}/${total}"
+        mkdir -p "$solution_tmpdir"
+
+        # Run all reindeer in parallel
+        local pids=""
+        for reindeer in $ready_reindeer; do
+            local cli_path
+            cli_path=$(get_stored_cli_path "$reindeer")
+            local output_file="${solution_tmpdir}/${reindeer}.out"
+            local time_file="${solution_tmpdir}/${reindeer}.time"
+
+            run_solution "$solution" "$reindeer" "$cli_path" "$CLI_ARGS" "$output_file" "$time_file" &
+            pids="$pids $!"
+        done
+
+        # Wait for all to complete
+        for pid in $pids; do
+            wait "$pid" 2>/dev/null || true
+        done
+
+        # Compare results
+        local status
+        status=$(compare_results "$solution_tmpdir" $ready_reindeer)
+
+        case "$status" in
+            ok) passed=$((passed + 1)) ;;
+            fail) failed=$((failed + 1)) ;;
+            mismatch) mismatched=$((mismatched + 1)) ;;
+        esac
+
+        if [ $JSON_OUTPUT -eq 1 ]; then
+            local json_result
+            json_result=$(build_json_result "$solution" "$status" "$solution_tmpdir" $ready_reindeer)
+            echo "$json_result" >> "$json_results_file"
+        else
+            # Print table row
+            printf "%-20s" "$filename"
+            for reindeer in $ready_reindeer; do
+                printf " "
+                format_cell "$reindeer" "$solution_tmpdir" 10
+            done
+            printf " "
+            format_status "$status"
+            printf "\n"
+
+            # Show verbose output on failure
+            if [ $VERBOSE -eq 1 ] && [ "$status" != "ok" ]; then
+                for reindeer in $ready_reindeer; do
+                    local output_file="${solution_tmpdir}/${reindeer}.out"
+                    local time_file="${solution_tmpdir}/${reindeer}.time"
+                    local rc
+                    rc=$(tail -1 "$time_file" 2>/dev/null || echo "1")
+
+                    if [ "$rc" != "0" ]; then
+                        echo "  ${reindeer}:"
+                        head -10 "$output_file" 2>/dev/null | sed 's/^/    /'
+                    fi
+                done
+            fi
+        fi
+    done
+
+    # Print summary
+    if [ $JSON_OUTPUT -eq 1 ]; then
+        echo "{"
+        echo "  \"directory\": \"$TARGET\","
+        if [ $BUILD_MODE -eq 1 ]; then
+            echo "  \"mode\": \"build\","
+        else
+            echo "  \"mode\": \"download\","
+        fi
+        echo "  \"cli_args\": $(echo "$CLI_ARGS" | jq -R 'split(" ") | map(select(. != ""))'),"
+        echo "  \"reindeer\": $(echo "$ready_reindeer" | tr ' ' '\n' | jq -R . | jq -s .),"
+        echo "  \"results\": ["
+        local first=1
+        if [ -f "$json_results_file" ]; then
+            while IFS= read -r result; do
+                if [ $first -eq 0 ]; then
+                    echo ","
+                fi
+                first=0
+                echo -n "    $result"
+            done < "$json_results_file"
+        fi
+        echo ""
+        echo "  ],"
+        echo "  \"summary\": {\"total\": $total, \"passed\": $passed, \"failed\": $failed, \"mismatch\": $mismatched}"
+        echo "}"
+    else
+        echo ""
+        echo "========================================================"
+        printf "Summary: ${GREEN}%d${NC}/%d passed" "$passed" "$total"
+        if [ $failed -gt 0 ]; then
+            printf ", ${RED}%d${NC} failed" "$failed"
+        fi
+        if [ $mismatched -gt 0 ]; then
+            printf ", ${YELLOW}%d${NC} mismatch" "$mismatched"
+        fi
+        printf "\n"
+    fi
+
+    # Exit code
+    if [ $failed -gt 0 ] || [ $mismatched -gt 0 ]; then
+        exit 1
+    fi
+}
+
+main "$@"
