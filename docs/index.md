@@ -24,7 +24,7 @@ The recommended implementation is [Comet](#comet-rust) (Rust tree-walking interp
 | Jupyter | Linux (x64)   | [`santa-lang-comet-jupyter-0.0.13-linux-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-jupyter-0.0.13-linux-amd64) |
 | Jupyter | macOS (Intel) | [`santa-lang-comet-jupyter-0.0.13-macos-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-jupyter-0.0.13-macos-amd64) |
 
-See [Implementations](#implementations) below for alternative implementations (Blitzen, Dasher, Donner, Vixen, Prancer).
+See [Reindeer](#reindeer) below for alternative implementations (Blitzen, Dasher, Donner, Vixen, Prancer).
 
 ## Why?
 
@@ -36,11 +36,11 @@ That way if I grow to dislike this language, I only have myself to blame!
 
 Welcome **santa-lang**, my programming language designed to help tackle Advent of Code puzzles.
 
-## Implementations
+## Reindeer
 
-The language specification and runtime implementation can be seen as two separate concerns; similar to how the Python language has been implemented within [CPython](https://github.com/python/cpython)/[JPython](https://www.jython.org/), and ECMAScript within [V8](https://v8.dev/)/[SpiderMonkey](https://spidermonkey.dev/).
-There are multiple implementations of the language (and runner), all of which follow the (informal) specification laid out in this documentation.
-There is feature parity in-regard to the core language, data types and [70+ builtin functions](builtins.md).
+The language specification and runtime can be seen as two separate concerns; similar to how the Python language has been implemented within [CPython](https://github.com/python/cpython)/[JPython](https://www.jython.org/), and ECMAScript within [V8](https://v8.dev/)/[SpiderMonkey](https://spidermonkey.dev/).
+There are multiple implementations (affectionately called "reindeer") of the language, all of which follow the [language specification](https://github.com/eddmann/santa-lang/blob/main/docs/lang.txt).
+There is feature parity in-regard to the core language, data types and [rich builtin function library](builtins.md).
 
 ### Comet (Rust)
 

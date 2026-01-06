@@ -8,14 +8,15 @@ Santa-lang is a domain-specific language with the primary goal of aiding in the 
 
 ### Key Features
 
-- **Functional programming** with pipelines (`|>`) and composition (`>>`)
+- **First-class functions and closures** with tail-call optimization
+- **Functional pipelines** (`|>`) and composition (`>>`)
 - **Pattern matching** with `match` expressions and guards
 - **Lazy sequences** and infinite ranges (`1..`)
-- **Persistent data structures** (immutable by default)
+- **Persistent immutable data structures**
 - **Placeholder syntax** (`_ + 1`) for concise lambdas
-- **Tail-call optimization** for recursive functions
-- **Memoization** built-in
-- **AoC helpers** (`lines`, `ints`, `regex_match`, etc.)
+- **Built-in memoization** support
+- **Rich built-in function library** for AoC puzzles
+- **AoC runner** with automatic input fetching
 
 ### AoC Runner
 
@@ -70,9 +71,9 @@ npx prettier --write docs/
 
 This applies to all markdown files in the `docs/` directory.
 
-## Implementations
+## Reindeer
 
-The language has been implemented multiple times to explore different execution models and technologies. **When making cross-implementation changes (e.g., adding a new built-in function), spawn separate subagents to explore and implement in each project concurrently.**
+The language has multiple implementations (affectionately called "reindeer") exploring different execution models and technologies. **When making cross-implementation changes (e.g., adding a new built-in function), spawn separate subagents to explore and implement in each project concurrently.**
 
 | Codename | Type | Description | Project Location |
 |----------|------|-------------|------------------|

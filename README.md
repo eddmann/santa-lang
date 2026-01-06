@@ -6,14 +6,15 @@ A functional, C-like programming language designed for solving [Advent of Code](
 
 ## Features
 
-- Functional programming with pipelines (`|>`) and composition (`>>`)
+- First-class functions and closures with tail-call optimization
+- Functional pipelines (`|>`) and composition (`>>`)
 - Pattern matching with `match` expressions and guards
 - Lazy sequences and infinite ranges (`1..`)
-- Persistent data structures (immutable by default)
+- Persistent immutable data structures
 - Placeholder syntax (`_ + 1`) for concise lambdas
-- Tail-call optimization for recursive functions
-- Memoization built-in
-- AoC helpers (`lines`, `ints`, `regex_match`, etc.)
+- Built-in memoization support
+- [Rich built-in function library](https://eddmann.com/santa-lang/builtins/) for AoC puzzles
+- AoC runner with automatic input fetching
 
 ## Examples
 
@@ -64,9 +65,9 @@ test: {
 }
 ```
 
-## Implementations
+## Reindeer
 
-The language has been implemented multiple times as a way to explore different execution models and learn new technologies.
+The language has multiple implementations (affectionately called "reindeer") exploring different execution models and technologies.
 
 | Codename | Description                         | Repository                                                          |
 | -------- | ----------------------------------- | ------------------------------------------------------------------- |
