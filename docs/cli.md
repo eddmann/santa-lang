@@ -1,6 +1,6 @@
 # CLI
 
-[![Comet](https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://github.com/eddmann/santa-lang-comet/tree/main/runtime/cli) [![Blitzen](https://img.shields.io/badge/Blitzen-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://github.com/eddmann/santa-lang-blitzen/tree/main/runtime/cli) [![Dasher](https://img.shields.io/badge/Dasher-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://github.com/eddmann/santa-lang-dasher/tree/main/cli) [![Donner](https://img.shields.io/badge/Donner-%237F52FF.svg?style=for-the-badge&logo=kotlin&logoColor=white)](https://github.com/eddmann/santa-lang-donner/tree/main/cli) [![Vixen](https://img.shields.io/badge/Vixen-%23A8B9CC.svg?style=for-the-badge&logo=c&logoColor=white)](https://github.com/eddmann/santa-lang-vixen/tree/main/cli) [![Prancer](https://img.shields.io/badge/Prancer-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://github.com/eddmann/santa-lang-prancer/tree/main/src/cli)
+[![Comet](https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](reindeer/comet.md) [![Blitzen](https://img.shields.io/badge/Blitzen-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](reindeer/blitzen.md) [![Dasher](https://img.shields.io/badge/Dasher-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](reindeer/dasher.md) [![Donner](https://img.shields.io/badge/Donner-%237F52FF.svg?style=for-the-badge&logo=kotlin&logoColor=white)](reindeer/donner.md) [![Prancer](https://img.shields.io/badge/Prancer-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](reindeer/prancer.md)
 
 This runtime provides the ability to access the language/runner via a Command Line Interface (CLI).
 It includes the following functionality:
@@ -8,19 +8,19 @@ It includes the following functionality:
 - Execute a given solution's source file, providing benchmark timing for each defined part.
 - Execute a given solutions source files test suite.
 - Execute a given script source file.
-- (Comet only) Load an interactive REPL environment, which can be used to quickly explore the language.
+- Load an interactive REPL environment, which can be used to quickly explore the language (Comet, Blitzen, Prancer).
 
 ## Release (Comet)
 
-| Platform      | Release                                                                                                                                                   |
-| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Linux (x64)   | [`santa-lang-comet-cli-0.0.13-linux-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-cli-0.0.13-linux-amd64) |
-| Linux (ARM)   | [`santa-lang-comet-cli-0.0.13-linux-arm64`](https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-cli-0.0.13-linux-arm64) |
-| macOS (Intel) | [`santa-lang-comet-cli-0.0.13-macos-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-cli-0.0.13-macos-amd64) |
-| macOS (ARM)   | [`santa-lang-comet-cli-0.0.13-macos-arm64`](https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-cli-0.0.13-macos-arm64) |
-| Docker        | [`ghcr.io/eddmann/santa-lang-cli:latest`](https://github.com/eddmann/santa-lang-comet/pkgs/container/santa-lang-cli)                                      |
+| Platform      | Release                                                                                                                                                |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Linux (x64)   | [`santa-lang-comet-cli-1.0.0-linux-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-linux-amd64) |
+| Linux (ARM)   | [`santa-lang-comet-cli-1.0.0-linux-arm64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-linux-arm64) |
+| macOS (Intel) | [`santa-lang-comet-cli-1.0.0-macos-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-macos-amd64) |
+| macOS (ARM)   | [`santa-lang-comet-cli-1.0.0-macos-arm64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-macos-arm64) |
+| Docker        | [`ghcr.io/eddmann/santa-lang-cli:latest`](https://github.com/eddmann/santa-lang-comet/pkgs/container/santa-lang-cli)                                   |
 
-**Note:** Blitzen, Dasher, Donner, Vixen, and Prancer CLIs can be accessed via their GitHub repositories: [Blitzen](https://github.com/eddmann/santa-lang-blitzen/releases), [Dasher](https://github.com/eddmann/santa-lang-dasher/releases), [Donner](https://github.com/eddmann/santa-lang-donner/releases), [Vixen](https://github.com/eddmann/santa-lang-vixen/releases), [Prancer](https://github.com/eddmann/santa-lang-prancer/releases).
+**Also available in:** [Blitzen](reindeer/blitzen.md), [Dasher](reindeer/dasher.md), [Donner](reindeer/donner.md), [Prancer](reindeer/prancer.md)
 
 > The macOS release may require you to remove the _quarantine_ flag from the executable: `xattr -d com.apple.quarantine santa-lang-comet-cli-*`
 
@@ -83,7 +83,7 @@ env()
 
 ## Formatting
 
-[![Comet](https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://github.com/eddmann/santa-lang-comet)
+[![Comet](https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](reindeer/comet.md)
 
 The CLI provides an opinionated code formatter that produces consistent, readable output. There are no configuration options - it enforces a single canonical style.
 

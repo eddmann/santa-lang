@@ -1,6 +1,6 @@
 # Lambda
 
-[![Comet](https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](https://github.com/eddmann/santa-lang-comet/tree/main/runtime/lambda) [![Prancer](https://img.shields.io/badge/Prancer-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://github.com/eddmann/santa-lang-prancer/tree/main/src/lambda)
+[![Comet](https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](reindeer/comet.md) [![Prancer](https://img.shields.io/badge/Prancer-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](reindeer/prancer.md)
 
 As an exploration into AWS Lambda and how [custom runtimes](https://docs.aws.amazon.com/lambda/latest/dg/runtimes-api.html) are built, I decided to provide access to the core language via the [AWS Lambda](https://aws.amazon.com/lambda/) platform.
 This runtime provides the user with the ability to handle a given Lambda request using behaviour defined in santa-lang.
@@ -9,11 +9,11 @@ This does not expose the Advent of Code runner, and is only primarily concerned 
 
 ## Release (Comet)
 
-| Platform     | Release                                                                                                                                         |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| provided.al2 | [`santa-lang-comet-lambda-0.0.13.zip`](https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-lambda-0.0.13.zip) |
+| Platform     | Release                                                                                                                                      |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| provided.al2 | [`santa-lang-comet-lambda-1.0.0.zip`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-lambda-1.0.0.zip) |
 
-**Note:** Prancer's Lambda runtime can be accessed via the [GitHub repository](https://github.com/eddmann/santa-lang-prancer).
+**Also available in:** [Prancer](reindeer/prancer.md)
 
 ## Lifecycle
 

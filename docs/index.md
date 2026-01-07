@@ -9,22 +9,22 @@ _Influenced by:_ Rust, Python, Clojure, F#, Scala
 
 ## Release
 
-The recommended implementation is [Comet](#comet-rust) (Rust tree-walking interpreter).
+The recommended implementation is [Comet](reindeer/comet.md) (Rust tree-walking interpreter).
 
-| Runtime | Platform      | Release                                                                                                                                                           |
-| ------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| CLI     | Linux (x64)   | [`santa-lang-comet-cli-0.0.13-linux-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-cli-0.0.13-linux-amd64)         |
-| CLI     | Linux (ARM)   | [`santa-lang-comet-cli-0.0.13-linux-arm64`](https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-cli-0.0.13-linux-arm64)         |
-| CLI     | macOS (Intel) | [`santa-lang-comet-cli-0.0.13-macos-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-cli-0.0.13-macos-amd64)         |
-| CLI     | macOS (ARM)   | [`santa-lang-comet-cli-0.0.13-macos-arm64`](https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-cli-0.0.13-macos-arm64)         |
-| CLI     | Docker        | [`ghcr.io/eddmann/santa-lang-cli:latest`](https://github.com/eddmann/santa-lang-comet/pkgs/container/santa-lang-cli)                                              |
-| Web     | WASM          | [`@eddmann/santa-lang-wasm`](https://github.com/eddmann/santa-lang-comet/pkgs/npm/santa-lang-wasm)                                                                |
-| Lambda  | provided.al2  | [`santa-lang-comet-lambda-0.0.13.zip`](https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-lambda-0.0.13.zip)                   |
-| PHP     | Linux (x64)   | [`santa-lang-comet-php-0.0.13-linux-amd64.so`](https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-php-0.0.13-linux-amd64.so)   |
-| Jupyter | Linux (x64)   | [`santa-lang-comet-jupyter-0.0.13-linux-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-jupyter-0.0.13-linux-amd64) |
-| Jupyter | macOS (Intel) | [`santa-lang-comet-jupyter-0.0.13-macos-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/0.0.13/santa-lang-comet-jupyter-0.0.13-macos-amd64) |
+| Runtime | Platform      | Release                                                                                                                                                        |
+| ------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| CLI     | Linux (x64)   | [`santa-lang-comet-cli-1.0.0-linux-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-linux-amd64)         |
+| CLI     | Linux (ARM)   | [`santa-lang-comet-cli-1.0.0-linux-arm64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-linux-arm64)         |
+| CLI     | macOS (Intel) | [`santa-lang-comet-cli-1.0.0-macos-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-macos-amd64)         |
+| CLI     | macOS (ARM)   | [`santa-lang-comet-cli-1.0.0-macos-arm64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-macos-arm64)         |
+| CLI     | Docker        | [`ghcr.io/eddmann/santa-lang-cli:latest`](https://github.com/eddmann/santa-lang-comet/pkgs/container/santa-lang-cli)                                           |
+| Web     | WASM          | [`@eddmann/santa-lang-wasm`](https://github.com/eddmann/santa-lang-comet/pkgs/npm/santa-lang-wasm)                                                             |
+| Lambda  | provided.al2  | [`santa-lang-comet-lambda-1.0.0.zip`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-lambda-1.0.0.zip)                   |
+| PHP     | Linux (x64)   | [`santa-lang-comet-php-1.0.0-linux-amd64.so`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-php-1.0.0-linux-amd64.so)   |
+| Jupyter | Linux (x64)   | [`santa-lang-comet-jupyter-1.0.0-linux-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-jupyter-1.0.0-linux-amd64) |
+| Jupyter | macOS (Intel) | [`santa-lang-comet-jupyter-1.0.0-macos-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-jupyter-1.0.0-macos-amd64) |
 
-See [Reindeer](#reindeer) below for alternative implementations (Blitzen, Dasher, Donner, Vixen, Prancer).
+See [Reindeer](#reindeer) below for alternative implementations (Blitzen, Dasher, Donner, Prancer).
 
 ## Why?
 
@@ -38,68 +38,12 @@ Welcome **santa-lang**, my programming language designed to help tackle Advent o
 
 ## Reindeer
 
-The language specification and runtime can be seen as two separate concerns; similar to how the Python language has been implemented within [CPython](https://github.com/python/cpython)/[JPython](https://www.jython.org/), and ECMAScript within [V8](https://v8.dev/)/[SpiderMonkey](https://spidermonkey.dev/).
-There are multiple implementations (affectionately called "reindeer") of the language, all of which follow the [language specification](https://github.com/eddmann/santa-lang/blob/main/docs/lang.txt).
-There is feature parity in-regard to the core language, data types and [rich builtin function library](builtins.md).
+There are multiple implementations (affectionately called "reindeer") of the language, all of which follow the [language specification](https://github.com/eddmann/santa-lang/blob/main/docs/lang.txt). See the [Reindeer](reindeer/index.md) section for detailed comparisons, downloads, and architecture information.
 
-### Comet (Rust)
-
-**Repository:** [eddmann/santa-lang-comet](https://github.com/eddmann/santa-lang-comet) ⭐ _Recommended_
-
-Taking all the learnings from the initial TypeScript implementation, Comet was built to be a stable and performant [tree-walking interpreter](<https://en.wikipedia.org/wiki/Interpreter_(computing)>).
-It was felt that the JavaScript runtime could only reach [so much performance](https://eddmann.com/posts/solving-the-advent-of-code-2022-calendar-using-my-own-programming-language-santa-lang/#so-whats-next), and a lower-level language could unlock more performance gains.
-Along with performance considerations, during its development, there was the addition of a WASM runtime, a PHP extension, Jupyter kernel and a CLI REPL.
-
-**Runtimes:** CLI, Web (WASM), Lambda, PHP Extension, Jupyter Kernel
-
-### Blitzen (Rust)
-
-**Repository:** [eddmann/santa-lang-blitzen](https://github.com/eddmann/santa-lang-blitzen)
-
-Blitzen takes a different approach by compiling santa-lang to FrostByte bytecode and executing it on a stack-based virtual machine.
-This bytecode compilation approach explores a different execution model for potential performance improvements over tree-walking interpretation, particularly for computationally intensive puzzles.
-
-**Runtimes:** CLI
-
-### Dasher (Rust)
-
-**Repository:** [eddmann/santa-lang-dasher](https://github.com/eddmann/santa-lang-dasher)
-
-Dasher takes an ahead-of-time compilation approach, using LLVM to compile santa-lang to native machine code.
-This provides significant performance improvements for computationally intensive puzzles by generating optimized native executables.
-Type inference enables specialization for native LLVM operations, with unknown types falling back to runtime library calls.
-
-**Runtimes:** CLI
-
-### Donner (Kotlin)
-
-**Repository:** [eddmann/santa-lang-donner](https://github.com/eddmann/santa-lang-donner)
-
-Donner compiles santa-lang directly to JVM bytecode using the ASM library.
-Programs are compiled to Java `.class` files that run on any Java 21+ runtime, benefiting from JVM optimizations and JIT compilation.
-The implementation uses persistent data structures throughout and includes full support for the AOC runner with test blocks and memoization.
-
-**Runtimes:** CLI
-
-### Vixen (C)
-
-**Repository:** [eddmann/santa-lang-vixen](https://github.com/eddmann/santa-lang-vixen)
-
-Vixen is a lightweight bytecode VM implementing a **subset of santa-lang** designed for embedded systems.
-It compiles santa-lang directly to bytecode and executes on a stack-based virtual machine, targeting microcontrollers like ESP32 and Raspberry Pi Pico.
-This enables running santa-lang on resource-constrained devices with fast startup times.
-
-To meet MCU memory constraints, Vixen omits `regex_match` and `regex_match_all`, uses UTF-8 codepoint indexing for strings (instead of grapheme-cluster), uses float32 for decimals (instead of float64), and limits the `memoize` cache to 256 entries.
-
-**Runtimes:** CLI (Host, ESP32, RP2040)
-
-### Prancer (TypeScript)
-
-**Repository:** [eddmann/santa-lang-prancer](https://github.com/eddmann/santa-lang-prancer)
-
-Prancer was the initial [tree-walking interpreted](<https://en.wikipedia.org/wiki/Interpreter_(computing)>) reference implementation used whilst creating of the language and runner.
-It allowed for quick exploration of different language constructs, and exercise them with actual Advent of Code problems throughout the [2022 calendar](https://github.com/eddmann/advent-of-code/tree/master/2022/santa-lang).
-TypeScript was chosen due to speed of development and minimal friction to try out new ideas.
-The JavaScript runtime also made it easy to develop the initial CLI, Web and Lambda runtimes; with minimal unique delivery requirements.
-
-**Runtimes:** CLI, Web (JavaScript), Lambda
+| Implementation                 | Language   | Execution Model          | Runtimes                              |
+| ------------------------------ | ---------- | ------------------------ | ------------------------------------- |
+| [Comet](reindeer/comet.md)     | Rust       | Tree-walking interpreter | CLI, Web (WASM), Lambda, PHP, Jupyter |
+| [Blitzen](reindeer/blitzen.md) | Rust       | Bytecode VM              | CLI                                   |
+| [Dasher](reindeer/dasher.md)   | Rust       | LLVM native compiler     | CLI                                   |
+| [Donner](reindeer/donner.md)   | Kotlin     | JVM bytecode compiler    | CLI                                   |
+| [Prancer](reindeer/prancer.md) | TypeScript | Tree-walking interpreter | CLI, Web (JS), Lambda                 |
