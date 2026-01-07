@@ -1,0 +1,1207 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="An functional, C-like programming language for solving Advent of Code puzzles.">
+      
+      
+        <meta name="author" content="Edd Mann">
+      
+      
+      
+        <link rel="prev" href="../dasher/">
+      
+      
+        <link rel="next" href="../prancer/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.14">
+    
+    
+      
+        <title>Donner (Kotlin) - santa-lang</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#donner-kotlin" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="santa-lang" class="md-header__button md-logo" aria-label="santa-lang" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            santa-lang
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Donner (Kotlin)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/eddmann/santa-lang" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="santa-lang" class="md-nav__button md-logo" aria-label="santa-lang" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    santa-lang
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/eddmann/santa-lang" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../language/" class="md-nav__link">
+        Language
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../builtins/" class="md-nav__link">
+        Builtins
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../runner/" class="md-nav__link">
+        Runner
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../formatter/" class="md-nav__link">
+        Formatter
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          Reindeer
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Reindeer
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../comet/" class="md-nav__link">
+        Comet (Rust)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../blitzen/" class="md-nav__link">
+        Blitzen (Rust)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dasher/" class="md-nav__link">
+        Dasher (Rust)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Donner (Kotlin)
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Donner (Kotlin)
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#downloads" class="md-nav__link">
+    Downloads
+  </a>
+  
+    <nav class="md-nav" aria-label="Downloads">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cli" class="md-nav__link">
+    CLI
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#binary-download" class="md-nav__link">
+    Binary Download
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jar-requires-java-21" class="md-nav__link">
+    JAR (Requires Java 21+)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker" class="md-nav__link">
+    Docker
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supported-runtimes" class="md-nav__link">
+    Supported Runtimes
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    Architecture
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#desugaring-passes" class="md-nav__link">
+    Desugaring Passes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#in-memory-compilation" class="md-nav__link">
+    In-Memory Compilation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#value-system" class="md-nav__link">
+    Value System
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#java-interop" class="md-nav__link">
+    Java Interop
+  </a>
+  
+    <nav class="md-nav" aria-label="Java Interop">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-java-interop" class="md-nav__link">
+    Example: Java Interop
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-conversion" class="md-nav__link">
+    Type Conversion
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cli-usage" class="md-nav__link">
+    CLI Usage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-from-source" class="md-nav__link">
+    Building from Source
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    See Also
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../prancer/" class="md-nav__link">
+        Prancer (TypeScript)
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+          Runtimes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Runtimes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cli/" class="md-nav__link">
+        CLI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../web/" class="md-nav__link">
+        Web
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lambda/" class="md-nav__link">
+        Lambda
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../php-ext/" class="md-nav__link">
+        PHP Extension
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../jupyter-kernel/" class="md-nav__link">
+        Jupyter Kernel
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/" class="md-nav__link">
+        Examples
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#downloads" class="md-nav__link">
+    Downloads
+  </a>
+  
+    <nav class="md-nav" aria-label="Downloads">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cli" class="md-nav__link">
+    CLI
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#binary-download" class="md-nav__link">
+    Binary Download
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#jar-requires-java-21" class="md-nav__link">
+    JAR (Requires Java 21+)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker" class="md-nav__link">
+    Docker
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supported-runtimes" class="md-nav__link">
+    Supported Runtimes
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    Architecture
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#desugaring-passes" class="md-nav__link">
+    Desugaring Passes
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#in-memory-compilation" class="md-nav__link">
+    In-Memory Compilation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#value-system" class="md-nav__link">
+    Value System
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#java-interop" class="md-nav__link">
+    Java Interop
+  </a>
+  
+    <nav class="md-nav" aria-label="Java Interop">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-java-interop" class="md-nav__link">
+    Example: Java Interop
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#type-conversion" class="md-nav__link">
+    Type Conversion
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cli-usage" class="md-nav__link">
+    CLI Usage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-from-source" class="md-nav__link">
+    Building from Source
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    See Also
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="donner-kotlin">Donner (Kotlin)</h1>
+<blockquote>
+<p>JVM bytecode compiler with Java interop</p>
+</blockquote>
+<p><strong>Repository:</strong> <a href="https://github.com/eddmann/santa-lang-donner">eddmann/santa-lang-donner</a>
+<strong>Version:</strong> 1.0.0</p>
+<h2 id="overview">Overview</h2>
+<p>Donner compiles santa-lang directly to <strong>JVM bytecode</strong> using the ASM library. Programs are compiled to Java <code>.class</code> files that run on any Java 21+ runtime, benefiting from JVM optimizations and JIT compilation.</p>
+<p>The implementation uses persistent data structures throughout and includes full support for the AoC runner with test blocks and memoization. Uniquely, Donner provides <strong>Java interop functions</strong> for seamless integration with the Java ecosystem.</p>
+<h2 id="downloads">Downloads</h2>
+<h3 id="cli">CLI</h3>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Download</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linux (x64)</td>
+<td><a href="https://github.com/eddmann/santa-lang-donner/releases/download/1.0.0/santa-lang-donner-cli-1.0.0-linux-amd64.tar.gz"><code>santa-lang-donner-cli-1.0.0-linux-amd64.tar.gz</code></a></td>
+</tr>
+<tr>
+<td>macOS (Intel)</td>
+<td><a href="https://github.com/eddmann/santa-lang-donner/releases/download/1.0.0/santa-lang-donner-cli-1.0.0-macos-amd64.tar.gz"><code>santa-lang-donner-cli-1.0.0-macos-amd64.tar.gz</code></a></td>
+</tr>
+<tr>
+<td>macOS (ARM)</td>
+<td><a href="https://github.com/eddmann/santa-lang-donner/releases/download/1.0.0/santa-lang-donner-cli-1.0.0-macos-arm64.tar.gz"><code>santa-lang-donner-cli-1.0.0-macos-arm64.tar.gz</code></a></td>
+</tr>
+<tr>
+<td>JAR</td>
+<td><a href="https://github.com/eddmann/santa-lang-donner/releases/download/1.0.0/santa-lang-donner-cli-1.0.0.jar"><code>santa-lang-donner-cli-1.0.0.jar</code></a></td>
+</tr>
+<tr>
+<td>Docker</td>
+<td><a href="https://github.com/eddmann/santa-lang-donner/releases/download/1.0.0/santa-lang-donner-cli-1.0.0-docker.tar"><code>santa-lang-donner-cli-1.0.0-docker.tar</code></a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="installation">Installation</h2>
+<h3 id="binary-download">Binary Download</h3>
+<pre class="highlight"><code class="language-bash"># Download and extract for your platform
+curl -L https://github.com/eddmann/santa-lang-donner/releases/download/1.0.0/santa-lang-donner-cli-1.0.0-macos-arm64.tar.gz | tar xz
+./santa-cli --help</code></pre>
+<h3 id="jar-requires-java-21">JAR (Requires Java 21+)</h3>
+<pre class="highlight"><code class="language-bash">curl -L -o santa-cli.jar https://github.com/eddmann/santa-lang-donner/releases/download/1.0.0/santa-lang-donner-cli-1.0.0.jar
+java -jar santa-cli.jar --help</code></pre>
+<h3 id="docker">Docker</h3>
+<pre class="highlight"><code class="language-bash"># Load the Docker image
+curl -L https://github.com/eddmann/santa-lang-donner/releases/download/1.0.0/santa-lang-donner-cli-1.0.0-docker.tar | docker load
+docker run --rm santa-lang-donner-cli:1.0.0 solution.santa</code></pre>
+<h2 id="supported-runtimes">Supported Runtimes</h2>
+<ul>
+<li><a href="../../cli/">CLI</a></li>
+</ul>
+<h2 id="architecture">Architecture</h2>
+<pre class="highlight"><code>Source Code → Lexer → Parser → Desugar → Resolver → Bytecode Gen (ASM) → JVM
+                                                          │
+                                                    In-Memory Classes
+                                                    (ScriptClassLoader)</code></pre>
+<p>Donner uses a multi-stage compilation pipeline:</p>
+<ol>
+<li><strong>Lexer</strong> - Tokenization with position tracking</li>
+<li><strong>Parser</strong> - Pratt parser producing an AST</li>
+<li><strong>Desugaring</strong> - Three passes: placeholder (<code>_</code>), pipeline (<code>|&gt;</code>), pattern parameters</li>
+<li><strong>Resolver</strong> - Two-pass scope resolution with forward reference support</li>
+<li><strong>Bytecode Generation</strong> - JVM bytecode via ASM 9.7</li>
+</ol>
+<h3 id="desugaring-passes">Desugaring Passes</h3>
+<table>
+<thead>
+<tr>
+<th>Pass</th>
+<th>Transformation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PlaceholderDesugarer</td>
+<td><code>_ + 1</code> → <code>\|$0\| $0 + 1</code></td>
+</tr>
+<tr>
+<td>PipelineDesugarer</td>
+<td><code>a \|&gt; f</code> → <code>f(a)</code></td>
+</tr>
+<tr>
+<td>PatternParamDesugarer</td>
+<td><code>\|[a, b]\| ...</code> → <code>\|$p\| let [a, b] = $p; ...</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="in-memory-compilation">In-Memory Compilation</h3>
+<p>Donner compiles directly to in-memory <code>.class</code> files without touching the filesystem:</p>
+<pre class="highlight"><code>CompiledScript {
+    mainClass: ByteArray,          // Main script class
+    lambdaClasses: Map&lt;String, ByteArray&gt;  // Lambda inner classes
+}</code></pre>
+<p>A custom <code>ScriptClassLoader</code> loads these classes for execution.</p>
+<h3 id="value-system">Value System</h3>
+<p>All runtime values implement a sealed <code>Value</code> interface:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Backing Implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IntValue</td>
+<td><code>Long</code></td>
+</tr>
+<tr>
+<td>DecimalValue</td>
+<td><code>Double</code></td>
+</tr>
+<tr>
+<td>StringValue</td>
+<td><code>String</code> (grapheme-cluster indexed)</td>
+</tr>
+<tr>
+<td>BoolValue</td>
+<td><code>Boolean</code></td>
+</tr>
+<tr>
+<td>NilValue</td>
+<td>Singleton</td>
+</tr>
+<tr>
+<td>ListValue</td>
+<td><code>kotlinx.collections.immutable.PersistentList</code></td>
+</tr>
+<tr>
+<td>SetValue</td>
+<td><code>kotlinx.collections.immutable.PersistentSet</code></td>
+</tr>
+<tr>
+<td>DictValue</td>
+<td><code>kotlinx.collections.immutable.PersistentMap</code></td>
+</tr>
+<tr>
+<td>FunctionValue</td>
+<td>Compiled lambda class</td>
+</tr>
+</tbody>
+</table>
+<h2 id="java-interop">Java Interop</h2>
+<p>Donner includes functions for seamless Java integration:</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>require(className)</code></td>
+<td>Load a Java class by name</td>
+</tr>
+<tr>
+<td><code>java_new(class, ...args)</code></td>
+<td>Create instance with constructor</td>
+</tr>
+<tr>
+<td><code>java_call(object, method, ...args)</code></td>
+<td>Call instance method</td>
+</tr>
+<tr>
+<td><code>java_static(class, method, ...args)</code></td>
+<td>Call static method</td>
+</tr>
+<tr>
+<td><code>method(name)</code></td>
+<td>Create method reference for pipelines</td>
+</tr>
+<tr>
+<td><code>static_method(class, name)</code></td>
+<td>Create static method reference</td>
+</tr>
+</tbody>
+</table>
+<h3 id="example-java-interop">Example: Java Interop</h3>
+<pre class="highlight"><code class="language-santa">let ArrayList = require("java.util.ArrayList");
+let list = java_new(ArrayList);
+java_call(list, "add", "hello");
+java_call(list, "add", "world");
+java_call(list, "size") // =&gt; 2
+
+// Pipeline-friendly methods
+let StringBuilder = require("java.lang.StringBuilder");
+java_new(StringBuilder)
+  |&gt; method("append")("Hello, ")
+  |&gt; method("append")("World!")
+  |&gt; method("toString")
+  // =&gt; "Hello, World!"</code></pre>
+<h3 id="type-conversion">Type Conversion</h3>
+<p>Values are automatically converted between santa-lang and Java:</p>
+<table>
+<thead>
+<tr>
+<th>santa-lang</th>
+<th>Java</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Integer</td>
+<td><code>Long</code> / <code>Integer</code></td>
+</tr>
+<tr>
+<td>Decimal</td>
+<td><code>Double</code></td>
+</tr>
+<tr>
+<td>String</td>
+<td><code>String</code></td>
+</tr>
+<tr>
+<td>Boolean</td>
+<td><code>Boolean</code></td>
+</tr>
+<tr>
+<td>List</td>
+<td><code>List&lt;?&gt;</code></td>
+</tr>
+<tr>
+<td>Dict</td>
+<td><code>Map&lt;?, ?&gt;</code></td>
+</tr>
+<tr>
+<td>Nil</td>
+<td><code>null</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="cli-usage">CLI Usage</h2>
+<p>Requires Java 21+.</p>
+<pre class="highlight"><code class="language-bash"># Run a solution
+santa-cli solution.santa
+
+# Run with tests
+santa-cli -t solution.santa</code></pre>
+<h2 id="building-from-source">Building from Source</h2>
+<p>Requires Java 21+ and Gradle.</p>
+<pre class="highlight"><code class="language-bash">git clone https://github.com/eddmann/santa-lang-donner.git
+cd santa-lang-donner
+make build      # Build CLI
+make test       # Run tests
+make cli/jar    # Build fat JAR</code></pre>
+<h2 id="see-also">See Also</h2>
+<ul>
+<li><a href="../../language/">Language Specification</a></li>
+<li><a href="../../builtins/">Built-in Functions</a></li>
+<li><a href="https://github.com/eddmann/santa-lang-donner/blob/main/docs/ARCHITECTURE.md">Full Architecture Documentation</a></li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.b4d07000.min.js"></script>
+      
+        <script src="../../assets/runner.js"></script>
+      
+    
+  </body>
+</html>

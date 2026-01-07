@@ -13,21 +13,21 @@
       
       
       
-        <link rel="prev" href="../builtins/">
+        <link rel="prev" href="../comet/">
       
       
-        <link rel="next" href="../formatter/">
+        <link rel="next" href="../dasher/">
       
-      <link rel="icon" href="../assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.14">
     
     
       
-        <title>Runner - santa-lang</title>
+        <title>Blitzen (Rust) - santa-lang</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.85bb2934.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
       
       
 
@@ -43,7 +43,7 @@
       
     
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -65,7 +65,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#advent-of-code-runner" class="md-skip">
+        <a href="#blitzen-rust" class="md-skip">
           Skip to content
         </a>
       
@@ -81,7 +81,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="santa-lang" class="md-header__button md-logo" aria-label="santa-lang" data-md-component="logo">
+    <a href="../.." title="santa-lang" class="md-header__button md-logo" aria-label="santa-lang" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -100,7 +100,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Runner
+              Blitzen (Rust)
             
           </span>
         </div>
@@ -179,7 +179,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="santa-lang" class="md-nav__button md-logo" aria-label="santa-lang" data-md-component="logo">
+    <a href="../.." title="santa-lang" class="md-nav__button md-logo" aria-label="santa-lang" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -210,7 +210,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         Home
       </a>
     </li>
@@ -225,7 +225,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../language/" class="md-nav__link">
+      <a href="../../language/" class="md-nav__link">
         Language
       </a>
     </li>
@@ -240,8 +240,38 @@
   
   
     <li class="md-nav__item">
-      <a href="../builtins/" class="md-nav__link">
+      <a href="../../builtins/" class="md-nav__link">
         Builtins
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../runner/" class="md-nav__link">
+        Runner
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../formatter/" class="md-nav__link">
+        Formatter
       </a>
     </li>
   
@@ -256,6 +286,65 @@
     
   
   
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          Reindeer
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Reindeer
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../comet/" class="md-nav__link">
+        Comet (Rust)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
     <li class="md-nav__item md-nav__item--active">
       
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
@@ -265,12 +354,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Runner
+          Blitzen (Rust)
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Runner
+        Blitzen (Rust)
       </a>
       
         
@@ -289,23 +378,23 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#solution" class="md-nav__link">
-    Solution
+  <a href="#overview" class="md-nav__link">
+    Overview
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#testing" class="md-nav__link">
-    Testing
+  <a href="#downloads" class="md-nav__link">
+    Downloads
   </a>
   
-    <nav class="md-nav" aria-label="Testing">
+    <nav class="md-nav" aria-label="Downloads">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#slow-tests" class="md-nav__link">
-    Slow Tests
+  <a href="#cli" class="md-nav__link">
+    CLI
   </a>
   
 </li>
@@ -316,30 +405,23 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#external-functions" class="md-nav__link">
-    External Functions
+  <a href="#installation" class="md-nav__link">
+    Installation
   </a>
   
-    <nav class="md-nav" aria-label="External Functions">
+    <nav class="md-nav" aria-label="Installation">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#putsvalues" class="md-nav__link">
-    puts(...values)
+  <a href="#using-docker-recommended" class="md-nav__link">
+    Using Docker (Recommended)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#readpath" class="md-nav__link">
-    read(path)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#env" class="md-nav__link">
-    env()
+  <a href="#binary-download" class="md-nav__link">
+    Binary Download
   </a>
   
 </li>
@@ -350,8 +432,63 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
-    Example
+  <a href="#supported-runtimes" class="md-nav__link">
+    Supported Runtimes
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    Architecture
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#frostbyte-bytecode" class="md-nav__link">
+    FrostByte Bytecode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-implementation-details" class="md-nav__link">
+    Key Implementation Details
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#value-representation" class="md-nav__link">
+    Value Representation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cli-usage" class="md-nav__link">
+    CLI Usage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-from-source" class="md-nav__link">
+    Building from Source
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    See Also
   </a>
   
 </li>
@@ -363,65 +500,6 @@
     </li>
   
 
-    
-      
-      
-      
-
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../formatter/" class="md-nav__link">
-        Formatter
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-  
-    
-      
-    
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
-      
-      
-      
-      
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
-      
-      
-      
-        <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
-          Reindeer
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-        <label class="md-nav__title" for="__nav_6">
-          <span class="md-nav__icon md-icon"></span>
-          Reindeer
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../reindeer/" class="md-nav__link">
-        Overview
-      </a>
-    </li>
-  
-
             
           
             
@@ -430,35 +508,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reindeer/comet/" class="md-nav__link">
-        Comet (Rust)
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../reindeer/blitzen/" class="md-nav__link">
-        Blitzen (Rust)
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../reindeer/dasher/" class="md-nav__link">
+      <a href="../dasher/" class="md-nav__link">
         Dasher (Rust)
       </a>
     </li>
@@ -472,7 +522,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reindeer/donner/" class="md-nav__link">
+      <a href="../donner/" class="md-nav__link">
         Donner (Kotlin)
       </a>
     </li>
@@ -486,7 +536,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reindeer/prancer/" class="md-nav__link">
+      <a href="../prancer/" class="md-nav__link">
         Prancer (TypeScript)
       </a>
     </li>
@@ -537,7 +587,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cli/" class="md-nav__link">
+      <a href="../../cli/" class="md-nav__link">
         CLI
       </a>
     </li>
@@ -551,7 +601,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../web/" class="md-nav__link">
+      <a href="../../web/" class="md-nav__link">
         Web
       </a>
     </li>
@@ -565,7 +615,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../lambda/" class="md-nav__link">
+      <a href="../../lambda/" class="md-nav__link">
         Lambda
       </a>
     </li>
@@ -579,7 +629,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../php-ext/" class="md-nav__link">
+      <a href="../../php-ext/" class="md-nav__link">
         PHP Extension
       </a>
     </li>
@@ -593,7 +643,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../jupyter-kernel/" class="md-nav__link">
+      <a href="../../jupyter-kernel/" class="md-nav__link">
         Jupyter Kernel
       </a>
     </li>
@@ -615,7 +665,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../examples/" class="md-nav__link">
+      <a href="../../examples/" class="md-nav__link">
         Examples
       </a>
     </li>
@@ -649,23 +699,23 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#solution" class="md-nav__link">
-    Solution
+  <a href="#overview" class="md-nav__link">
+    Overview
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#testing" class="md-nav__link">
-    Testing
+  <a href="#downloads" class="md-nav__link">
+    Downloads
   </a>
   
-    <nav class="md-nav" aria-label="Testing">
+    <nav class="md-nav" aria-label="Downloads">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#slow-tests" class="md-nav__link">
-    Slow Tests
+  <a href="#cli" class="md-nav__link">
+    CLI
   </a>
   
 </li>
@@ -676,30 +726,23 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#external-functions" class="md-nav__link">
-    External Functions
+  <a href="#installation" class="md-nav__link">
+    Installation
   </a>
   
-    <nav class="md-nav" aria-label="External Functions">
+    <nav class="md-nav" aria-label="Installation">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#putsvalues" class="md-nav__link">
-    puts(...values)
+  <a href="#using-docker-recommended" class="md-nav__link">
+    Using Docker (Recommended)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#readpath" class="md-nav__link">
-    read(path)
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#env" class="md-nav__link">
-    env()
+  <a href="#binary-download" class="md-nav__link">
+    Binary Download
   </a>
   
 </li>
@@ -710,8 +753,63 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
-    Example
+  <a href="#supported-runtimes" class="md-nav__link">
+    Supported Runtimes
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    Architecture
+  </a>
+  
+    <nav class="md-nav" aria-label="Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#frostbyte-bytecode" class="md-nav__link">
+    FrostByte Bytecode
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-implementation-details" class="md-nav__link">
+    Key Implementation Details
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#value-representation" class="md-nav__link">
+    Value Representation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cli-usage" class="md-nav__link">
+    CLI Usage
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-from-source" class="md-nav__link">
+    Building from Source
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    See Also
   </a>
   
 </li>
@@ -734,110 +832,161 @@
   
 
 
-<h1 id="advent-of-code-runner">Advent of Code Runner</h1>
-<p>The language has been designed with the primary goal of aiding in the development of solutions to Advent of Code (AoC) problems.
-Whilst the <a href="../language/">core language</a> provides the building blocks to express and evaluate a problem, it is the addition of the AoC Runner that truly helps aid in solution development.
-Over the many years of AoC problems I have tackled, regardless of language used, I noticed a similar pattern of building up a form of framework for both running and testing each solution.
-As such, during this languages development, a lot of effort was paid in providing a REPL which catered for a frictionless problem-solving environment.</p>
-<p>With the aid of <a href="../language/#sections">Sections</a>, the Runner is able to provide a clear Domain Specific Language (DSL) for the programmer to express and validate the correctness of a solution.</p>
-<h2 id="solution">Solution</h2>
-<p>The solution source consists of a <code>part_one</code> and/or <code>part_two</code> section.
-Each section is an expression, which when evaluated (by the desired runtime) returns the answer to the given problem.
-The solution source is additionally able to define an <code>input</code> section, which will be evaluated and supplied to both <code>part_*</code> sections in the form of a <code>input</code> variable.
-The Runner also benchmarks each parts execution time and supplies this to the runtime to be presented accordingly.</p>
-<p>Below is an example solution for solving the <a href="https://adventofcode.com/2015/day/1">first ever</a> AoC problem:</p>
-<pre class="highlight"><code>input: "()())"
+<h1 id="blitzen-rust">Blitzen (Rust)</h1>
+<blockquote>
+<p>Bytecode VM with FrostByte bytecode compilation</p>
+</blockquote>
+<p><strong>Repository:</strong> <a href="https://github.com/eddmann/santa-lang-blitzen">eddmann/santa-lang-blitzen</a>
+<strong>Version:</strong> 1.0.0</p>
+<h2 id="overview">Overview</h2>
+<p>Blitzen takes a different approach from tree-walking interpretation by compiling santa-lang to <strong>FrostByte bytecode</strong> and executing it on a stack-based virtual machine.</p>
+<p>This bytecode compilation approach explores a different execution model for potential performance improvements over tree-walking interpretation, particularly for computationally intensive puzzles. The bytecode format is portable and can be serialized for caching.</p>
+<h2 id="downloads">Downloads</h2>
+<h3 id="cli">CLI</h3>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Download</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linux (x64)</td>
+<td><a href="https://github.com/eddmann/santa-lang-blitzen/releases/download/1.0.0/santa-lang-blitzen-cli-1.0.0-linux-amd64"><code>santa-lang-blitzen-cli-1.0.0-linux-amd64</code></a></td>
+</tr>
+<tr>
+<td>Linux (ARM)</td>
+<td><a href="https://github.com/eddmann/santa-lang-blitzen/releases/download/1.0.0/santa-lang-blitzen-cli-1.0.0-linux-arm64"><code>santa-lang-blitzen-cli-1.0.0-linux-arm64</code></a></td>
+</tr>
+<tr>
+<td>macOS (Intel)</td>
+<td><a href="https://github.com/eddmann/santa-lang-blitzen/releases/download/1.0.0/santa-lang-blitzen-cli-1.0.0-macos-amd64"><code>santa-lang-blitzen-cli-1.0.0-macos-amd64</code></a></td>
+</tr>
+<tr>
+<td>macOS (ARM)</td>
+<td><a href="https://github.com/eddmann/santa-lang-blitzen/releases/download/1.0.0/santa-lang-blitzen-cli-1.0.0-macos-arm64"><code>santa-lang-blitzen-cli-1.0.0-macos-arm64</code></a></td>
+</tr>
+<tr>
+<td>Docker</td>
+<td><code>docker pull ghcr.io/eddmann/santa-lang-blitzen:cli-latest</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="installation">Installation</h2>
+<h3 id="using-docker-recommended">Using Docker (Recommended)</h3>
+<pre class="highlight"><code class="language-bash">docker run --rm ghcr.io/eddmann/santa-lang-blitzen:cli-latest -e '1 + 1'</code></pre>
+<h3 id="binary-download">Binary Download</h3>
+<pre class="highlight"><code class="language-bash"># Download for your platform
+curl -L -o santa https://github.com/eddmann/santa-lang-blitzen/releases/download/1.0.0/santa-lang-blitzen-cli-1.0.0-macos-arm64
+chmod +x santa
+./santa --help</code></pre>
+<h2 id="supported-runtimes">Supported Runtimes</h2>
+<ul>
+<li><a href="../../cli/">CLI</a></li>
+</ul>
+<h2 id="architecture">Architecture</h2>
+<pre class="highlight"><code>Source Code → Lexer → Parser → Compiler → FrostByte Bytecode → Blitzen VM → Result
+                                                                    │
+                                                              Stack + Globals
+                                                              + Upvalues</code></pre>
+<p>Blitzen uses a compilation pipeline that transforms source code into bytecode before execution:</p>
+<ol>
+<li><strong>Lexer</strong> - Tokenization (shared with other Rust implementations)</li>
+<li><strong>Parser</strong> - Pratt parser producing an AST</li>
+<li><strong>Compiler</strong> - Transforms AST to FrostByte bytecode with scope resolution</li>
+<li><strong>VM</strong> - Stack-based execution engine</li>
+</ol>
+<h3 id="frostbyte-bytecode">FrostByte Bytecode</h3>
+<p>FrostByte is a custom bytecode format designed for santa-lang. Key instruction categories:</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Instructions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stack</td>
+<td><code>Constant</code>, <code>Pop</code>, <code>Dup</code>, <code>Nil</code>, <code>True</code>, <code>False</code></td>
+</tr>
+<tr>
+<td>Variables</td>
+<td><code>GetLocal</code>, <code>SetLocal</code>, <code>GetGlobal</code>, <code>SetGlobal</code>, <code>GetUpvalue</code>, <code>SetUpvalue</code></td>
+</tr>
+<tr>
+<td>Arithmetic</td>
+<td><code>Add</code>, <code>Sub</code>, <code>Mul</code>, <code>Div</code>, <code>Mod</code>, <code>Neg</code></td>
+</tr>
+<tr>
+<td>Collections</td>
+<td><code>MakeList</code>, <code>MakeSet</code>, <code>MakeDict</code>, <code>MakeRange</code>, <code>Index</code>, <code>Slice</code>, <code>Size</code>, <code>Spread</code></td>
+</tr>
+<tr>
+<td>Functions</td>
+<td><code>MakeClosure</code>, <code>Call</code>, <code>TailCall</code>, <code>Return</code></td>
+</tr>
+<tr>
+<td>Control</td>
+<td><code>Jump</code>, <code>JumpIfFalse</code>, <code>JumpIfTrue</code></td>
+</tr>
+<tr>
+<td>Builtins</td>
+<td><code>CallBuiltin</code> (fast-path dispatch)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="key-implementation-details">Key Implementation Details</h3>
+<ul>
+<li><strong>Stack-Based VM</strong>: Operations push/pop values from an operand stack</li>
+<li><strong>Call Frames</strong>: Each function call creates a frame with its own stack window</li>
+<li><strong>Upvalue Management</strong>: Closures capture variables via open/closed upvalues</li>
+<li><strong>Builtin Fast-Path</strong>: Common builtins like <code>map</code>, <code>filter</code>, <code>fold</code> use direct dispatch via <code>CallBuiltin</code> opcode, avoiding closure allocation overhead</li>
+<li><strong>Tail-Call Optimization</strong>: Self-recursive tail calls reuse the current frame</li>
+<li><strong>Persistent Collections</strong>: Uses <code>im-rs</code> crate for immutable data structures with structural sharing</li>
+</ul>
+<h3 id="value-representation">Value Representation</h3>
+<pre class="highlight"><code>Value enum:
+├── Nil
+├── Integer (i64)
+├── Decimal (f64)
+├── Boolean
+├── String (Rc&lt;String&gt;)
+├── List (im::Vector)
+├── Set (im::HashSet)
+├── Dict (im::HashMap)
+├── Function (Closure)
+├── LazySequence
+├── Range
+├── PartialApplication
+├── MemoizedFunction
+└── SpreadMarker</code></pre>
+<h2 id="cli-usage">CLI Usage</h2>
+<pre class="highlight"><code class="language-bash"># Run a solution
+santa-cli solution.santa
 
-part_one: {
-  input |&gt; fold(0) |floor, direction| {
-    if direction == "(" { floor + 1 } else { floor - 1 };
-  }
-}
+# Run with tests
+santa-cli -t solution.santa
 
-part_two: {
-  zip(1.., input) |&gt; fold(0) |floor, [index, direction]| {
-    let next_floor = if direction == "(" { floor + 1 } else { floor - 1 };
-    if next_floor &lt; 0 { break index } else { next_floor };
-  }
-}</code></pre>
-<p><strong>Note:</strong> in this example the input has been statically defined as a String response.
-Typically, you will see other means of fetching the problem input, for example, via runtime specific implementations of the <a href="../language/#external">external</a> <code>read</code> function.
-If is advised to review your desired runtimes documentation to see what is available.</p>
-<h2 id="testing">Testing</h2>
-<p>Whilst solving a days problem it is common to be shown a smaller example, in which the expected answer is provided.
-Along with defining a solution, you are able to provide test cases in the form of <code>test</code> sections.
-Each test case includes a desired <code>input</code>, alongside a <code>part_one</code> and/or <code>part_two</code> expected result.
-Upon testing your solution, the Runner will assert the given solutions result to the expected one and return success or failure accordingly.
-It is upto the runtime to determine how this test results are presented.</p>
-<pre class="highlight"><code>test: {
-  input: "()())"
-  part_one: -1
-  part_two: 5
-}</code></pre>
-<h3 id="slow-tests">Slow Tests</h3>
-<p>Tests that are expensive or take a long time to run can be marked with the <code>@slow</code> attribute.
-These tests are skipped by default, allowing for faster iteration during development.</p>
-<pre class="highlight"><code>@slow
-test: {
-  input: read("aoc://2015/1")
-  part_one: 280
-  part_two: 1797
-}</code></pre>
-<p>To include slow tests during test execution, use the <code>-s</code> or <code>--slow</code> flag with the CLI:</p>
-<pre class="highlight"><code class="language-bash">santa-cli -t -s solution.santa</code></pre>
-<p>This is useful for tests that validate against the actual puzzle input, which may be computationally expensive compared to the smaller example inputs provided in the problem description.</p>
-<h2 id="external-functions">External Functions</h2>
-<p>The CLI runtime provides the following external functions that are available in your santa-lang programs:</p>
-<h3 id="putsvalues"><code>puts(...values)</code></h3>
-<p>Prints values to standard output, separated by spaces, followed by a newline.</p>
-<pre class="highlight"><code class="language-santa">puts("Hello", "World");  // Output: Hello World
-puts(1, 2, 3);           // Output: 1 2 3</code></pre>
-<p>Returns <code>nil</code>.</p>
-<h3 id="readpath"><code>read(path)</code></h3>
-<p>Reads content from a file path, URL, or Advent of Code input.</p>
-<p><strong>File paths:</strong></p>
-<pre class="highlight"><code class="language-santa">let data = read("input.txt");</code></pre>
-<p><strong>HTTP/HTTPS URLs:</strong></p>
-<pre class="highlight"><code class="language-santa">let data = read("https://example.com/data.txt");</code></pre>
-<p><strong>Advent of Code inputs:</strong></p>
-<pre class="highlight"><code class="language-santa">let data = read("aoc://2015/1");  // Fetches Day 1 of 2015</code></pre>
-<p>The <code>aoc://</code> scheme requires the <code>SANTA_CLI_SESSION_TOKEN</code> environment variable to be set with your Advent of Code session cookie.
-Fetched inputs are cached locally as <code>aoc{year}_day{day}.input</code> files to avoid repeated requests.</p>
-<p>Returns the file contents as a String.</p>
-<h3 id="env"><code>env()</code></h3>
-<p>Prints all variables and functions currently defined in the REPL environment.
-Useful for debugging and exploring what's available in the current session.</p>
-<pre class="highlight"><code class="language-santa">let x = 42;
-let add = |a, b| a + b;
-env();
-// Output:
-// Environment:
-//   x = 42
-//   add = Function</code></pre>
-<p>Returns <code>nil</code>. This function is primarily useful in REPL mode.</p>
-<h2 id="example">Example</h2>
-<p>For completeness, below is the full example solution combining both the solution and test blocks.
-It also documents use of a runtime-specific external <code>read</code> function.</p>
-<pre class="highlight"><code>input: read("aoc://2015/1")
+# Evaluate inline expression
+santa-cli -e '1 + 2'
 
-part_one: {
-  input |&gt; fold(0) |floor, direction| {
-    if direction == "(" { floor + 1 } else { floor - 1 };
-  }
-}
-
-part_two: {
-  zip(1.., input) |&gt; fold(0) |floor, [index, direction]| {
-    let next_floor = if direction == "(" { floor + 1 } else { floor - 1 };
-    if next_floor &lt; 0 { break index } else { next_floor };
-  }
-}
-
-test: {
-  input: "()())"
-  part_one: -1
-  part_two: 5
-}</code></pre>
+# Interactive REPL
+santa-cli -r</code></pre>
+<h2 id="building-from-source">Building from Source</h2>
+<p>Requires Rust 1.91.1+.</p>
+<pre class="highlight"><code class="language-bash">git clone https://github.com/eddmann/santa-lang-blitzen.git
+cd santa-lang-blitzen
+make build    # Debug build
+make release  # Release build
+make test     # Run tests</code></pre>
+<h2 id="see-also">See Also</h2>
+<ul>
+<li><a href="../../language/">Language Specification</a></li>
+<li><a href="../../builtins/">Built-in Functions</a></li>
+<li><a href="https://github.com/eddmann/santa-lang-blitzen/blob/main/docs/ARCHITECTURE.md">Full Architecture Documentation</a></li>
+</ul>
 
 
 
@@ -875,12 +1024,12 @@ test: {
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.sections", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.b4d07000.min.js"></script>
+      <script src="../../assets/javascripts/bundle.b4d07000.min.js"></script>
       
-        <script src="../assets/runner.js"></script>
+        <script src="../../assets/runner.js"></script>
       
     
   </body>

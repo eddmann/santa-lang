@@ -3237,7 +3237,7 @@ Santa does not have explicit exception handling mechanisms (no try/catch).
 
 ## 16. CLI Output Format Specification
 
-This section defines the machine-readable output formats for CLI implementations. All CLI implementations (Comet, Blitzen, Dasher, Donner, Vixen, Prancer) should produce consistent output following this specification.
+This section defines the machine-readable output formats for CLI implementations. All CLI implementations (Comet, Blitzen, Dasher, Donner, Prancer) should produce consistent output following this specification.
 
 ### 16.1 Output Modes
 
