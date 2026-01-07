@@ -1,5 +1,5 @@
 MKDOCS_IMAGE = squidfunk/mkdocs-material:9.1.14
-NODE_IMAGE = node:22-alpine
+BUN_IMAGE = oven/bun:1-alpine
 DOCKER = docker run --rm -v $(PWD):/docs -w /docs
 
 .PHONY: serve
@@ -12,4 +12,4 @@ build: build/runner
 
 .PHONY: build/runner
 build/runner:
-	@$(DOCKER) -e SANTA_LANG_NPM_TOKEN -w /docs/runner $(NODE_IMAGE) sh -c "yarn && yarn build"
+	@$(DOCKER) -e SANTA_LANG_NPM_TOKEN -w /docs/runner $(BUN_IMAGE) sh -c "bun install && bun run build"

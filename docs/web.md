@@ -34,41 +34,84 @@ type ExternalFunctions = {
   [name: string]: (arguments: InteropType[]) => InteropType;
 };
 
-type Location = { start: number; end: number };
-type RunErr = { message: string; source: Location; trace: Location[] };
+type Status = "pending" | "running" | "complete" | "error";
 
-type RunResult = { value: string; duration: number };
-type RunEvaluation =
-  | {
-      part_one?: RunResult;
-      part_two?: RunResult;
-    }
-  | RunResult;
+type ErrorLocation = { line: number; column: number };
+type StackFrame = { function: string; line: number; column: number };
+type ErrorInfo = { message: string; location: ErrorLocation; stack: StackFrame[] };
 
-type TestCaseResult = { expected: string; actual: string; passed: boolean };
-type TestCase = {
-  part_one?: TestCaseResult;
-  part_two?: TestCaseResult;
+type PartResult = {
+  status: Status;
+  value?: string;
+  duration_ms?: number;
 };
 
-function aoc_run(
-  source: string,
-  js_functions: ExternalFunctions,
-): RunEvaluation | RunErr;
+type ScriptState = {
+  type: "script";
+  status: Status;
+  value?: string;
+  duration_ms?: number;
+  error?: ErrorInfo;
+};
 
-function aoc_test(
-  source: string,
-  js_functions: ExternalFunctions,
-): TestCase[] | RunErr;
+type SolutionState = {
+  type: "solution";
+  status: Status;
+  part_one: PartResult;
+  part_two: PartResult;
+  error?: ErrorInfo;
+};
 
-function evaluate(
-  expression: string,
-  js_functions?: ExternalFunctions,
-): string | RunErr;
+type TestPartResult = { passed: boolean; expected: string; actual: string };
+type TestCaseStatus = "pending" | "running" | "complete" | "skipped";
+type TestCaseState = {
+  index: number;
+  slow: boolean;
+  status: TestCaseStatus;
+  part_one?: TestPartResult;
+  part_two?: TestPartResult;
+};
+type TestSummary = { total: number; passed: number; failed: number; skipped: number };
+type TestState = {
+  type: "test";
+  status: Status;
+  success?: boolean;
+  summary: TestSummary;
+  tests: TestCaseState[];
+  error?: ErrorInfo;
+};
+
+type FormatResult = {
+  success: boolean;
+  formatted?: string;
+  error?: ErrorInfo;
+};
+
+// Evaluate a script or expression
+function evaluateScript(
+  source: string,
+  externalFunctions?: ExternalFunctions,
+  onProgress?: (state: ScriptState) => void,
+): ScriptState;
+
+// Evaluate a solution (part_one/part_two)
+function evaluateSolution(
+  source: string,
+  externalFunctions?: ExternalFunctions,
+  onProgress?: (state: SolutionState) => void,
+): SolutionState;
+
+// Run test cases
+function testSolution(
+  source: string,
+  includeSlow?: boolean,
+  externalFunctions?: ExternalFunctions,
+  onProgress?: (state: TestState) => void,
+): TestState;
 
 // Comet (WASM) only
-function format(source: string): string | RunErr;
-function isFormatted(source: string): boolean | RunErr;
+function format(source: string): FormatResult;
+function isFormatted(source: string): boolean;
 ```
 
 ## External Functions
@@ -93,22 +136,30 @@ const puts = (arguments: InteropType[]): InteropType => console.log(...arguments
 
 ## Errors
 
-If an error occurs during execution the the program is immediately halted; with the error message, location and associated call stack trace locations returned as an `RunErr` object (as detailed above).
+All functions return state objects with a `status` field. When `status` is `"error"`, the `error` property contains detailed error information including the message, source location (line and column), and stack trace. Functions never throw exceptions.
 
 ## Example
 
 Below is an example of how the WASM variant can be used within a Web context.
 
 ```js
-import { evaluate, format, isFormatted } from "@eddmann/santa-lang-wasm";
+import { evaluateScript, evaluateSolution, testSolution, format, isFormatted } from "@eddmann/santa-lang-wasm";
 
-evaluate("[1, 2, 3] |> map(_ + 1) |> sum");
+// Evaluate a simple expression
+const result = evaluateScript("[1, 2, 3] |> map(_ + 1) |> sum");
+if (result.status === "complete") {
+  console.log(result.value); // "10"
+}
 
-evaluate('puts("Hello, world")', { puts: console.log.bind(console) });
+// With external functions
+const withPuts = evaluateScript('puts("Hello, world")', { puts: console.log.bind(console) });
 
 // Formatting (Comet only)
-format("let x=1+2"); // Returns: "let x = 1 + 2\n"
-isFormatted("let x = 1 + 2\n"); // Returns: true
+const formatted = format("let x=1+2");
+if (formatted.success) {
+  console.log(formatted.formatted); // "let x = 1 + 2\n"
+}
+console.log(isFormatted("let x = 1 + 2\n")); // true
 ```
 
 ## Editor

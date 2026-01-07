@@ -1,10 +1,8 @@
 {
   "dependencies": {
-    "@eddmann/santa-lang-wasm": "0.0.1",
-    "webpack": "^5.85.0",
-    "webpack-cli": "^5.1.1"
+    "@eddmann/santa-lang-wasm": "1.0.1"
   },
   "scripts": {
-    "build": "webpack"
+    "build": "bun build ./runner.js --outdir ../docs/assets --minify"
   }
 }

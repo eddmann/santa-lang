@@ -1,7 +1,11 @@
-import { evaluate } from '@eddmann/santa-lang-wasm';
+import * as bg from '@eddmann/santa-lang-wasm/santa_lang_wasm_bg.js';
+import wasmPath from '@eddmann/santa-lang-wasm/santa_lang_wasm_bg.wasm';
+
+// Capture script URL immediately (document.currentScript is null after script loads)
+const scriptUrl = document.currentScript?.src;
 
 /**
- * Replace code snippet copy functionality with runner
+ * Apply play button styling immediately (don't wait for WASM)
  */
 const style = document.createElement('style');
 style.innerHTML = `
@@ -12,30 +16,62 @@ style.innerHTML = `
 `;
 document.head.appendChild(style);
 
-[].forEach.call(document.querySelectorAll('.md-clipboard.md-icon'), (el) => {
-  const source = document.querySelector(el.dataset.clipboardTarget);
+/**
+ * Manually load WASM and initialize bindings
+ */
+const imports = { './santa_lang_wasm_bg.js': {} };
 
-  if (!source.classList.contains('language-santa')) {
-    el.remove();
-    return;
+for (const [name, fn] of Object.entries(bg)) {
+  if (name.startsWith('__wbg') || name.startsWith('__wbindgen')) {
+    imports['./santa_lang_wasm_bg.js'][name] = fn;
   }
+}
 
-  source.addEventListener('dblclick', () => {
-    source.contentEditable = true;
+// Resolve WASM path relative to this script's location (not the page URL)
+fetch(new URL(wasmPath, scriptUrl))
+  .then((response) => response.arrayBuffer())
+  .then((buffer) => WebAssembly.instantiate(buffer, imports))
+  .then(({ instance }) => {
+    bg.__wbg_set_wasm(instance.exports);
+    initRunner(bg.evaluateScript);
+  })
+  .catch((err) => {
+    console.error('Failed to load santa-lang WASM:', err);
   });
 
-  el.addEventListener('click', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
+/**
+ * Set up code runner on santa code blocks
+ */
+function initRunner(evaluateScript) {
+  [].forEach.call(document.querySelectorAll('.md-clipboard.md-icon'), (el) => {
+    const source = document.querySelector(el.dataset.clipboardTarget);
 
-    source.parentNode.nextSibling?.remove();
-    const result = document.createElement('pre');
-    source.parentNode.after(result);
-
-    try {
-      result.innerHTML = `<code>${evaluate(source.innerText)}</code>`;
-    } catch (error) {
-      result.innerHTML = `<code>${error.message}</code>`;
+    if (!source.classList.contains('language-santa')) {
+      el.remove();
+      return;
     }
+
+    // Remove clipboard functionality to prevent Material's clipboard.js from triggering
+    el.removeAttribute('data-clipboard-target');
+
+    source.addEventListener('dblclick', () => {
+      source.contentEditable = true;
+    });
+
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      source.parentNode.nextSibling?.remove();
+      const result = document.createElement('pre');
+      source.parentNode.after(result);
+
+      const state = evaluateScript(source.innerText);
+      if (state.status === 'error') {
+        result.innerHTML = `<code>${state.error.message}</code>`;
+      } else {
+        result.innerHTML = `<code>${state.value}</code>`;
+      }
+    });
   });
-});
+}

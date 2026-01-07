@@ -34,7 +34,11 @@ echo "1+2" | santa-cli -f
 ```javascript
 import { format, isFormatted } from "@eddmann/santa-lang-wasm";
 
-const formatted = format("let x=1+2");
+const result = format("let x=1+2");
+if (result.success) {
+  console.log(result.formatted); // "let x = 1 + 2\n"
+}
+
 const needsFormat = !isFormatted(source);
 ```
 

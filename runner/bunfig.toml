@@ -1,0 +1,2 @@
+[install.scopes]
+"@eddmann" = { url = "https://npm.pkg.github.com", token = "$SANTA_LANG_NPM_TOKEN" }

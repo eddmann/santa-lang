@@ -1,0 +1,14 @@
+{
+  "lockfileVersion": 1,
+  "configVersion": 1,
+  "workspaces": {
+    "": {
+      "dependencies": {
+        "@eddmann/santa-lang-wasm": "1.0.1",
+      },
+    },
+  },
+  "packages": {
+    "@eddmann/santa-lang-wasm": ["@eddmann/santa-lang-wasm@1.0.1", "https://npm.pkg.github.com/download/@eddmann/santa-lang-wasm/1.0.1/4aa55f42d60520280a2d2b6c87a888ffab421054", {}, "sha512-UQzYNk6JD4hSCDkKQGHjSl77oGdcRxccDln+9Yt965YJ5us1diEUWKyRT86UXbNEyzC7HH+Q0hkzG/7qfXWIVg=="],
+  }
+}
