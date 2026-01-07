@@ -3118,17 +3118,45 @@ sum([1, 2, 3])  // Calls local 'sum', not built-in
 
 ## 15. Implementation Notes
 
-### 15.1 Reference Implementations
+### 15.1 Implementations
 
-**TypeScript Implementation:**
-- Repository: `eddmann/santa-lang-prancer`
-- Type: Tree-walking interpreter
-- Status: Initial implementation
+The language has multiple implementations (affectionately called "reindeer"):
 
-**Rust Implementation:**
+**Comet** (Recommended)
 - Repository: `eddmann/santa-lang-comet`
-- Type: Bytecode VM (recommended)
-- Status: Performance-optimized
+- Language: Rust
+- Type: Tree-walking interpreter
+- Runtimes: CLI, Web (WASM), Lambda, PHP Extension, Jupyter Kernel
+
+**Blitzen**
+- Repository: `eddmann/santa-lang-blitzen`
+- Language: Rust
+- Type: Bytecode VM (FrostByte)
+- Runtimes: CLI
+
+**Dasher**
+- Repository: `eddmann/santa-lang-dasher`
+- Language: Rust
+- Type: LLVM native compiler
+- Runtimes: CLI
+
+**Donner**
+- Repository: `eddmann/santa-lang-donner`
+- Language: Kotlin
+- Type: JVM bytecode compiler
+- Runtimes: CLI
+
+**Prancer**
+- Repository: `eddmann/santa-lang-prancer`
+- Language: TypeScript
+- Type: Tree-walking interpreter
+- Runtimes: CLI, Web, Lambda
+
+**Vixen**
+- Repository: `eddmann/santa-lang-vixen`
+- Language: C
+- Type: Embedded bytecode VM
+- Runtimes: ESP32, Raspberry Pi Pico (language subset)
 
 ### 15.2 Runtime Targets
 
