@@ -3273,6 +3273,7 @@ The output type is determined by the source content and CLI flags:
 | `"script"` | Source contains no `part_one`/`part_two` sections (default execution) |
 | `"test"` | Running with `-t` flag |
 | `"error"` | An error occurred during execution (JSON mode only) |
+| (version) | Running with `-v`/`--version` flag (see 16.3.6) |
 
 Inline expressions (`-e`) follow the same detection rules as files.
 
@@ -3422,6 +3423,21 @@ When an error occurs during execution, the entire output is replaced with an err
   "stack": []
 }
 ```
+
+#### 16.3.6 Version Output
+
+When running with `--version` (or `-v`) and an output format flag (`-o json` or `-o jsonl`):
+
+```json
+{
+  "reindeer": "Comet",
+  "version": "1.0.0"
+}
+```
+
+The `reindeer` field contains the implementation codename (Comet, Blitzen, Dasher, Donner, Prancer). Unlike other output types, version output does not include a `type` field.
+
+For JSONL mode, the same JSON object is output as a single line (no streaming updates are needed for version information).
 
 ### 16.4 JSONL Streaming Format
 

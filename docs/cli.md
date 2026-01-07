@@ -129,6 +129,10 @@ santa-cli -o json solution.santa
 
 # JSONL streaming output (real-time updates)
 santa-cli -o jsonl solution.santa
+
+# JSON version output
+santa-cli -o json --version
+# {"reindeer":"Comet","version":"1.0.0"}
 ```
 
 The JSON and JSONL formats are useful for integration with editors, CI systems, and other tools. JSONL provides real-time progress updates using [RFC 6902 JSON Patch](https://datatracker.ietf.org/doc/html/rfc6902).
