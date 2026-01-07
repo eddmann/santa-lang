@@ -84,6 +84,12 @@ The language has multiple implementations (affectionately called "reindeer") exp
 | **Vixen** | C embedded bytecode VM | Lightweight subset VM for microcontrollers (ESP32, Raspberry Pi Pico) | `~/Projects/santa-lang-vixen` |
 | **Prancer** | TypeScript tree-walking interpreter | TypeScript/JavaScript implementation for browser and Node.js | `~/Projects/santa-lang-prancer` |
 
+## Tooling
+
+| Name | Type | Description | Project Location |
+|------|------|-------------|------------------|
+| **Tinsel** | Zig code formatter | Opinionated code formatter for santa-lang source files | `~/Projects/santa-lang-tinsel` |
+
 ## Working with Implementations
 
 **Before making any changes to an implementation, always explore that project first.** Each implementation has its own `AGENTS.md`, `CLAUDE.md`, or `README.md` that explains how the project works, its structure, conventions, and how to build/test.
