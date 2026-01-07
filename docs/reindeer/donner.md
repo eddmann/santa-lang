@@ -21,9 +21,15 @@ The implementation uses persistent data structures throughout and includes full 
 | macOS (Intel) | [`santa-lang-donner-cli-1.0.0-macos-amd64.tar.gz`](https://github.com/eddmann/santa-lang-donner/releases/download/1.0.0/santa-lang-donner-cli-1.0.0-macos-amd64.tar.gz) |
 | macOS (ARM)   | [`santa-lang-donner-cli-1.0.0-macos-arm64.tar.gz`](https://github.com/eddmann/santa-lang-donner/releases/download/1.0.0/santa-lang-donner-cli-1.0.0-macos-arm64.tar.gz) |
 | JAR           | [`santa-lang-donner-cli-1.0.0.jar`](https://github.com/eddmann/santa-lang-donner/releases/download/1.0.0/santa-lang-donner-cli-1.0.0.jar)                               |
-| Docker        | [`santa-lang-donner-cli-1.0.0-docker.tar`](https://github.com/eddmann/santa-lang-donner/releases/download/1.0.0/santa-lang-donner-cli-1.0.0-docker.tar)                 |
+| Docker        | `docker pull ghcr.io/eddmann/santa-lang-donner:cli-latest`                                                                                                              |
 
 ## Installation
+
+### Using Docker (Recommended)
+
+```bash
+docker run --rm ghcr.io/eddmann/santa-lang-donner:cli-latest -e '1 + 1'
+```
 
 ### Binary Download
 
@@ -38,14 +44,6 @@ curl -L https://github.com/eddmann/santa-lang-donner/releases/download/1.0.0/san
 ```bash
 curl -L -o santa-cli.jar https://github.com/eddmann/santa-lang-donner/releases/download/1.0.0/santa-lang-donner-cli-1.0.0.jar
 java -jar santa-cli.jar --help
-```
-
-### Docker
-
-```bash
-# Load the Docker image
-curl -L https://github.com/eddmann/santa-lang-donner/releases/download/1.0.0/santa-lang-donner-cli-1.0.0-docker.tar | docker load
-docker run --rm santa-lang-donner-cli:1.0.0 solution.santa
 ```
 
 ## Supported Runtimes

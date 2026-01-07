@@ -20,9 +20,15 @@ This provides significant performance improvements for computationally intensive
 | Linux (x64)   | [`santa-lang-dasher-cli-1.0.0-linux-amd64`](https://github.com/eddmann/santa-lang-dasher/releases/download/1.0.0/santa-lang-dasher-cli-1.0.0-linux-amd64) |
 | macOS (Intel) | [`santa-lang-dasher-cli-1.0.0-macos-amd64`](https://github.com/eddmann/santa-lang-dasher/releases/download/1.0.0/santa-lang-dasher-cli-1.0.0-macos-amd64) |
 | macOS (ARM)   | [`santa-lang-dasher-cli-1.0.0-macos-arm64`](https://github.com/eddmann/santa-lang-dasher/releases/download/1.0.0/santa-lang-dasher-cli-1.0.0-macos-arm64) |
-| Docker        | [`santa-lang-dasher-cli-1.0.0-docker.tar`](https://github.com/eddmann/santa-lang-dasher/releases/download/1.0.0/santa-lang-dasher-cli-1.0.0-docker.tar)   |
+| Docker        | `docker pull ghcr.io/eddmann/santa-lang-dasher:cli-latest`                                                                                                |
 
 ## Installation
+
+### Using Docker (Recommended)
+
+```bash
+docker run --rm ghcr.io/eddmann/santa-lang-dasher:cli-latest -e '1 + 1'
+```
 
 ### Binary Download
 
@@ -31,14 +37,6 @@ This provides significant performance improvements for computationally intensive
 curl -L -o santa https://github.com/eddmann/santa-lang-dasher/releases/download/1.0.0/santa-lang-dasher-cli-1.0.0-macos-arm64
 chmod +x santa
 ./santa --help
-```
-
-### Docker
-
-```bash
-# Load the Docker image
-curl -L https://github.com/eddmann/santa-lang-dasher/releases/download/1.0.0/santa-lang-dasher-cli-1.0.0-docker.tar | docker load
-docker run --rm santa-lang-dasher-cli:1.0.0 -e '1 + 1'
 ```
 
 ## Supported Runtimes
