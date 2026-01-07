@@ -1,6 +1,6 @@
 # Blitzen (Rust)
 
-> Bytecode VM with FrostByte bytecode compilation
+> Rust bytecode VM with FrostByte compilation
 
 **Repository:** [eddmann/santa-lang-blitzen](https://github.com/eddmann/santa-lang-blitzen)
 **Version:** 1.0.0

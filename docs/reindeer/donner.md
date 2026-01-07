@@ -1,6 +1,6 @@
 # Donner (Kotlin)
 
-> JVM bytecode compiler with Java interop
+> Kotlin JVM bytecode compiler with Java interop
 
 **Repository:** [eddmann/santa-lang-donner](https://github.com/eddmann/santa-lang-donner)
 **Version:** 1.0.0

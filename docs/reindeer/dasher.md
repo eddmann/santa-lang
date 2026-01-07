@@ -1,6 +1,6 @@
 # Dasher (Rust)
 
-> LLVM-based AOT native compiler for maximum performance
+> Rust LLVM-based native compiler with type inference
 
 **Repository:** [eddmann/santa-lang-dasher](https://github.com/eddmann/santa-lang-dasher)
 **Version:** 1.0.0

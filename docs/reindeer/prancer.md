@@ -1,6 +1,6 @@
 # Prancer (TypeScript)
 
-> Reference tree-walking interpreter for rapid development
+> TypeScript tree-walking interpreter for browser and Node.js
 
 **Repository:** [eddmann/santa-lang-prancer](https://github.com/eddmann/santa-lang-prancer)
 **Version:** 1.0.0

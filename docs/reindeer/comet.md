@@ -1,6 +1,6 @@
 # Comet (Rust)
 
-> Tree-walking interpreter with the most runtime options
+> Rust tree-walking interpreter with multiple runtime targets
 
 **Repository:** [eddmann/santa-lang-comet](https://github.com/eddmann/santa-lang-comet)
 **Version:** 1.0.0
