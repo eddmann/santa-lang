@@ -762,41 +762,84 @@ type ExternalFunctions = {
   [name: string]: (arguments: InteropType[]) =&gt; InteropType;
 };
 
-type Location = { start: number; end: number };
-type RunErr = { message: string; source: Location; trace: Location[] };
+type Status = "pending" | "running" | "complete" | "error";
 
-type RunResult = { value: string; duration: number };
-type RunEvaluation =
-  | {
-      part_one?: RunResult;
-      part_two?: RunResult;
-    }
-  | RunResult;
+type ErrorLocation = { line: number; column: number };
+type StackFrame = { function: string; line: number; column: number };
+type ErrorInfo = { message: string; location: ErrorLocation; stack: StackFrame[] };
 
-type TestCaseResult = { expected: string; actual: string; passed: boolean };
-type TestCase = {
-  part_one?: TestCaseResult;
-  part_two?: TestCaseResult;
+type PartResult = {
+  status: Status;
+  value?: string;
+  duration_ms?: number;
 };
 
-function aoc_run(
-  source: string,
-  js_functions: ExternalFunctions,
-): RunEvaluation | RunErr;
+type ScriptState = {
+  type: "script";
+  status: Status;
+  value?: string;
+  duration_ms?: number;
+  error?: ErrorInfo;
+};
 
-function aoc_test(
-  source: string,
-  js_functions: ExternalFunctions,
-): TestCase[] | RunErr;
+type SolutionState = {
+  type: "solution";
+  status: Status;
+  part_one: PartResult;
+  part_two: PartResult;
+  error?: ErrorInfo;
+};
 
-function evaluate(
-  expression: string,
-  js_functions?: ExternalFunctions,
-): string | RunErr;
+type TestPartResult = { passed: boolean; expected: string; actual: string };
+type TestCaseStatus = "pending" | "running" | "complete" | "skipped";
+type TestCaseState = {
+  index: number;
+  slow: boolean;
+  status: TestCaseStatus;
+  part_one?: TestPartResult;
+  part_two?: TestPartResult;
+};
+type TestSummary = { total: number; passed: number; failed: number; skipped: number };
+type TestState = {
+  type: "test";
+  status: Status;
+  success?: boolean;
+  summary: TestSummary;
+  tests: TestCaseState[];
+  error?: ErrorInfo;
+};
+
+type FormatResult = {
+  success: boolean;
+  formatted?: string;
+  error?: ErrorInfo;
+};
+
+// Evaluate a script or expression
+function evaluateScript(
+  source: string,
+  externalFunctions?: ExternalFunctions,
+  onProgress?: (state: ScriptState) =&gt; void,
+): ScriptState;
+
+// Evaluate a solution (part_one/part_two)
+function evaluateSolution(
+  source: string,
+  externalFunctions?: ExternalFunctions,
+  onProgress?: (state: SolutionState) =&gt; void,
+): SolutionState;
+
+// Run test cases
+function testSolution(
+  source: string,
+  includeSlow?: boolean,
+  externalFunctions?: ExternalFunctions,
+  onProgress?: (state: TestState) =&gt; void,
+): TestState;
 
 // Comet (WASM) only
-function format(source: string): string | RunErr;
-function isFormatted(source: string): boolean | RunErr;</code></pre>
+function format(source: string): FormatResult;
+function isFormatted(source: string): boolean;</code></pre>
 <h2 id="external-functions">External Functions</h2>
 <p>Unlike other runtimes which have a select few external functions (defined at the runtime level), the Web variants gives you the power of user-land JavaScript to define and execute desired behaviour.
 The runtimes implicitly handle the interoperability between the two languages type systems whilst communicating.
@@ -808,18 +851,26 @@ function external_function(arguments: InteropType[]): InteropType;</code></pre>
 <p>An example external function could be:</p>
 <pre class="highlight"><code class="language-js">const puts = (arguments: InteropType[]): InteropType =&gt; console.log(...arguments);</code></pre>
 <h2 id="errors">Errors</h2>
-<p>If an error occurs during execution the the program is immediately halted; with the error message, location and associated call stack trace locations returned as an <code>RunErr</code> object (as detailed above).</p>
+<p>All functions return state objects with a <code>status</code> field. When <code>status</code> is <code>"error"</code>, the <code>error</code> property contains detailed error information including the message, source location (line and column), and stack trace. Functions never throw exceptions.</p>
 <h2 id="example">Example</h2>
 <p>Below is an example of how the WASM variant can be used within a Web context.</p>
-<pre class="highlight"><code class="language-js">import { evaluate, format, isFormatted } from "@eddmann/santa-lang-wasm";
+<pre class="highlight"><code class="language-js">import { evaluateScript, evaluateSolution, testSolution, format, isFormatted } from "@eddmann/santa-lang-wasm";
 
-evaluate("[1, 2, 3] |&gt; map(_ + 1) |&gt; sum");
+// Evaluate a simple expression
+const result = evaluateScript("[1, 2, 3] |&gt; map(_ + 1) |&gt; sum");
+if (result.status === "complete") {
+  console.log(result.value); // "10"
+}
 
-evaluate('puts("Hello, world")', { puts: console.log.bind(console) });
+// With external functions
+const withPuts = evaluateScript('puts("Hello, world")', { puts: console.log.bind(console) });
 
 // Formatting (Comet only)
-format("let x=1+2"); // Returns: "let x = 1 + 2\n"
-isFormatted("let x = 1 + 2\n"); // Returns: true</code></pre>
+const formatted = format("let x=1+2");
+if (formatted.success) {
+  console.log(formatted.formatted); // "let x = 1 + 2\n"
+}
+console.log(isFormatted("let x = 1 + 2\n")); // true</code></pre>
 <h2 id="editor">Editor</h2>
 <p><strong>Repository:</strong> <a href="https://github.com/eddmann/santa-lang-editor">eddmann/santa-lang-editor</a></p>
 <p>One of the reasons for providing such a runtime was to create a Web-based code editor which could be used to develop solutions with.

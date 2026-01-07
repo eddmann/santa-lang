@@ -912,7 +912,11 @@ echo "1+2" | santa-cli -f</code></pre>
 <h3 id="wasm">WASM</h3>
 <pre class="highlight"><code class="language-javascript">import { format, isFormatted } from "@eddmann/santa-lang-wasm";
 
-const formatted = format("let x=1+2");
+const result = format("let x=1+2");
+if (result.success) {
+  console.log(result.formatted); // "let x = 1 + 2\n"
+}
+
 const needsFormat = !isFormatted(source);</code></pre>
 <h2 id="properties">Properties</h2>
 <p>The formatter guarantees:</p>
