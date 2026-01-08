@@ -47,3 +47,9 @@ There are multiple implementations (affectionately called "reindeer") of the lan
 | [Dasher](reindeer/dasher.md)   | Rust       | LLVM native compiler     | CLI                                   |
 | [Donner](reindeer/donner.md)   | Kotlin     | JVM bytecode compiler    | CLI                                   |
 | [Prancer](reindeer/prancer.md) | TypeScript | Tree-walking interpreter | CLI, Web (JS), Lambda                 |
+
+## Tooling
+
+| Tool                      | Language | Description                               |
+| ------------------------- | -------- | ----------------------------------------- |
+| [Formatter](formatter.md) | Zig      | Opinionated code formatter for santa-lang |

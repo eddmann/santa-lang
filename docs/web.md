@@ -38,7 +38,11 @@ type Status = "pending" | "running" | "complete" | "error";
 
 type ErrorLocation = { line: number; column: number };
 type StackFrame = { function: string; line: number; column: number };
-type ErrorInfo = { message: string; location: ErrorLocation; stack: StackFrame[] };
+type ErrorInfo = {
+  message: string;
+  location: ErrorLocation;
+  stack: StackFrame[];
+};
 
 type PartResult = {
   status: Status;
@@ -71,7 +75,12 @@ type TestCaseState = {
   part_one?: TestPartResult;
   part_two?: TestPartResult;
 };
-type TestSummary = { total: number; passed: number; failed: number; skipped: number };
+type TestSummary = {
+  total: number;
+  passed: number;
+  failed: number;
+  skipped: number;
+};
 type TestState = {
   type: "test";
   status: Status;
@@ -143,7 +152,13 @@ All functions return state objects with a `status` field. When `status` is `"err
 Below is an example of how the WASM variant can be used within a Web context.
 
 ```js
-import { evaluateScript, evaluateSolution, testSolution, format, isFormatted } from "@eddmann/santa-lang-wasm";
+import {
+  evaluateScript,
+  evaluateSolution,
+  testSolution,
+  format,
+  isFormatted,
+} from "@eddmann/santa-lang-wasm";
 
 // Evaluate a simple expression
 const result = evaluateScript("[1, 2, 3] |> map(_ + 1) |> sum");
@@ -152,7 +167,9 @@ if (result.status === "complete") {
 }
 
 // With external functions
-const withPuts = evaluateScript('puts("Hello, world")', { puts: console.log.bind(console) });
+const withPuts = evaluateScript('puts("Hello, world")', {
+  puts: console.log.bind(console),
+});
 
 // Formatting (Comet only)
 const formatted = format("let x=1+2");

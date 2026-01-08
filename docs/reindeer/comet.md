@@ -60,7 +60,7 @@ npm install @eddmann/santa-lang-wasm
 
 ## Supported Runtimes
 
-- [CLI](../cli.md) - Command-line interface with REPL, formatting, profiling
+- [CLI](../cli.md) - Command-line interface with REPL and profiling
 - [Web (WASM)](../web.md) - WebAssembly build for browsers and Node.js
 - [Lambda](../lambda.md) - AWS Lambda custom runtime
 - [PHP Extension](../php-ext.md) - Native PHP extension (.so)
@@ -93,7 +93,6 @@ Comet follows a traditional 3-stage pipeline:
 ### Runtime Features
 
 - **REPL**: Interactive read-eval-print loop for exploration
-- **Formatter**: Opinionated code formatter (100-char width, 2-space indent)
 - **Profiler**: Flamegraph generation for performance analysis
 - **jemalloc**: Memory allocator for improved performance
 
@@ -111,11 +110,6 @@ santa-cli -e '1 + 2'
 
 # Interactive REPL
 santa-cli -r
-
-# Format code
-santa-cli -f solution.santa        # stdout
-santa-cli --fmt-write solution.santa  # in-place
-santa-cli --fmt-check solution.santa  # verify
 ```
 
 ## Building from Source

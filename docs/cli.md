@@ -81,35 +81,6 @@ env()
 
 (REPL only) Prints the current environment's variables
 
-## Formatting
-
-[![Comet](https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](reindeer/comet.md)
-
-The CLI provides an opinionated code formatter that produces consistent, readable output. There are no configuration options - it enforces a single canonical style.
-
-```bash
-# Format to stdout
-santa-cli -f solution.santa
-
-# Format file in place
-santa-cli --fmt-write solution.santa
-
-# Check if formatted (exit 1 if not, useful for CI)
-santa-cli --fmt-check solution.santa
-```
-
-The formatter also accepts input from stdin or inline expressions:
-
-```bash
-# Format from stdin
-echo "let x=1+2" | santa-cli -f
-
-# Format inline expression
-santa-cli -e "let x=1+2" -f
-```
-
-See the [Formatter](formatter.md) documentation for details on formatting rules.
-
 ## Output Formats
 
 The CLI supports three output formats:

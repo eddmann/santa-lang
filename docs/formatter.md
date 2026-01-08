@@ -1,46 +1,59 @@
 # Formatter
 
-[![Comet](https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&logo=rust&logoColor=white)](reindeer/comet.md)
-
 An opinionated code formatter for santa-lang that produces consistent, readable output.
 
 ## Overview
 
 The formatter transforms santa-lang source code into a canonical format, ensuring consistent style across solutions. It follows a single, deterministic formatting style - there are no configuration options.
 
+Built in Zig using the Wadler-Lindig pretty printing algorithm for intelligent line-breaking decisions.
+
+## Installation
+
+### Release Binaries
+
+Download pre-built binaries from [GitHub Releases](https://github.com/eddmann/santa-lang-tinsel/releases):
+
+| Platform              | Artifact                             |
+| --------------------- | ------------------------------------ |
+| Linux (x86_64)        | `santa-tinsel-{version}-linux-amd64` |
+| Linux (ARM64)         | `santa-tinsel-{version}-linux-arm64` |
+| macOS (Intel)         | `santa-tinsel-{version}-macos-amd64` |
+| macOS (Apple Silicon) | `santa-tinsel-{version}-macos-arm64` |
+| WebAssembly (WASI)    | `santa-tinsel-{version}.wasm`        |
+
 ## Usage
 
 ### CLI
 
 ```bash
-# Format to stdout
-santa-cli -f file.santa
+# Format stdin to stdout
+echo 'let x=1+2' | santa-tinsel
 
-# Format in place
-santa-cli --fmt-write file.santa
+# Format a file to stdout
+santa-tinsel solution.santa
 
-# Check if formatted (exit 1 if not)
-santa-cli --fmt-check file.santa
+# Format a file in place
+santa-tinsel -w solution.santa
 
-# Format inline expression
-santa-cli -e "1+2" -f
+# List files that differ from formatted (useful for CI)
+santa-tinsel -l solution.santa
 
-# Format from stdin
-echo "1+2" | santa-cli -f
+# Show diff of changes
+santa-tinsel -d solution.santa
+
+# Format all .santa files in a directory recursively
+santa-tinsel -w src/
 ```
 
-### WASM
+### Options
 
-```javascript
-import { format, isFormatted } from "@eddmann/santa-lang-wasm";
-
-const result = format("let x=1+2");
-if (result.success) {
-  console.log(result.formatted); // "let x = 1 + 2\n"
-}
-
-const needsFormat = !isFormatted(source);
-```
+| Flag | Description                                         |
+| ---- | --------------------------------------------------- |
+| -w   | Write result to source file (format in place)       |
+| -l   | List files whose formatting differs (exit 1 if any) |
+| -d   | Display diffs instead of rewriting files            |
+| -h   | Display help and exit                               |
 
 ## Properties
 
