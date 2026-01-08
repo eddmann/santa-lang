@@ -11,7 +11,7 @@ This does not expose the Advent of Code runner, and is only primarily concerned 
 
 | Platform     | Release                                                                                                                                      |
 | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| provided.al2 | [`santa-lang-comet-lambda-1.0.0.zip`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-lambda-1.0.0.zip) |
+| provided.al2 | [`santa-lang-comet-lambda-1.0.1.zip`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-lambda-1.0.1.zip) |
 
 **Also available in:** [Prancer](reindeer/prancer.md)
 

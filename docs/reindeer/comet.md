@@ -3,7 +3,7 @@
 > Rust tree-walking interpreter with multiple runtime targets
 
 **Repository:** [eddmann/santa-lang-comet](https://github.com/eddmann/santa-lang-comet)
-**Version:** 1.0.0
+**Version:** 1.0.1
 
 ## Overview
 
@@ -19,10 +19,10 @@ Comet offers the most runtime options: CLI with REPL, WebAssembly for browsers, 
 
 | Platform      | Download                                                                                                                                               |
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Linux (x64)   | [`santa-lang-comet-cli-1.0.0-linux-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-linux-amd64) |
-| Linux (ARM)   | [`santa-lang-comet-cli-1.0.0-linux-arm64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-linux-arm64) |
-| macOS (Intel) | [`santa-lang-comet-cli-1.0.0-macos-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-macos-amd64) |
-| macOS (ARM)   | [`santa-lang-comet-cli-1.0.0-macos-arm64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-macos-arm64) |
+| Linux (x64)   | [`santa-lang-comet-cli-1.0.1-linux-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-cli-1.0.1-linux-amd64) |
+| Linux (ARM)   | [`santa-lang-comet-cli-1.0.1-linux-arm64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-cli-1.0.1-linux-arm64) |
+| macOS (Intel) | [`santa-lang-comet-cli-1.0.1-macos-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-cli-1.0.1-macos-amd64) |
+| macOS (ARM)   | [`santa-lang-comet-cli-1.0.1-macos-arm64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-cli-1.0.1-macos-arm64) |
 | Docker        | `docker pull ghcr.io/eddmann/santa-lang-cli:latest`                                                                                                    |
 
 ### Other Runtimes
@@ -30,10 +30,10 @@ Comet offers the most runtime options: CLI with REPL, WebAssembly for browsers, 
 | Runtime         | Download                                                                                                                                                       |
 | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Web (WASM)      | [`@eddmann/santa-lang-wasm`](https://github.com/eddmann/santa-lang-comet/pkgs/npm/santa-lang-wasm)                                                             |
-| Lambda          | [`santa-lang-comet-lambda-1.0.0.zip`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-lambda-1.0.0.zip)                   |
-| PHP Extension   | [`santa-lang-comet-php-1.0.0-linux-amd64.so`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-php-1.0.0-linux-amd64.so)   |
-| Jupyter (Linux) | [`santa-lang-comet-jupyter-1.0.0-linux-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-jupyter-1.0.0-linux-amd64) |
-| Jupyter (macOS) | [`santa-lang-comet-jupyter-1.0.0-macos-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-jupyter-1.0.0-macos-amd64) |
+| Lambda          | [`santa-lang-comet-lambda-1.0.1.zip`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-lambda-1.0.1.zip)                   |
+| PHP Extension   | [`santa-lang-comet-php-1.0.1-linux-amd64.so`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-php-1.0.1-linux-amd64.so)   |
+| Jupyter (Linux) | [`santa-lang-comet-jupyter-1.0.1-linux-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-jupyter-1.0.1-linux-amd64) |
+| Jupyter (macOS) | [`santa-lang-comet-jupyter-1.0.1-macos-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-jupyter-1.0.1-macos-amd64) |
 
 ## Installation
 
@@ -47,7 +47,7 @@ docker run --rm ghcr.io/eddmann/santa-lang-cli:latest -e '1 + 1'
 
 ```bash
 # Download for your platform
-curl -L -o santa https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-macos-arm64
+curl -L -o santa https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-cli-1.0.1-macos-arm64
 chmod +x santa
 ./santa --help
 ```

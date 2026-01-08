@@ -13,16 +13,16 @@ The recommended implementation is [Comet](reindeer/comet.md) (Rust tree-walking 
 
 | Runtime | Platform      | Release                                                                                                                                                        |
 | ------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| CLI     | Linux (x64)   | [`santa-lang-comet-cli-1.0.0-linux-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-linux-amd64)         |
-| CLI     | Linux (ARM)   | [`santa-lang-comet-cli-1.0.0-linux-arm64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-linux-arm64)         |
-| CLI     | macOS (Intel) | [`santa-lang-comet-cli-1.0.0-macos-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-macos-amd64)         |
-| CLI     | macOS (ARM)   | [`santa-lang-comet-cli-1.0.0-macos-arm64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-macos-arm64)         |
+| CLI     | Linux (x64)   | [`santa-lang-comet-cli-1.0.1-linux-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-cli-1.0.1-linux-amd64)         |
+| CLI     | Linux (ARM)   | [`santa-lang-comet-cli-1.0.1-linux-arm64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-cli-1.0.1-linux-arm64)         |
+| CLI     | macOS (Intel) | [`santa-lang-comet-cli-1.0.1-macos-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-cli-1.0.1-macos-amd64)         |
+| CLI     | macOS (ARM)   | [`santa-lang-comet-cli-1.0.1-macos-arm64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-cli-1.0.1-macos-arm64)         |
 | CLI     | Docker        | [`ghcr.io/eddmann/santa-lang-cli:latest`](https://github.com/eddmann/santa-lang-comet/pkgs/container/santa-lang-cli)                                           |
 | Web     | WASM          | [`@eddmann/santa-lang-wasm`](https://github.com/eddmann/santa-lang-comet/pkgs/npm/santa-lang-wasm)                                                             |
-| Lambda  | provided.al2  | [`santa-lang-comet-lambda-1.0.0.zip`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-lambda-1.0.0.zip)                   |
-| PHP     | Linux (x64)   | [`santa-lang-comet-php-1.0.0-linux-amd64.so`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-php-1.0.0-linux-amd64.so)   |
-| Jupyter | Linux (x64)   | [`santa-lang-comet-jupyter-1.0.0-linux-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-jupyter-1.0.0-linux-amd64) |
-| Jupyter | macOS (Intel) | [`santa-lang-comet-jupyter-1.0.0-macos-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-jupyter-1.0.0-macos-amd64) |
+| Lambda  | provided.al2  | [`santa-lang-comet-lambda-1.0.1.zip`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-lambda-1.0.1.zip)                   |
+| PHP     | Linux (x64)   | [`santa-lang-comet-php-1.0.1-linux-amd64.so`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-php-1.0.1-linux-amd64.so)   |
+| Jupyter | Linux (x64)   | [`santa-lang-comet-jupyter-1.0.1-linux-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-jupyter-1.0.1-linux-amd64) |
+| Jupyter | macOS (Intel) | [`santa-lang-comet-jupyter-1.0.1-macos-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-jupyter-1.0.1-macos-amd64) |
 
 See [Reindeer](#reindeer) below for alternative implementations (Blitzen, Dasher, Donner, Prancer).
 

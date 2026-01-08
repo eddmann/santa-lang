@@ -14,10 +14,10 @@ It includes the following functionality:
 
 | Platform      | Release                                                                                                                                                |
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Linux (x64)   | [`santa-lang-comet-cli-1.0.0-linux-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-linux-amd64) |
-| Linux (ARM)   | [`santa-lang-comet-cli-1.0.0-linux-arm64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-linux-arm64) |
-| macOS (Intel) | [`santa-lang-comet-cli-1.0.0-macos-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-macos-amd64) |
-| macOS (ARM)   | [`santa-lang-comet-cli-1.0.0-macos-arm64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-macos-arm64) |
+| Linux (x64)   | [`santa-lang-comet-cli-1.0.1-linux-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-cli-1.0.1-linux-amd64) |
+| Linux (ARM)   | [`santa-lang-comet-cli-1.0.1-linux-arm64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-cli-1.0.1-linux-arm64) |
+| macOS (Intel) | [`santa-lang-comet-cli-1.0.1-macos-amd64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-cli-1.0.1-macos-amd64) |
+| macOS (ARM)   | [`santa-lang-comet-cli-1.0.1-macos-arm64`](https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-cli-1.0.1-macos-arm64) |
 | Docker        | [`ghcr.io/eddmann/santa-lang-cli:latest`](https://github.com/eddmann/santa-lang-comet/pkgs/container/santa-lang-cli)                                   |
 
 **Also available in:** [Blitzen](reindeer/blitzen.md), [Dasher](reindeer/dasher.md), [Donner](reindeer/donner.md), [Prancer](reindeer/prancer.md)
@@ -103,7 +103,7 @@ santa-cli -o jsonl solution.santa
 
 # JSON version output
 santa-cli -o json --version
-# {"reindeer":"Comet","version":"1.0.0"}
+# {"reindeer":"Comet","version":"1.0.1"}
 ```
 
 The JSON and JSONL formats are useful for integration with editors, CI systems, and other tools. JSONL provides real-time progress updates using [RFC 6902 JSON Patch](https://datatracker.ietf.org/doc/html/rfc6902).

@@ -3,7 +3,7 @@
 > Rust LLVM-based native compiler with type inference
 
 **Repository:** [eddmann/santa-lang-dasher](https://github.com/eddmann/santa-lang-dasher)
-**Version:** 1.0.0
+**Version:** 1.0.1
 
 ## Overview
 
@@ -17,9 +17,9 @@ This provides significant performance improvements for computationally intensive
 
 | Platform      | Download                                                                                                                                                  |
 | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Linux (x64)   | [`santa-lang-dasher-cli-1.0.0-linux-amd64`](https://github.com/eddmann/santa-lang-dasher/releases/download/1.0.0/santa-lang-dasher-cli-1.0.0-linux-amd64) |
-| macOS (Intel) | [`santa-lang-dasher-cli-1.0.0-macos-amd64`](https://github.com/eddmann/santa-lang-dasher/releases/download/1.0.0/santa-lang-dasher-cli-1.0.0-macos-amd64) |
-| macOS (ARM)   | [`santa-lang-dasher-cli-1.0.0-macos-arm64`](https://github.com/eddmann/santa-lang-dasher/releases/download/1.0.0/santa-lang-dasher-cli-1.0.0-macos-arm64) |
+| Linux (x64)   | [`santa-lang-dasher-cli-1.0.1-linux-amd64`](https://github.com/eddmann/santa-lang-dasher/releases/download/1.0.1/santa-lang-dasher-cli-1.0.1-linux-amd64) |
+| macOS (Intel) | [`santa-lang-dasher-cli-1.0.1-macos-amd64`](https://github.com/eddmann/santa-lang-dasher/releases/download/1.0.1/santa-lang-dasher-cli-1.0.1-macos-amd64) |
+| macOS (ARM)   | [`santa-lang-dasher-cli-1.0.1-macos-arm64`](https://github.com/eddmann/santa-lang-dasher/releases/download/1.0.1/santa-lang-dasher-cli-1.0.1-macos-arm64) |
 | Docker        | `docker pull ghcr.io/eddmann/santa-lang-dasher:cli-latest`                                                                                                |
 
 ## Installation
@@ -34,7 +34,7 @@ docker run --rm ghcr.io/eddmann/santa-lang-dasher:cli-latest -e '1 + 1'
 
 ```bash
 # Download for your platform
-curl -L -o santa https://github.com/eddmann/santa-lang-dasher/releases/download/1.0.0/santa-lang-dasher-cli-1.0.0-macos-arm64
+curl -L -o santa https://github.com/eddmann/santa-lang-dasher/releases/download/1.0.1/santa-lang-dasher-cli-1.0.1-macos-arm64
 chmod +x santa
 ./santa --help
 ```

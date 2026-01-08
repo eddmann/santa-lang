@@ -3,7 +3,7 @@
 > Kotlin JVM bytecode compiler with Java interop
 
 **Repository:** [eddmann/santa-lang-donner](https://github.com/eddmann/santa-lang-donner)
-**Version:** 1.0.0
+**Version:** 1.0.3
 
 ## Overview
 
@@ -17,10 +17,10 @@ The implementation uses persistent data structures throughout and includes full 
 
 | Platform      | Download                                                                                                                                                                |
 | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Linux (x64)   | [`santa-lang-donner-cli-1.0.0-linux-amd64.tar.gz`](https://github.com/eddmann/santa-lang-donner/releases/download/1.0.0/santa-lang-donner-cli-1.0.0-linux-amd64.tar.gz) |
-| macOS (Intel) | [`santa-lang-donner-cli-1.0.0-macos-amd64.tar.gz`](https://github.com/eddmann/santa-lang-donner/releases/download/1.0.0/santa-lang-donner-cli-1.0.0-macos-amd64.tar.gz) |
-| macOS (ARM)   | [`santa-lang-donner-cli-1.0.0-macos-arm64.tar.gz`](https://github.com/eddmann/santa-lang-donner/releases/download/1.0.0/santa-lang-donner-cli-1.0.0-macos-arm64.tar.gz) |
-| JAR           | [`santa-lang-donner-cli-1.0.0.jar`](https://github.com/eddmann/santa-lang-donner/releases/download/1.0.0/santa-lang-donner-cli-1.0.0.jar)                               |
+| Linux (x64)   | [`santa-lang-donner-cli-1.0.3-linux-amd64.tar.gz`](https://github.com/eddmann/santa-lang-donner/releases/download/1.0.3/santa-lang-donner-cli-1.0.3-linux-amd64.tar.gz) |
+| macOS (Intel) | [`santa-lang-donner-cli-1.0.3-macos-amd64.tar.gz`](https://github.com/eddmann/santa-lang-donner/releases/download/1.0.3/santa-lang-donner-cli-1.0.3-macos-amd64.tar.gz) |
+| macOS (ARM)   | [`santa-lang-donner-cli-1.0.3-macos-arm64.tar.gz`](https://github.com/eddmann/santa-lang-donner/releases/download/1.0.3/santa-lang-donner-cli-1.0.3-macos-arm64.tar.gz) |
+| JAR           | [`santa-lang-donner-cli-1.0.3.jar`](https://github.com/eddmann/santa-lang-donner/releases/download/1.0.3/santa-lang-donner-cli-1.0.3.jar)                               |
 | Docker        | `docker pull ghcr.io/eddmann/santa-lang-donner:cli-latest`                                                                                                              |
 
 ## Installation
@@ -35,14 +35,14 @@ docker run --rm ghcr.io/eddmann/santa-lang-donner:cli-latest -e '1 + 1'
 
 ```bash
 # Download and extract for your platform
-curl -L https://github.com/eddmann/santa-lang-donner/releases/download/1.0.0/santa-lang-donner-cli-1.0.0-macos-arm64.tar.gz | tar xz
+curl -L https://github.com/eddmann/santa-lang-donner/releases/download/1.0.3/santa-lang-donner-cli-1.0.3-macos-arm64.tar.gz | tar xz
 ./santa-cli --help
 ```
 
 ### JAR (Requires Java 21+)
 
 ```bash
-curl -L -o santa-cli.jar https://github.com/eddmann/santa-lang-donner/releases/download/1.0.0/santa-lang-donner-cli-1.0.0.jar
+curl -L -o santa-cli.jar https://github.com/eddmann/santa-lang-donner/releases/download/1.0.3/santa-lang-donner-cli-1.0.3.jar
 java -jar santa-cli.jar --help
 ```
 

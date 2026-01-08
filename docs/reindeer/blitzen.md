@@ -3,7 +3,7 @@
 > Rust bytecode VM with FrostByte compilation
 
 **Repository:** [eddmann/santa-lang-blitzen](https://github.com/eddmann/santa-lang-blitzen)
-**Version:** 1.0.0
+**Version:** 1.0.1
 
 ## Overview
 
@@ -17,10 +17,10 @@ This bytecode compilation approach explores a different execution model for pote
 
 | Platform      | Download                                                                                                                                                     |
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Linux (x64)   | [`santa-lang-blitzen-cli-1.0.0-linux-amd64`](https://github.com/eddmann/santa-lang-blitzen/releases/download/1.0.0/santa-lang-blitzen-cli-1.0.0-linux-amd64) |
-| Linux (ARM)   | [`santa-lang-blitzen-cli-1.0.0-linux-arm64`](https://github.com/eddmann/santa-lang-blitzen/releases/download/1.0.0/santa-lang-blitzen-cli-1.0.0-linux-arm64) |
-| macOS (Intel) | [`santa-lang-blitzen-cli-1.0.0-macos-amd64`](https://github.com/eddmann/santa-lang-blitzen/releases/download/1.0.0/santa-lang-blitzen-cli-1.0.0-macos-amd64) |
-| macOS (ARM)   | [`santa-lang-blitzen-cli-1.0.0-macos-arm64`](https://github.com/eddmann/santa-lang-blitzen/releases/download/1.0.0/santa-lang-blitzen-cli-1.0.0-macos-arm64) |
+| Linux (x64)   | [`santa-lang-blitzen-cli-1.0.1-linux-amd64`](https://github.com/eddmann/santa-lang-blitzen/releases/download/1.0.1/santa-lang-blitzen-cli-1.0.1-linux-amd64) |
+| Linux (ARM)   | [`santa-lang-blitzen-cli-1.0.1-linux-arm64`](https://github.com/eddmann/santa-lang-blitzen/releases/download/1.0.1/santa-lang-blitzen-cli-1.0.1-linux-arm64) |
+| macOS (Intel) | [`santa-lang-blitzen-cli-1.0.1-macos-amd64`](https://github.com/eddmann/santa-lang-blitzen/releases/download/1.0.1/santa-lang-blitzen-cli-1.0.1-macos-amd64) |
+| macOS (ARM)   | [`santa-lang-blitzen-cli-1.0.1-macos-arm64`](https://github.com/eddmann/santa-lang-blitzen/releases/download/1.0.1/santa-lang-blitzen-cli-1.0.1-macos-arm64) |
 | Docker        | `docker pull ghcr.io/eddmann/santa-lang-blitzen:cli-latest`                                                                                                  |
 
 ## Installation
@@ -35,7 +35,7 @@ docker run --rm ghcr.io/eddmann/santa-lang-blitzen:cli-latest -e '1 + 1'
 
 ```bash
 # Download for your platform
-curl -L -o santa https://github.com/eddmann/santa-lang-blitzen/releases/download/1.0.0/santa-lang-blitzen-cli-1.0.0-macos-arm64
+curl -L -o santa https://github.com/eddmann/santa-lang-blitzen/releases/download/1.0.1/santa-lang-blitzen-cli-1.0.1-macos-arm64
 chmod +x santa
 ./santa --help
 ```
