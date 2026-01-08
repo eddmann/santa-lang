@@ -12,13 +12,13 @@ Built in Zig using the Wadler-Lindig pretty printing algorithm for intelligent l
 
 ### Release Binaries
 
-| Platform              | Download                                                                                                                                |
-| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| Linux (x86_64)        | [`santa-tinsel-0.1.0-linux-amd64`](https://github.com/eddmann/santa-lang-tinsel/releases/download/0.1.0/santa-tinsel-0.1.0-linux-amd64) |
-| Linux (ARM64)         | [`santa-tinsel-0.1.0-linux-arm64`](https://github.com/eddmann/santa-lang-tinsel/releases/download/0.1.0/santa-tinsel-0.1.0-linux-arm64) |
-| macOS (Intel)         | [`santa-tinsel-0.1.0-macos-amd64`](https://github.com/eddmann/santa-lang-tinsel/releases/download/0.1.0/santa-tinsel-0.1.0-macos-amd64) |
-| macOS (Apple Silicon) | [`santa-tinsel-0.1.0-macos-arm64`](https://github.com/eddmann/santa-lang-tinsel/releases/download/0.1.0/santa-tinsel-0.1.0-macos-arm64) |
-| WebAssembly (WASI)    | [`santa-tinsel-0.1.0.wasm`](https://github.com/eddmann/santa-lang-tinsel/releases/download/0.1.0/santa-tinsel-0.1.0.wasm)               |
+| Platform      | Download                                                                                                                                |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Linux (x64)   | [`santa-tinsel-0.1.0-linux-amd64`](https://github.com/eddmann/santa-lang-tinsel/releases/download/0.1.0/santa-tinsel-0.1.0-linux-amd64) |
+| Linux (ARM)   | [`santa-tinsel-0.1.0-linux-arm64`](https://github.com/eddmann/santa-lang-tinsel/releases/download/0.1.0/santa-tinsel-0.1.0-linux-arm64) |
+| macOS (Intel) | [`santa-tinsel-0.1.0-macos-amd64`](https://github.com/eddmann/santa-lang-tinsel/releases/download/0.1.0/santa-tinsel-0.1.0-macos-amd64) |
+| macOS (ARM)   | [`santa-tinsel-0.1.0-macos-arm64`](https://github.com/eddmann/santa-lang-tinsel/releases/download/0.1.0/santa-tinsel-0.1.0-macos-arm64) |
+| WASM          | [`santa-tinsel-0.1.0.wasm`](https://github.com/eddmann/santa-lang-tinsel/releases/download/0.1.0/santa-tinsel-0.1.0.wasm)               |
 
 ## Usage
 
