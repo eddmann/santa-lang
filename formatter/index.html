@@ -311,6 +311,26 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#release-binaries" class="md-nav__link">
+    Release Binaries
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#usage" class="md-nav__link">
     Usage
   </a>
@@ -326,8 +346,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#wasm" class="md-nav__link">
-    WASM
+  <a href="#options" class="md-nav__link">
+    Options
   </a>
   
 </li>
@@ -733,6 +753,26 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#release-binaries" class="md-nav__link">
+    Release Binaries
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#usage" class="md-nav__link">
     Usage
   </a>
@@ -748,8 +788,8 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#wasm" class="md-nav__link">
-    WASM
+  <a href="#options" class="md-nav__link">
+    Options
   </a>
   
 </li>
@@ -889,35 +929,88 @@
 
 
 <h1 id="formatter">Formatter</h1>
-<p><a href="../reindeer/comet/"><img alt="Comet" src="https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&amp;logo=rust&amp;logoColor=white" /></a></p>
 <p>An opinionated code formatter for santa-lang that produces consistent, readable output.</p>
 <h2 id="overview">Overview</h2>
 <p>The formatter transforms santa-lang source code into a canonical format, ensuring consistent style across solutions. It follows a single, deterministic formatting style - there are no configuration options.</p>
+<p>Built in Zig using the Wadler-Lindig pretty printing algorithm for intelligent line-breaking decisions.</p>
+<h2 id="installation">Installation</h2>
+<h3 id="release-binaries">Release Binaries</h3>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Download</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linux (x64)</td>
+<td><a href="https://github.com/eddmann/santa-lang-tinsel/releases/download/0.1.1/santa-tinsel-0.1.1-linux-amd64"><code>santa-tinsel-0.1.1-linux-amd64</code></a></td>
+</tr>
+<tr>
+<td>Linux (ARM)</td>
+<td><a href="https://github.com/eddmann/santa-lang-tinsel/releases/download/0.1.1/santa-tinsel-0.1.1-linux-arm64"><code>santa-tinsel-0.1.1-linux-arm64</code></a></td>
+</tr>
+<tr>
+<td>macOS (Intel)</td>
+<td><a href="https://github.com/eddmann/santa-lang-tinsel/releases/download/0.1.1/santa-tinsel-0.1.1-macos-amd64"><code>santa-tinsel-0.1.1-macos-amd64</code></a></td>
+</tr>
+<tr>
+<td>macOS (ARM)</td>
+<td><a href="https://github.com/eddmann/santa-lang-tinsel/releases/download/0.1.1/santa-tinsel-0.1.1-macos-arm64"><code>santa-tinsel-0.1.1-macos-arm64</code></a></td>
+</tr>
+<tr>
+<td>WASM</td>
+<td><a href="https://github.com/eddmann/santa-lang-tinsel/releases/download/0.1.1/santa-tinsel-0.1.1.wasm"><code>santa-tinsel-0.1.1.wasm</code></a></td>
+</tr>
+</tbody>
+</table>
 <h2 id="usage">Usage</h2>
 <h3 id="cli">CLI</h3>
-<pre class="highlight"><code class="language-bash"># Format to stdout
-santa-cli -f file.santa
+<pre class="highlight"><code class="language-bash"># Format stdin to stdout
+echo 'let x=1+2' | santa-tinsel
 
-# Format in place
-santa-cli --fmt-write file.santa
+# Format a file to stdout
+santa-tinsel solution.santa
 
-# Check if formatted (exit 1 if not)
-santa-cli --fmt-check file.santa
+# Format a file in place
+santa-tinsel -w solution.santa
 
-# Format inline expression
-santa-cli -e "1+2" -f
+# List files that differ from formatted (useful for CI)
+santa-tinsel -l solution.santa
 
-# Format from stdin
-echo "1+2" | santa-cli -f</code></pre>
-<h3 id="wasm">WASM</h3>
-<pre class="highlight"><code class="language-javascript">import { format, isFormatted } from "@eddmann/santa-lang-wasm";
+# Show diff of changes
+santa-tinsel -d solution.santa
 
-const result = format("let x=1+2");
-if (result.success) {
-  console.log(result.formatted); // "let x = 1 + 2\n"
-}
-
-const needsFormat = !isFormatted(source);</code></pre>
+# Format all .santa files in a directory recursively
+santa-tinsel -w src/</code></pre>
+<h3 id="options">Options</h3>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-w</td>
+<td>Write result to source file (format in place)</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>List files whose formatting differs (exit 1 if any)</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>Display diffs instead of rewriting files</td>
+</tr>
+<tr>
+<td>-h</td>
+<td>Display help and exit</td>
+</tr>
+</tbody>
+</table>
 <h2 id="properties">Properties</h2>
 <p>The formatter guarantees:</p>
 <ol>

@@ -512,13 +512,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#formatting" class="md-nav__link">
-    Formatting
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#output-formats" class="md-nav__link">
     Output Formats
   </a>
@@ -713,13 +706,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#formatting" class="md-nav__link">
-    Formatting
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#output-formats" class="md-nav__link">
     Output Formats
   </a>
@@ -799,19 +785,19 @@ It includes the following functionality:</p>
 <tbody>
 <tr>
 <td>Linux (x64)</td>
-<td><a href="https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-linux-amd64"><code>santa-lang-comet-cli-1.0.0-linux-amd64</code></a></td>
+<td><a href="https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-cli-1.0.1-linux-amd64"><code>santa-lang-comet-cli-1.0.1-linux-amd64</code></a></td>
 </tr>
 <tr>
 <td>Linux (ARM)</td>
-<td><a href="https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-linux-arm64"><code>santa-lang-comet-cli-1.0.0-linux-arm64</code></a></td>
+<td><a href="https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-cli-1.0.1-linux-arm64"><code>santa-lang-comet-cli-1.0.1-linux-arm64</code></a></td>
 </tr>
 <tr>
 <td>macOS (Intel)</td>
-<td><a href="https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-macos-amd64"><code>santa-lang-comet-cli-1.0.0-macos-amd64</code></a></td>
+<td><a href="https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-cli-1.0.1-macos-amd64"><code>santa-lang-comet-cli-1.0.1-macos-amd64</code></a></td>
 </tr>
 <tr>
 <td>macOS (ARM)</td>
-<td><a href="https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-macos-arm64"><code>santa-lang-comet-cli-1.0.0-macos-arm64</code></a></td>
+<td><a href="https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-cli-1.0.1-macos-arm64"><code>santa-lang-comet-cli-1.0.1-macos-arm64</code></a></td>
 </tr>
 <tr>
 <td>Docker</td>
@@ -856,24 +842,6 @@ The path can either be:</p>
 <h3 id="env">env</h3>
 <pre class="highlight"><code>env()</code></pre>
 <p>(REPL only) Prints the current environment's variables</p>
-<h2 id="formatting">Formatting</h2>
-<p><a href="../reindeer/comet/"><img alt="Comet" src="https://img.shields.io/badge/Comet-%23000000.svg?style=for-the-badge&amp;logo=rust&amp;logoColor=white" /></a></p>
-<p>The CLI provides an opinionated code formatter that produces consistent, readable output. There are no configuration options - it enforces a single canonical style.</p>
-<pre class="highlight"><code class="language-bash"># Format to stdout
-santa-cli -f solution.santa
-
-# Format file in place
-santa-cli --fmt-write solution.santa
-
-# Check if formatted (exit 1 if not, useful for CI)
-santa-cli --fmt-check solution.santa</code></pre>
-<p>The formatter also accepts input from stdin or inline expressions:</p>
-<pre class="highlight"><code class="language-bash"># Format from stdin
-echo "let x=1+2" | santa-cli -f
-
-# Format inline expression
-santa-cli -e "let x=1+2" -f</code></pre>
-<p>See the <a href="../formatter/">Formatter</a> documentation for details on formatting rules.</p>
 <h2 id="output-formats">Output Formats</h2>
 <p>The CLI supports three output formats:</p>
 <table>
@@ -913,7 +881,7 @@ santa-cli -o jsonl solution.santa
 
 # JSON version output
 santa-cli -o json --version
-# {"reindeer":"Comet","version":"1.0.0"}</code></pre>
+# {"reindeer":"Comet","version":"1.0.1"}</code></pre>
 <p>The JSON and JSONL formats are useful for integration with editors, CI systems, and other tools. JSONL provides real-time progress updates using <a href="https://datatracker.ietf.org/doc/html/rfc6902">RFC 6902 JSON Patch</a>.</p>
 <h3 id="exit-codes">Exit Codes</h3>
 <table>

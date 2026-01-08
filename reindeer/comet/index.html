@@ -851,7 +851,7 @@
 <p>Rust tree-walking interpreter with multiple runtime targets</p>
 </blockquote>
 <p><strong>Repository:</strong> <a href="https://github.com/eddmann/santa-lang-comet">eddmann/santa-lang-comet</a>
-<strong>Version:</strong> 1.0.0</p>
+<strong>Version:</strong> 1.0.1</p>
 <h2 id="overview">Overview</h2>
 <p>Comet is the recommended santa-lang implementation. It's a <a href="https://en.wikipedia.org/wiki/Interpreter_(computing)">tree-walking interpreter</a> written in Rust that directly executes the Abstract Syntax Tree (AST) without an intermediate compilation step.</p>
 <p>Taking all the learnings from the initial TypeScript implementation (Prancer), Comet was built to be stable and performant. The move to Rust unlocked significant performance gains over the JavaScript runtime, while the core <code>lang</code> crate is shared across multiple runtime targets.</p>
@@ -868,19 +868,19 @@
 <tbody>
 <tr>
 <td>Linux (x64)</td>
-<td><a href="https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-linux-amd64"><code>santa-lang-comet-cli-1.0.0-linux-amd64</code></a></td>
+<td><a href="https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-cli-1.0.1-linux-amd64"><code>santa-lang-comet-cli-1.0.1-linux-amd64</code></a></td>
 </tr>
 <tr>
 <td>Linux (ARM)</td>
-<td><a href="https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-linux-arm64"><code>santa-lang-comet-cli-1.0.0-linux-arm64</code></a></td>
+<td><a href="https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-cli-1.0.1-linux-arm64"><code>santa-lang-comet-cli-1.0.1-linux-arm64</code></a></td>
 </tr>
 <tr>
 <td>macOS (Intel)</td>
-<td><a href="https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-macos-amd64"><code>santa-lang-comet-cli-1.0.0-macos-amd64</code></a></td>
+<td><a href="https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-cli-1.0.1-macos-amd64"><code>santa-lang-comet-cli-1.0.1-macos-amd64</code></a></td>
 </tr>
 <tr>
 <td>macOS (ARM)</td>
-<td><a href="https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-macos-arm64"><code>santa-lang-comet-cli-1.0.0-macos-arm64</code></a></td>
+<td><a href="https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-cli-1.0.1-macos-arm64"><code>santa-lang-comet-cli-1.0.1-macos-arm64</code></a></td>
 </tr>
 <tr>
 <td>Docker</td>
@@ -903,19 +903,19 @@
 </tr>
 <tr>
 <td>Lambda</td>
-<td><a href="https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-lambda-1.0.0.zip"><code>santa-lang-comet-lambda-1.0.0.zip</code></a></td>
+<td><a href="https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-lambda-1.0.1.zip"><code>santa-lang-comet-lambda-1.0.1.zip</code></a></td>
 </tr>
 <tr>
 <td>PHP Extension</td>
-<td><a href="https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-php-1.0.0-linux-amd64.so"><code>santa-lang-comet-php-1.0.0-linux-amd64.so</code></a></td>
+<td><a href="https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-php-1.0.1-linux-amd64.so"><code>santa-lang-comet-php-1.0.1-linux-amd64.so</code></a></td>
 </tr>
 <tr>
 <td>Jupyter (Linux)</td>
-<td><a href="https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-jupyter-1.0.0-linux-amd64"><code>santa-lang-comet-jupyter-1.0.0-linux-amd64</code></a></td>
+<td><a href="https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-jupyter-1.0.1-linux-amd64"><code>santa-lang-comet-jupyter-1.0.1-linux-amd64</code></a></td>
 </tr>
 <tr>
 <td>Jupyter (macOS)</td>
-<td><a href="https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-jupyter-1.0.0-macos-amd64"><code>santa-lang-comet-jupyter-1.0.0-macos-amd64</code></a></td>
+<td><a href="https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-jupyter-1.0.1-macos-amd64"><code>santa-lang-comet-jupyter-1.0.1-macos-amd64</code></a></td>
 </tr>
 </tbody>
 </table>
@@ -924,14 +924,14 @@
 <pre class="highlight"><code class="language-bash">docker run --rm ghcr.io/eddmann/santa-lang-cli:latest -e '1 + 1'</code></pre>
 <h3 id="binary-download">Binary Download</h3>
 <pre class="highlight"><code class="language-bash"># Download for your platform
-curl -L -o santa https://github.com/eddmann/santa-lang-comet/releases/download/1.0.0/santa-lang-comet-cli-1.0.0-macos-arm64
+curl -L -o santa https://github.com/eddmann/santa-lang-comet/releases/download/1.0.1/santa-lang-comet-cli-1.0.1-macos-arm64
 chmod +x santa
 ./santa --help</code></pre>
 <h3 id="npm-wasm">npm (WASM)</h3>
 <pre class="highlight"><code class="language-bash">npm install @eddmann/santa-lang-wasm</code></pre>
 <h2 id="supported-runtimes">Supported Runtimes</h2>
 <ul>
-<li><a href="../../cli/">CLI</a> - Command-line interface with REPL, formatting, profiling</li>
+<li><a href="../../cli/">CLI</a> - Command-line interface with REPL and profiling</li>
 <li><a href="../../web/">Web (WASM)</a> - WebAssembly build for browsers and Node.js</li>
 <li><a href="../../lambda/">Lambda</a> - AWS Lambda custom runtime</li>
 <li><a href="../../php-ext/">PHP Extension</a> - Native PHP extension (.so)</li>
@@ -960,7 +960,6 @@ chmod +x santa
 <h3 id="runtime-features">Runtime Features</h3>
 <ul>
 <li><strong>REPL</strong>: Interactive read-eval-print loop for exploration</li>
-<li><strong>Formatter</strong>: Opinionated code formatter (100-char width, 2-space indent)</li>
 <li><strong>Profiler</strong>: Flamegraph generation for performance analysis</li>
 <li><strong>jemalloc</strong>: Memory allocator for improved performance</li>
 </ul>
@@ -975,12 +974,7 @@ santa-cli -t solution.santa
 santa-cli -e '1 + 2'
 
 # Interactive REPL
-santa-cli -r
-
-# Format code
-santa-cli -f solution.santa        # stdout
-santa-cli --fmt-write solution.santa  # in-place
-santa-cli --fmt-check solution.santa  # verify</code></pre>
+santa-cli -r</code></pre>
 <h2 id="building-from-source">Building from Source</h2>
 <p>Requires Rust 1.85+.</p>
 <pre class="highlight"><code class="language-bash">git clone https://github.com/eddmann/santa-lang-comet.git
