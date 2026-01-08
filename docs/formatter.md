@@ -12,15 +12,13 @@ Built in Zig using the Wadler-Lindig pretty printing algorithm for intelligent l
 
 ### Release Binaries
 
-Download pre-built binaries from [GitHub Releases](https://github.com/eddmann/santa-lang-tinsel/releases):
-
-| Platform              | Artifact                             |
-| --------------------- | ------------------------------------ |
-| Linux (x86_64)        | `santa-tinsel-{version}-linux-amd64` |
-| Linux (ARM64)         | `santa-tinsel-{version}-linux-arm64` |
-| macOS (Intel)         | `santa-tinsel-{version}-macos-amd64` |
-| macOS (Apple Silicon) | `santa-tinsel-{version}-macos-arm64` |
-| WebAssembly (WASI)    | `santa-tinsel-{version}.wasm`        |
+| Platform              | Download                                                                                                                                |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Linux (x86_64)        | [`santa-tinsel-0.1.0-linux-amd64`](https://github.com/eddmann/santa-lang-tinsel/releases/download/0.1.0/santa-tinsel-0.1.0-linux-amd64) |
+| Linux (ARM64)         | [`santa-tinsel-0.1.0-linux-arm64`](https://github.com/eddmann/santa-lang-tinsel/releases/download/0.1.0/santa-tinsel-0.1.0-linux-arm64) |
+| macOS (Intel)         | [`santa-tinsel-0.1.0-macos-amd64`](https://github.com/eddmann/santa-lang-tinsel/releases/download/0.1.0/santa-tinsel-0.1.0-macos-amd64) |
+| macOS (Apple Silicon) | [`santa-tinsel-0.1.0-macos-arm64`](https://github.com/eddmann/santa-lang-tinsel/releases/download/0.1.0/santa-tinsel-0.1.0-macos-arm64) |
+| WebAssembly (WASI)    | [`santa-tinsel-0.1.0.wasm`](https://github.com/eddmann/santa-lang-tinsel/releases/download/0.1.0/santa-tinsel-0.1.0.wasm)               |
 
 ## Usage
 
