@@ -1,10 +1,10 @@
 ---
-description: Review changes and update draft release descriptions for all santa-lang implementations
+description: Review changes and update draft release descriptions for all santa-lang implementations and tools
 ---
 
 # Prepare Releases Command
 
-Update the draft release descriptions for all santa-lang implementations based on changes since the last published release.
+Update the draft release descriptions for all santa-lang implementations and tools based on changes since the last published release.
 
 ## Implementation Repositories
 
@@ -17,9 +17,15 @@ Update the draft release descriptions for all santa-lang implementations based o
 | Vixen    | eddmann/santa-lang-vixen   | ~/Projects/santa-lang-vixen   |
 | Prancer  | eddmann/santa-lang-prancer | ~/Projects/santa-lang-prancer |
 
+## Tool Repositories
+
+| Name   | GitHub Repo                | Local Path                    |
+| ------ | -------------------------- | ----------------------------- |
+| Tinsel | eddmann/santa-lang-tinsel  | ~/Projects/santa-lang-tinsel  |
+
 ## Task
 
-For each implementation repository:
+For each implementation and tool repository:
 
 1. **Find releases** using `gh release list --repo eddmann/<repo> --json tagName,isDraft,publishedAt --limit 10`
 
@@ -76,6 +82,7 @@ Notes on the template:
    - https://github.com/eddmann/santa-lang-donner/releases
    - https://github.com/eddmann/santa-lang-vixen/releases
    - https://github.com/eddmann/santa-lang-prancer/releases
+   - https://github.com/eddmann/santa-lang-tinsel/releases
 
 ## Important Notes
 

@@ -1,10 +1,10 @@
 ---
-description: Publish releases for all santa-lang implementations
+description: Publish releases for all santa-lang implementations and tools
 ---
 
 # Publish Releases Command
 
-Publish the draft releases for all santa-lang implementations.
+Publish the draft releases for all santa-lang implementations and tools.
 
 ## Implementation Repositories
 
@@ -17,11 +17,17 @@ Publish the draft releases for all santa-lang implementations.
 | Vixen    | eddmann/santa-lang-vixen   |
 | Prancer  | eddmann/santa-lang-prancer |
 
+## Tool Repositories
+
+| Name   | GitHub Repo                |
+| ------ | -------------------------- |
+| Tinsel | eddmann/santa-lang-tinsel  |
+
 ## Task
 
 ### 1. Gather Release Information
 
-For each implementation repository, find the draft release:
+For each implementation and tool repository, find the draft release:
 
 ```bash
 gh release list --repo eddmann/<repo> --json tagName,isDraft,name --limit 5
@@ -63,6 +69,7 @@ After publishing, report:
   - https://github.com/eddmann/santa-lang-donner/releases/tag/<tag>
   - https://github.com/eddmann/santa-lang-vixen/releases/tag/<tag>
   - https://github.com/eddmann/santa-lang-prancer/releases/tag/<tag>
+  - https://github.com/eddmann/santa-lang-tinsel/releases/tag/<tag>
 
 ## Important Notes
 

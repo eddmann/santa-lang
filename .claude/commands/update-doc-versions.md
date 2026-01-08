@@ -1,14 +1,14 @@
 ---
-description: Update documentation to reference the latest Comet release version
+description: Update documentation to reference the latest release versions
 ---
 
 # Update Documentation Versions Command
 
-Update all version references in the documentation to match the latest published release for each implementation.
+Update all version references in the documentation to match the latest published release for each implementation and tool.
 
 ## Context
 
-The documentation contains download links and version references for multiple implementations. These need to be updated whenever new versions are released.
+The documentation contains download links and version references for multiple implementations and tools. These need to be updated whenever new versions are released.
 
 ## Implementation Files
 
@@ -30,11 +30,19 @@ Additionally, Comet versions appear in:
 - `docs/lambda.md` - Lambda runtime download link
 - `docs/php-ext.md` - PHP extension download link
 
+## Tooling Files
+
+Tools have their own documentation pages:
+
+| Tool   | Doc File            | Repository                 |
+| ------ | ------------------- | -------------------------- |
+| Tinsel | `docs/formatter.md` | eddmann/santa-lang-tinsel  |
+
 ## Task
 
 ### 1. Get Latest Published Releases
 
-Fetch the latest published (non-draft) release version for each implementation:
+Fetch the latest published (non-draft) release version for each implementation and tool:
 
 ```bash
 # Comet
@@ -51,6 +59,9 @@ gh release list --repo eddmann/santa-lang-donner --json tagName,isDraft --limit 
 
 # Prancer
 gh release list --repo eddmann/santa-lang-prancer --json tagName,isDraft --limit 5 | jq -r '.[] | select(.isDraft == false) | .tagName' | head -1
+
+# Tinsel
+gh release list --repo eddmann/santa-lang-tinsel --json tagName,isDraft --limit 5 | jq -r '.[] | select(.isDraft == false) | .tagName' | head -1
 ```
 
 ### 2. Find Current Versions in Docs
@@ -72,11 +83,14 @@ grep -oE 'donner-[a-z]+-[0-9]+\.[0-9]+\.[0-9]+' docs/reindeer/donner.md | head -
 
 # Prancer (in prancer.md)
 grep -oE 'prancer-[a-z]+-[0-9]+\.[0-9]+\.[0-9]+' docs/reindeer/prancer.md | head -1 | grep -oE '[0-9]+\.[0-9]+\.[0-9]+'
+
+# Tinsel (in formatter.md)
+grep -oE 'santa-tinsel-[0-9]+\.[0-9]+\.[0-9]+' docs/formatter.md | head -1 | grep -oE '[0-9]+\.[0-9]+\.[0-9]+'
 ```
 
 ### 3. Show Summary
 
-Present to the user for each implementation:
+Present to the user for each implementation and tool:
 
 - Current version in docs
 - Latest published version
@@ -85,10 +99,10 @@ Present to the user for each implementation:
 
 ### 4. Request Confirmation
 
-Ask the user which implementations to update. Options:
+Ask the user which implementations/tools to update. Options:
 
-- Update all implementations with new versions
-- Update specific implementations only
+- Update all implementations and tools with new versions
+- Update specific implementations/tools only
 - Skip (no changes)
 
 **Do NOT proceed without explicit user confirmation.**
@@ -108,6 +122,11 @@ For Comet specifically, also update:
 - `docs/jupyter-kernel.md` - Jupyter kernel download links
 - `docs/lambda.md` - Lambda runtime download link
 - `docs/php-ext.md` - PHP extension download link
+
+For Tinsel, the pattern is different:
+
+1. **Link text:** `santa-tinsel-X.Y.Z-linux-amd64`
+2. **URL path:** `/releases/download/X.Y.Z/santa-tinsel-X.Y.Z`
 
 Use find and replace to update from the old version to the new version in all target files.
 
@@ -131,9 +150,9 @@ git diff docs/
 
 Summarize:
 
-- Which implementations were updated
+- Which implementations and tools were updated
 - Which files were modified
-- How many version references were changed per implementation
+- How many version references were changed per implementation/tool
 - Remind user to review changes and commit when ready
 
 ## Important Notes
