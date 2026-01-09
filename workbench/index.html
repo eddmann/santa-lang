@@ -13,21 +13,21 @@
       
       
       
-        <link rel="prev" href="../comet/">
+        <link rel="prev" href="../formatter/">
       
       
-        <link rel="next" href="../dasher/">
+        <link rel="next" href="../reindeer/">
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.14">
     
     
       
-        <title>Blitzen (Rust) - santa-lang</title>
+        <title>Workbench - santa-lang</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.85bb2934.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.85bb2934.min.css">
       
       
 
@@ -43,7 +43,7 @@
       
     
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -65,7 +65,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#blitzen-rust" class="md-skip">
+        <a href="#workbench" class="md-skip">
           Skip to content
         </a>
       
@@ -81,7 +81,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="santa-lang" class="md-header__button md-logo" aria-label="santa-lang" data-md-component="logo">
+    <a href=".." title="santa-lang" class="md-header__button md-logo" aria-label="santa-lang" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -100,7 +100,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Blitzen (Rust)
+              Workbench
             
           </span>
         </div>
@@ -179,7 +179,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="santa-lang" class="md-nav__button md-logo" aria-label="santa-lang" data-md-component="logo">
+    <a href=".." title="santa-lang" class="md-nav__button md-logo" aria-label="santa-lang" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -210,7 +210,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         Home
       </a>
     </li>
@@ -225,7 +225,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../language/" class="md-nav__link">
+      <a href="../language/" class="md-nav__link">
         Language
       </a>
     </li>
@@ -240,7 +240,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../builtins/" class="md-nav__link">
+      <a href="../builtins/" class="md-nav__link">
         Builtins
       </a>
     </li>
@@ -255,7 +255,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../runner/" class="md-nav__link">
+      <a href="../runner/" class="md-nav__link">
         Runner
       </a>
     </li>
@@ -270,7 +270,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../formatter/" class="md-nav__link">
+      <a href="../formatter/" class="md-nav__link">
         Formatter
       </a>
     </li>
@@ -281,80 +281,6 @@
       
       
 
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../workbench/" class="md-nav__link">
-        Workbench
-      </a>
-    </li>
-  
-
-    
-      
-      
-      
-
-  
-  
-    
-  
-  
-    
-      
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-      
-      
-      
-      
-      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
-      
-      
-      
-        <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
-          Reindeer
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
-        <label class="md-nav__title" for="__nav_7">
-          <span class="md-nav__icon md-icon"></span>
-          Reindeer
-        </label>
-        <ul class="md-nav__list" data-md-scrollfix>
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
-        Overview
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../comet/" class="md-nav__link">
-        Comet (Rust)
-      </a>
-    </li>
-  
-
-            
-          
-            
-              
   
   
     
@@ -369,12 +295,12 @@
       
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
-          Blitzen (Rust)
+          Workbench
           <span class="md-nav__icon md-icon"></span>
         </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
-        Blitzen (Rust)
+        Workbench
       </a>
       
         
@@ -400,26 +326,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#downloads" class="md-nav__link">
-    Downloads
-  </a>
-  
-    <nav class="md-nav" aria-label="Downloads">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#cli" class="md-nav__link">
-    CLI
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#installation" class="md-nav__link">
     Installation
   </a>
@@ -428,15 +334,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#using-docker-recommended" class="md-nav__link">
-    Using Docker (Recommended)
+  <a href="#homebrew-macos" class="md-nav__link">
+    Homebrew (macOS)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#binary-download" class="md-nav__link">
-    Binary Download
+  <a href="#release-binaries" class="md-nav__link">
+    Release Binaries
   </a>
   
 </li>
@@ -447,37 +353,51 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#supported-runtimes" class="md-nav__link">
-    Supported Runtimes
+  <a href="#features" class="md-nav__link">
+    Features
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#architecture" class="md-nav__link">
-    Architecture
-  </a>
-  
-    <nav class="md-nav" aria-label="Architecture">
+    <nav class="md-nav" aria-label="Features">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#frostbyte-bytecode" class="md-nav__link">
-    FrostByte Bytecode
+  <a href="#run-solutions" class="md-nav__link">
+    Run Solutions
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#key-implementation-details" class="md-nav__link">
-    Key Implementation Details
+  <a href="#multiple-reindeer" class="md-nav__link">
+    Multiple Reindeer
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#value-representation" class="md-nav__link">
-    Value Representation
+  <a href="#aoc-integration" class="md-nav__link">
+    AoC Integration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparative-testing" class="md-nav__link">
+    Comparative Testing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-formatting" class="md-nav__link">
+    Code Formatting
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modern-editor" class="md-nav__link">
+    Modern Editor
   </a>
   
 </li>
@@ -488,22 +408,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#cli-usage" class="md-nav__link">
-    CLI Usage
+  <a href="#keyboard-shortcuts" class="md-nav__link">
+    Keyboard Shortcuts
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#building-from-source" class="md-nav__link">
-    Building from Source
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#see-also" class="md-nav__link">
-    See Also
+  <a href="#reindeer-support" class="md-nav__link">
+    Reindeer Support
   </a>
   
 </li>
@@ -515,6 +428,50 @@
     </li>
   
 
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+          Reindeer
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Reindeer
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reindeer/" class="md-nav__link">
+        Overview
+      </a>
+    </li>
+  
+
             
           
             
@@ -523,7 +480,35 @@
   
   
     <li class="md-nav__item">
-      <a href="../dasher/" class="md-nav__link">
+      <a href="../reindeer/comet/" class="md-nav__link">
+        Comet (Rust)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reindeer/blitzen/" class="md-nav__link">
+        Blitzen (Rust)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reindeer/dasher/" class="md-nav__link">
         Dasher (Rust)
       </a>
     </li>
@@ -537,7 +522,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../donner/" class="md-nav__link">
+      <a href="../reindeer/donner/" class="md-nav__link">
         Donner (Kotlin)
       </a>
     </li>
@@ -551,7 +536,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../prancer/" class="md-nav__link">
+      <a href="../reindeer/prancer/" class="md-nav__link">
         Prancer (TypeScript)
       </a>
     </li>
@@ -602,7 +587,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cli/" class="md-nav__link">
+      <a href="../cli/" class="md-nav__link">
         CLI
       </a>
     </li>
@@ -616,7 +601,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../web/" class="md-nav__link">
+      <a href="../web/" class="md-nav__link">
         Web
       </a>
     </li>
@@ -630,7 +615,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../lambda/" class="md-nav__link">
+      <a href="../lambda/" class="md-nav__link">
         Lambda
       </a>
     </li>
@@ -644,7 +629,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../php-ext/" class="md-nav__link">
+      <a href="../php-ext/" class="md-nav__link">
         PHP Extension
       </a>
     </li>
@@ -658,7 +643,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../jupyter-kernel/" class="md-nav__link">
+      <a href="../jupyter-kernel/" class="md-nav__link">
         Jupyter Kernel
       </a>
     </li>
@@ -680,7 +665,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../examples/" class="md-nav__link">
+      <a href="../examples/" class="md-nav__link">
         Examples
       </a>
     </li>
@@ -721,26 +706,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#downloads" class="md-nav__link">
-    Downloads
-  </a>
-  
-    <nav class="md-nav" aria-label="Downloads">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#cli" class="md-nav__link">
-    CLI
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#installation" class="md-nav__link">
     Installation
   </a>
@@ -749,15 +714,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#using-docker-recommended" class="md-nav__link">
-    Using Docker (Recommended)
+  <a href="#homebrew-macos" class="md-nav__link">
+    Homebrew (macOS)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#binary-download" class="md-nav__link">
-    Binary Download
+  <a href="#release-binaries" class="md-nav__link">
+    Release Binaries
   </a>
   
 </li>
@@ -768,37 +733,51 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#supported-runtimes" class="md-nav__link">
-    Supported Runtimes
+  <a href="#features" class="md-nav__link">
+    Features
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#architecture" class="md-nav__link">
-    Architecture
-  </a>
-  
-    <nav class="md-nav" aria-label="Architecture">
+    <nav class="md-nav" aria-label="Features">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#frostbyte-bytecode" class="md-nav__link">
-    FrostByte Bytecode
+  <a href="#run-solutions" class="md-nav__link">
+    Run Solutions
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#key-implementation-details" class="md-nav__link">
-    Key Implementation Details
+  <a href="#multiple-reindeer" class="md-nav__link">
+    Multiple Reindeer
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#value-representation" class="md-nav__link">
-    Value Representation
+  <a href="#aoc-integration" class="md-nav__link">
+    AoC Integration
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparative-testing" class="md-nav__link">
+    Comparative Testing
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-formatting" class="md-nav__link">
+    Code Formatting
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modern-editor" class="md-nav__link">
+    Modern Editor
   </a>
   
 </li>
@@ -809,22 +788,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#cli-usage" class="md-nav__link">
-    CLI Usage
+  <a href="#keyboard-shortcuts" class="md-nav__link">
+    Keyboard Shortcuts
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#building-from-source" class="md-nav__link">
-    Building from Source
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#see-also" class="md-nav__link">
-    See Also
+  <a href="#reindeer-support" class="md-nav__link">
+    Reindeer Support
   </a>
   
 </li>
@@ -847,17 +819,15 @@
   
 
 
-<h1 id="blitzen-rust">Blitzen (Rust)</h1>
-<blockquote>
-<p>Rust bytecode VM with FrostByte compilation</p>
-</blockquote>
-<p><strong>Repository:</strong> <a href="https://github.com/eddmann/santa-lang-blitzen">eddmann/santa-lang-blitzen</a>
-<strong>Version:</strong> 1.0.1</p>
+<h1 id="workbench">Workbench</h1>
+<p>A cross-platform desktop IDE for santa-lang, designed to write and test Advent of Code solutions.</p>
 <h2 id="overview">Overview</h2>
-<p>Blitzen takes a different approach from tree-walking interpretation by compiling santa-lang to <strong>FrostByte bytecode</strong> and executing it on a stack-based virtual machine.</p>
-<p>This bytecode compilation approach explores a different execution model for potential performance improvements over tree-walking interpretation, particularly for computationally intensive puzzles. The bytecode format is portable and can be serialized for caching.</p>
-<h2 id="downloads">Downloads</h2>
-<h3 id="cli">CLI</h3>
+<p>The Workbench provides a controlled environment for developing AoC solutions, with the ability to download, manage, and compare different backend implementations (reindeer) of santa-lang.</p>
+<p>Built with Tauri 2.0 and React, featuring a Monaco editor with syntax highlighting, real-time execution output, and performance comparisons across implementations.</p>
+<h2 id="installation">Installation</h2>
+<h3 id="homebrew-macos">Homebrew (macOS)</h3>
+<pre class="highlight"><code class="language-bash">brew install eddmann/tap/santa-lang-workbench</code></pre>
+<h3 id="release-binaries">Release Binaries</h3>
 <table>
 <thead>
 <tr>
@@ -867,141 +837,101 @@
 </thead>
 <tbody>
 <tr>
-<td>Linux (x64)</td>
-<td><a href="https://github.com/eddmann/santa-lang-blitzen/releases/download/1.0.1/santa-lang-blitzen-cli-1.0.1-linux-amd64"><code>santa-lang-blitzen-cli-1.0.1-linux-amd64</code></a></td>
-</tr>
-<tr>
-<td>Linux (ARM)</td>
-<td><a href="https://github.com/eddmann/santa-lang-blitzen/releases/download/1.0.1/santa-lang-blitzen-cli-1.0.1-linux-arm64"><code>santa-lang-blitzen-cli-1.0.1-linux-arm64</code></a></td>
+<td>macOS (ARM)</td>
+<td><a href="https://github.com/eddmann/santa-lang-workbench/releases/download/0.1.0/santa-workbench-0.1.0-macos-arm64.dmg"><code>santa-workbench-0.1.0-macos-arm64.dmg</code></a></td>
 </tr>
 <tr>
 <td>macOS (Intel)</td>
-<td><a href="https://github.com/eddmann/santa-lang-blitzen/releases/download/1.0.1/santa-lang-blitzen-cli-1.0.1-macos-amd64"><code>santa-lang-blitzen-cli-1.0.1-macos-amd64</code></a></td>
+<td><a href="https://github.com/eddmann/santa-lang-workbench/releases/download/0.1.0/santa-workbench-0.1.0-macos-amd64.dmg"><code>santa-workbench-0.1.0-macos-amd64.dmg</code></a></td>
 </tr>
 <tr>
-<td>macOS (ARM)</td>
-<td><a href="https://github.com/eddmann/santa-lang-blitzen/releases/download/1.0.1/santa-lang-blitzen-cli-1.0.1-macos-arm64"><code>santa-lang-blitzen-cli-1.0.1-macos-arm64</code></a></td>
+<td>Linux (x64)</td>
+<td><a href="https://github.com/eddmann/santa-lang-workbench/releases/download/0.1.0/santa-workbench-0.1.0-linux-amd64.deb"><code>santa-workbench-0.1.0-linux-amd64.deb</code></a></td>
 </tr>
 <tr>
-<td>Docker</td>
-<td><code>docker pull ghcr.io/eddmann/santa-lang-blitzen:cli-latest</code></td>
+<td>Linux (x64)</td>
+<td><a href="https://github.com/eddmann/santa-lang-workbench/releases/download/0.1.0/santa-workbench-0.1.0-linux-amd64.AppImage"><code>santa-workbench-0.1.0-linux-amd64.AppImage</code></a></td>
 </tr>
 </tbody>
 </table>
-<h2 id="installation">Installation</h2>
-<h3 id="using-docker-recommended">Using Docker (Recommended)</h3>
-<pre class="highlight"><code class="language-bash">docker run --rm ghcr.io/eddmann/santa-lang-blitzen:cli-latest -e '1 + 1'</code></pre>
-<h3 id="binary-download">Binary Download</h3>
-<pre class="highlight"><code class="language-bash"># Download for your platform
-curl -L -o santa https://github.com/eddmann/santa-lang-blitzen/releases/download/1.0.1/santa-lang-blitzen-cli-1.0.1-macos-arm64
-chmod +x santa
-./santa --help</code></pre>
-<h2 id="supported-runtimes">Supported Runtimes</h2>
-<ul>
-<li><a href="../../cli/">CLI</a></li>
-</ul>
-<h2 id="architecture">Architecture</h2>
-<pre class="highlight"><code>Source Code → Lexer → Parser → Compiler → FrostByte Bytecode → Blitzen VM → Result
-                                                                    │
-                                                              Stack + Globals
-                                                              + Upvalues</code></pre>
-<p>Blitzen uses a compilation pipeline that transforms source code into bytecode before execution:</p>
-<ol>
-<li><strong>Lexer</strong> - Tokenization (shared with other Rust implementations)</li>
-<li><strong>Parser</strong> - Pratt parser producing an AST</li>
-<li><strong>Compiler</strong> - Transforms AST to FrostByte bytecode with scope resolution</li>
-<li><strong>VM</strong> - Stack-based execution engine</li>
-</ol>
-<h3 id="frostbyte-bytecode">FrostByte Bytecode</h3>
-<p>FrostByte is a custom bytecode format designed for santa-lang. Key instruction categories:</p>
+<h2 id="features">Features</h2>
+<h3 id="run-solutions">Run Solutions</h3>
+<p>Execute santa-lang code with real-time streaming output showing progress as each part runs.</p>
+<h3 id="multiple-reindeer">Multiple Reindeer</h3>
+<p>Download and manage multiple backend implementations from within the app. Switch between them instantly to test your solutions against different interpreters and compilers.</p>
+<h3 id="aoc-integration">AoC Integration</h3>
+<p>Auto-detects <code>read("aoc://YEAR/DAY")</code> patterns in your code and fetches puzzle descriptions and inputs using your session token.</p>
+<h3 id="comparative-testing">Comparative Testing</h3>
+<p>Run the same code on multiple reindeer simultaneously, comparing execution times side-by-side with performance charts.</p>
+<h3 id="code-formatting">Code Formatting</h3>
+<p>Built-in formatting via <a href="../formatter/">Tinsel</a>, accessible through the toolbar or keyboard shortcut.</p>
+<h3 id="modern-editor">Modern Editor</h3>
+<p>Monaco editor with syntax highlighting, multiple tabs, autosave, and dark themes.</p>
+<h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
 <table>
 <thead>
 <tr>
-<th>Category</th>
-<th>Instructions</th>
+<th>Shortcut</th>
+<th>Action</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Stack</td>
-<td><code>Constant</code>, <code>Pop</code>, <code>Dup</code>, <code>Nil</code>, <code>True</code>, <code>False</code></td>
+<td><code>Cmd + Enter</code></td>
+<td>Run solution</td>
 </tr>
 <tr>
-<td>Variables</td>
-<td><code>GetLocal</code>, <code>SetLocal</code>, <code>GetGlobal</code>, <code>SetGlobal</code>, <code>GetUpvalue</code>, <code>SetUpvalue</code></td>
+<td><code>Cmd + Shift + Enter</code></td>
+<td>Run tests</td>
 </tr>
 <tr>
-<td>Arithmetic</td>
-<td><code>Add</code>, <code>Sub</code>, <code>Mul</code>, <code>Div</code>, <code>Mod</code>, <code>Neg</code></td>
+<td><code>Cmd + S</code></td>
+<td>Save file</td>
 </tr>
 <tr>
-<td>Collections</td>
-<td><code>MakeList</code>, <code>MakeSet</code>, <code>MakeDict</code>, <code>MakeRange</code>, <code>Index</code>, <code>Slice</code>, <code>Size</code>, <code>Spread</code></td>
-</tr>
-<tr>
-<td>Functions</td>
-<td><code>MakeClosure</code>, <code>Call</code>, <code>TailCall</code>, <code>Return</code></td>
-</tr>
-<tr>
-<td>Control</td>
-<td><code>Jump</code>, <code>JumpIfFalse</code>, <code>JumpIfTrue</code></td>
-</tr>
-<tr>
-<td>Builtins</td>
-<td><code>CallBuiltin</code> (fast-path dispatch)</td>
+<td><code>Cmd + K</code></td>
+<td>Format code</td>
 </tr>
 </tbody>
 </table>
-<h3 id="key-implementation-details">Key Implementation Details</h3>
-<ul>
-<li><strong>Stack-Based VM</strong>: Operations push/pop values from an operand stack</li>
-<li><strong>Call Frames</strong>: Each function call creates a frame with its own stack window</li>
-<li><strong>Upvalue Management</strong>: Closures capture variables via open/closed upvalues</li>
-<li><strong>Builtin Fast-Path</strong>: Common builtins like <code>map</code>, <code>filter</code>, <code>fold</code> use direct dispatch via <code>CallBuiltin</code> opcode, avoiding closure allocation overhead</li>
-<li><strong>Tail-Call Optimization</strong>: Self-recursive tail calls reuse the current frame</li>
-<li><strong>Persistent Collections</strong>: Uses <code>im-rs</code> crate for immutable data structures with structural sharing</li>
-</ul>
-<h3 id="value-representation">Value Representation</h3>
-<pre class="highlight"><code>Value enum:
-├── Nil
-├── Integer (i64)
-├── Decimal (f64)
-├── Boolean
-├── String (Rc&lt;String&gt;)
-├── List (im::Vector)
-├── Set (im::HashSet)
-├── Dict (im::HashMap)
-├── Function (Closure)
-├── LazySequence
-├── Range
-├── PartialApplication
-├── MemoizedFunction
-└── SpreadMarker</code></pre>
-<h2 id="cli-usage">CLI Usage</h2>
-<pre class="highlight"><code class="language-bash"># Run a solution
-santa-cli solution.santa
-
-# Run with tests
-santa-cli -t solution.santa
-
-# Evaluate inline expression
-santa-cli -e '1 + 2'
-
-# Interactive REPL
-santa-cli -r</code></pre>
-<h2 id="building-from-source">Building from Source</h2>
-<p>Requires Rust 1.91.1+.</p>
-<pre class="highlight"><code class="language-bash">git clone https://github.com/eddmann/santa-lang-blitzen.git
-cd santa-lang-blitzen
-make build    # Debug build
-make release  # Release build
-make test     # Run tests</code></pre>
-<h2 id="see-also">See Also</h2>
-<ul>
-<li><a href="../../language/">Language Specification</a></li>
-<li><a href="../../builtins/">Built-in Functions</a></li>
-<li><a href="https://github.com/eddmann/santa-lang-blitzen/blob/main/docs/ARCHITECTURE.md">Full Architecture Documentation</a></li>
-</ul>
+<h2 id="reindeer-support">Reindeer Support</h2>
+<p>The Workbench can download and manage the following implementations:</p>
+<table>
+<thead>
+<tr>
+<th>Codename</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Comet</td>
+<td>Rust interpreter</td>
+<td>Tree-walking interpreter, good balance of speed and features</td>
+</tr>
+<tr>
+<td>Blitzen</td>
+<td>Rust bytecode VM</td>
+<td>High-performance bytecode compilation</td>
+</tr>
+<tr>
+<td>Dasher</td>
+<td>Rust LLVM compiler</td>
+<td>Native compilation via LLVM for maximum performance</td>
+</tr>
+<tr>
+<td>Donner</td>
+<td>Kotlin JVM compiler</td>
+<td>JVM bytecode generation, requires Java runtime</td>
+</tr>
+<tr>
+<td>Prancer</td>
+<td>TypeScript interpreter</td>
+<td>JavaScript-based, useful for debugging and web compatibility</td>
+</tr>
+</tbody>
+</table>
 
 
 
@@ -1039,12 +969,12 @@ make test     # Run tests</code></pre>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.sections", "content.code.copy", "content.code.annotate"], "search": "../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.sections", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.b4d07000.min.js"></script>
+      <script src="../assets/javascripts/bundle.b4d07000.min.js"></script>
       
-        <script src="../../assets/runner.js"></script>
+        <script src="../assets/runner.js"></script>
       
     
   </body>
