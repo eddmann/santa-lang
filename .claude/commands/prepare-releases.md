@@ -19,9 +19,10 @@ Update the draft release descriptions for all santa-lang implementations and too
 
 ## Tool Repositories
 
-| Name   | GitHub Repo                | Local Path                    |
-| ------ | -------------------------- | ----------------------------- |
-| Tinsel | eddmann/santa-lang-tinsel  | ~/Projects/santa-lang-tinsel  |
+| Name      | GitHub Repo                  | Local Path                      |
+| --------- | ---------------------------- | ------------------------------- |
+| Tinsel    | eddmann/santa-lang-tinsel    | ~/Projects/santa-lang-tinsel    |
+| Workbench | eddmann/santa-lang-workbench | ~/Projects/santa-lang-workbench |
 
 ## Task
 
@@ -83,6 +84,7 @@ Notes on the template:
    - https://github.com/eddmann/santa-lang-vixen/releases
    - https://github.com/eddmann/santa-lang-prancer/releases
    - https://github.com/eddmann/santa-lang-tinsel/releases
+   - https://github.com/eddmann/santa-lang-workbench/releases
 
 ## Important Notes
 

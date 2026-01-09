@@ -34,9 +34,10 @@ Additionally, Comet versions appear in:
 
 Tools have their own documentation pages:
 
-| Tool   | Doc File            | Repository                 |
-| ------ | ------------------- | -------------------------- |
-| Tinsel | `docs/formatter.md` | eddmann/santa-lang-tinsel  |
+| Tool      | Doc File             | Repository                   |
+| --------- | -------------------- | ---------------------------- |
+| Tinsel    | `docs/formatter.md`  | eddmann/santa-lang-tinsel    |
+| Workbench | `docs/workbench.md`  | eddmann/santa-lang-workbench |
 
 ## Task
 
@@ -62,6 +63,9 @@ gh release list --repo eddmann/santa-lang-prancer --json tagName,isDraft --limit
 
 # Tinsel
 gh release list --repo eddmann/santa-lang-tinsel --json tagName,isDraft --limit 5 | jq -r '.[] | select(.isDraft == false) | .tagName' | head -1
+
+# Workbench
+gh release list --repo eddmann/santa-lang-workbench --json tagName,isDraft --limit 5 | jq -r '.[] | select(.isDraft == false) | .tagName' | head -1
 ```
 
 ### 2. Find Current Versions in Docs
@@ -86,6 +90,9 @@ grep -oE 'prancer-[a-z]+-[0-9]+\.[0-9]+\.[0-9]+' docs/reindeer/prancer.md | head
 
 # Tinsel (in formatter.md)
 grep -oE 'santa-tinsel-[0-9]+\.[0-9]+\.[0-9]+' docs/formatter.md | head -1 | grep -oE '[0-9]+\.[0-9]+\.[0-9]+'
+
+# Workbench (in workbench.md)
+grep -oE 'santa-workbench-[0-9]+\.[0-9]+\.[0-9]+' docs/workbench.md | head -1 | grep -oE '[0-9]+\.[0-9]+\.[0-9]+'
 ```
 
 ### 3. Show Summary
@@ -127,6 +134,11 @@ For Tinsel, the pattern is different:
 
 1. **Link text:** `santa-tinsel-X.Y.Z-linux-amd64`
 2. **URL path:** `/releases/download/X.Y.Z/santa-tinsel-X.Y.Z`
+
+For Workbench, the pattern is:
+
+1. **Link text:** `santa-workbench-X.Y.Z-macos-arm64.dmg`
+2. **URL path:** `/releases/download/X.Y.Z/santa-workbench-X.Y.Z`
 
 Use find and replace to update from the old version to the new version in all target files.
 

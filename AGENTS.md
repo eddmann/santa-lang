@@ -89,6 +89,7 @@ The language has multiple implementations (affectionately called "reindeer") exp
 | Name | Type | Description | Project Location |
 |------|------|-------------|------------------|
 | **Tinsel** | Zig code formatter | Opinionated code formatter for santa-lang source files | `~/Projects/santa-lang-tinsel` |
+| **Workbench** | Tauri desktop IDE | Desktop IDE for writing and testing santa-lang solutions | `~/Projects/santa-lang-workbench` |
 
 ## Working with Implementations
 

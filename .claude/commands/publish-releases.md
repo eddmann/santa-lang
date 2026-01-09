@@ -19,9 +19,10 @@ Publish the draft releases for all santa-lang implementations and tools.
 
 ## Tool Repositories
 
-| Name   | GitHub Repo                |
-| ------ | -------------------------- |
-| Tinsel | eddmann/santa-lang-tinsel  |
+| Name      | GitHub Repo                  |
+| --------- | ---------------------------- |
+| Tinsel    | eddmann/santa-lang-tinsel    |
+| Workbench | eddmann/santa-lang-workbench |
 
 ## Task
 
@@ -70,6 +71,7 @@ After publishing, report:
   - https://github.com/eddmann/santa-lang-vixen/releases/tag/<tag>
   - https://github.com/eddmann/santa-lang-prancer/releases/tag/<tag>
   - https://github.com/eddmann/santa-lang-tinsel/releases/tag/<tag>
+  - https://github.com/eddmann/santa-lang-workbench/releases/tag/<tag>
 
 ## Important Notes
 
