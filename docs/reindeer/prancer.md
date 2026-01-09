@@ -3,7 +3,7 @@
 > TypeScript tree-walking interpreter for browser and Node.js
 
 **Repository:** [eddmann/santa-lang-prancer](https://github.com/eddmann/santa-lang-prancer)
-**Version:** 1.0.1
+**Version:** 1.0.2
 
 ## Overview
 
@@ -19,18 +19,18 @@ Prancer is ideal for exploring the language internals or when you need native Ja
 
 | Platform      | Download                                                                                                                                                     |
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Linux (x64)   | [`santa-lang-prancer-cli-1.0.1-linux-amd64`](https://github.com/eddmann/santa-lang-prancer/releases/download/1.0.1/santa-lang-prancer-cli-1.0.1-linux-amd64) |
-| Linux (ARM)   | [`santa-lang-prancer-cli-1.0.1-linux-arm64`](https://github.com/eddmann/santa-lang-prancer/releases/download/1.0.1/santa-lang-prancer-cli-1.0.1-linux-arm64) |
-| macOS (Intel) | [`santa-lang-prancer-cli-1.0.1-macos-amd64`](https://github.com/eddmann/santa-lang-prancer/releases/download/1.0.1/santa-lang-prancer-cli-1.0.1-macos-amd64) |
-| macOS (ARM)   | [`santa-lang-prancer-cli-1.0.1-macos-arm64`](https://github.com/eddmann/santa-lang-prancer/releases/download/1.0.1/santa-lang-prancer-cli-1.0.1-macos-arm64) |
+| Linux (x64)   | [`santa-lang-prancer-cli-1.0.2-linux-amd64`](https://github.com/eddmann/santa-lang-prancer/releases/download/1.0.2/santa-lang-prancer-cli-1.0.2-linux-amd64) |
+| Linux (ARM)   | [`santa-lang-prancer-cli-1.0.2-linux-arm64`](https://github.com/eddmann/santa-lang-prancer/releases/download/1.0.2/santa-lang-prancer-cli-1.0.2-linux-arm64) |
+| macOS (Intel) | [`santa-lang-prancer-cli-1.0.2-macos-amd64`](https://github.com/eddmann/santa-lang-prancer/releases/download/1.0.2/santa-lang-prancer-cli-1.0.2-macos-amd64) |
+| macOS (ARM)   | [`santa-lang-prancer-cli-1.0.2-macos-arm64`](https://github.com/eddmann/santa-lang-prancer/releases/download/1.0.2/santa-lang-prancer-cli-1.0.2-macos-arm64) |
 | Docker        | `docker pull ghcr.io/eddmann/santa-lang-prancer-cli:latest`                                                                                                  |
 
 ### Other Runtimes
 
 | Runtime | Download                                                                                                                                           |
 | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Lambda  | [`santa-lang-prancer-lambda-1.0.1.zip`](https://github.com/eddmann/santa-lang-prancer/releases/download/1.0.1/santa-lang-prancer-lambda-1.0.1.zip) |
-| Web     | [`santa-lang-prancer-web-1.0.1.tar.gz`](https://github.com/eddmann/santa-lang-prancer/releases/download/1.0.1/santa-lang-prancer-web-1.0.1.tar.gz) |
+| Lambda  | [`santa-lang-prancer-lambda-1.0.2.zip`](https://github.com/eddmann/santa-lang-prancer/releases/download/1.0.2/santa-lang-prancer-lambda-1.0.2.zip) |
+| Web     | [`santa-lang-prancer-web-1.0.2.tar.gz`](https://github.com/eddmann/santa-lang-prancer/releases/download/1.0.2/santa-lang-prancer-web-1.0.2.tar.gz) |
 
 ## Installation
 
@@ -44,7 +44,7 @@ docker run --rm ghcr.io/eddmann/santa-lang-prancer-cli:latest -e '1 + 1'
 
 ```bash
 # Download for your platform
-curl -L -o santa https://github.com/eddmann/santa-lang-prancer/releases/download/1.0.1/santa-lang-prancer-cli-1.0.1-macos-arm64
+curl -L -o santa https://github.com/eddmann/santa-lang-prancer/releases/download/1.0.2/santa-lang-prancer-cli-1.0.2-macos-arm64
 chmod +x santa
 ./santa --help
 ```
