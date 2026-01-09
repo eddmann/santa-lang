@@ -20,10 +20,10 @@ brew install eddmann/tap/santa-lang-workbench
 
 | Platform      | Download                                                                                                                                                           |
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| macOS (ARM)   | [`santa-workbench-0.1.0-macos-arm64.dmg`](https://github.com/eddmann/santa-lang-workbench/releases/download/0.1.0/santa-workbench-0.1.0-macos-arm64.dmg)           |
-| macOS (Intel) | [`santa-workbench-0.1.0-macos-amd64.dmg`](https://github.com/eddmann/santa-lang-workbench/releases/download/0.1.0/santa-workbench-0.1.0-macos-amd64.dmg)           |
-| Linux (x64)   | [`santa-workbench-0.1.0-linux-amd64.deb`](https://github.com/eddmann/santa-lang-workbench/releases/download/0.1.0/santa-workbench-0.1.0-linux-amd64.deb)           |
-| Linux (x64)   | [`santa-workbench-0.1.0-linux-amd64.AppImage`](https://github.com/eddmann/santa-lang-workbench/releases/download/0.1.0/santa-workbench-0.1.0-linux-amd64.AppImage) |
+| macOS (ARM)   | [`santa-workbench-0.1.1-macos-arm64.dmg`](https://github.com/eddmann/santa-lang-workbench/releases/download/0.1.1/santa-workbench-0.1.1-macos-arm64.dmg)           |
+| macOS (Intel) | [`santa-workbench-0.1.1-macos-amd64.dmg`](https://github.com/eddmann/santa-lang-workbench/releases/download/0.1.1/santa-workbench-0.1.1-macos-amd64.dmg)           |
+| Linux (x64)   | [`santa-workbench-0.1.1-linux-amd64.deb`](https://github.com/eddmann/santa-lang-workbench/releases/download/0.1.1/santa-workbench-0.1.1-linux-amd64.deb)           |
+| Linux (x64)   | [`santa-workbench-0.1.1-linux-amd64.AppImage`](https://github.com/eddmann/santa-lang-workbench/releases/download/0.1.1/santa-workbench-0.1.1-linux-amd64.AppImage) |
 
 ## Features
 
