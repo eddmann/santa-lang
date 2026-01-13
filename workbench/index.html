@@ -368,6 +368,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#run-tests" class="md-nav__link">
+    Run Tests
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#multiple-reindeer" class="md-nav__link">
     Multiple Reindeer
   </a>
@@ -748,6 +755,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#run-tests" class="md-nav__link">
+    Run Tests
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#multiple-reindeer" class="md-nav__link">
     Multiple Reindeer
   </a>
@@ -820,10 +834,18 @@
 
 
 <h1 id="workbench">Workbench</h1>
+<p align="center">
+  <img src="assets/workbench-logo.png" alt="santa-lang Workbench" width="150">
+</p>
+
 <p>A cross-platform desktop IDE for santa-lang, designed to write and test Advent of Code solutions.</p>
 <h2 id="overview">Overview</h2>
 <p>The Workbench provides a controlled environment for developing AoC solutions, with the ability to download, manage, and compare different backend implementations (reindeer) of santa-lang.</p>
 <p>Built with Tauri 2.0 and React, featuring a Monaco editor with syntax highlighting, real-time execution output, and performance comparisons across implementations.</p>
+<figure>
+  <img alt="Workbench Editor" src="../assets/workbench-editor-answer.png" />
+  <figcaption>Running a solution with real-time output</figcaption>
+</figure>
 <h2 id="installation">Installation</h2>
 <h3 id="homebrew-macos">Homebrew (macOS)</h3>
 <pre class="highlight"><code class="language-bash">brew install eddmann/tap/santa-lang-workbench</code></pre>
@@ -838,31 +860,49 @@
 <tbody>
 <tr>
 <td>macOS (ARM)</td>
-<td><a href="https://github.com/eddmann/santa-lang-workbench/releases/download/0.1.0/santa-workbench-0.1.0-macos-arm64.dmg"><code>santa-workbench-0.1.0-macos-arm64.dmg</code></a></td>
+<td><a href="https://github.com/eddmann/santa-lang-workbench/releases/download/0.1.1/santa-workbench-0.1.1-macos-arm64.dmg"><code>santa-workbench-0.1.1-macos-arm64.dmg</code></a></td>
 </tr>
 <tr>
 <td>macOS (Intel)</td>
-<td><a href="https://github.com/eddmann/santa-lang-workbench/releases/download/0.1.0/santa-workbench-0.1.0-macos-amd64.dmg"><code>santa-workbench-0.1.0-macos-amd64.dmg</code></a></td>
+<td><a href="https://github.com/eddmann/santa-lang-workbench/releases/download/0.1.1/santa-workbench-0.1.1-macos-amd64.dmg"><code>santa-workbench-0.1.1-macos-amd64.dmg</code></a></td>
 </tr>
 <tr>
 <td>Linux (x64)</td>
-<td><a href="https://github.com/eddmann/santa-lang-workbench/releases/download/0.1.0/santa-workbench-0.1.0-linux-amd64.deb"><code>santa-workbench-0.1.0-linux-amd64.deb</code></a></td>
+<td><a href="https://github.com/eddmann/santa-lang-workbench/releases/download/0.1.1/santa-workbench-0.1.1-linux-amd64.deb"><code>santa-workbench-0.1.1-linux-amd64.deb</code></a></td>
 </tr>
 <tr>
 <td>Linux (x64)</td>
-<td><a href="https://github.com/eddmann/santa-lang-workbench/releases/download/0.1.0/santa-workbench-0.1.0-linux-amd64.AppImage"><code>santa-workbench-0.1.0-linux-amd64.AppImage</code></a></td>
+<td><a href="https://github.com/eddmann/santa-lang-workbench/releases/download/0.1.1/santa-workbench-0.1.1-linux-amd64.AppImage"><code>santa-workbench-0.1.1-linux-amd64.AppImage</code></a></td>
 </tr>
 </tbody>
 </table>
 <h2 id="features">Features</h2>
 <h3 id="run-solutions">Run Solutions</h3>
 <p>Execute santa-lang code with real-time streaming output showing progress as each part runs.</p>
+<h3 id="run-tests">Run Tests</h3>
+<p>Define test cases with expected values and run them to validate your solutions.</p>
+<figure>
+  <img alt="Running Tests" src="../assets/workbench-editor-tests.png" />
+  <figcaption>Running tests with expected values</figcaption>
+</figure>
 <h3 id="multiple-reindeer">Multiple Reindeer</h3>
 <p>Download and manage multiple backend implementations from within the app. Switch between them instantly to test your solutions against different interpreters and compilers.</p>
+<figure>
+  <img alt="Reindeer Management" src="../assets/workbench-settings-reindeer.png" />
+  <figcaption>Managing installed reindeer versions</figcaption>
+</figure>
 <h3 id="aoc-integration">AoC Integration</h3>
 <p>Auto-detects <code>read("aoc://YEAR/DAY")</code> patterns in your code and fetches puzzle descriptions and inputs using your session token.</p>
+<figure>
+  <img alt="Puzzle Integration" src="../assets/workbench-editor-puzzle.png" />
+  <figcaption>Integrated Advent of Code puzzle descriptions</figcaption>
+</figure>
 <h3 id="comparative-testing">Comparative Testing</h3>
 <p>Run the same code on multiple reindeer simultaneously, comparing execution times side-by-side with performance charts.</p>
+<figure>
+  <img alt="Performance Comparison" src="../assets/workbench-comparison-graph.png" />
+  <figcaption>Comparing performance across different reindeer</figcaption>
+</figure>
 <h3 id="code-formatting">Code Formatting</h3>
 <p>Built-in formatting via <a href="../formatter/">Tinsel</a>, accessible through the toolbar or keyboard shortcut.</p>
 <h3 id="modern-editor">Modern Editor</h3>
@@ -889,7 +929,7 @@
 <td>Save file</td>
 </tr>
 <tr>
-<td><code>Cmd + K</code></td>
+<td><code>Cmd + Shift + F</code></td>
 <td>Format code</td>
 </tr>
 </tbody>
