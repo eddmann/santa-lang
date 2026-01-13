@@ -1,5 +1,9 @@
 # Workbench
 
+<p align="center">
+  <img src="assets/workbench-logo.png" alt="santa-lang Workbench" width="150">
+</p>
+
 A cross-platform desktop IDE for santa-lang, designed to write and test Advent of Code solutions.
 
 ## Overview
@@ -7,6 +11,11 @@ A cross-platform desktop IDE for santa-lang, designed to write and test Advent o
 The Workbench provides a controlled environment for developing AoC solutions, with the ability to download, manage, and compare different backend implementations (reindeer) of santa-lang.
 
 Built with Tauri 2.0 and React, featuring a Monaco editor with syntax highlighting, real-time execution output, and performance comparisons across implementations.
+
+<figure markdown="span">
+  ![Workbench Editor](assets/workbench-editor-answer.png)
+  <figcaption>Running a solution with real-time output</figcaption>
+</figure>
 
 ## Installation
 
@@ -31,17 +40,41 @@ brew install eddmann/tap/santa-lang-workbench
 
 Execute santa-lang code with real-time streaming output showing progress as each part runs.
 
+### Run Tests
+
+Define test cases with expected values and run them to validate your solutions.
+
+<figure markdown="span">
+  ![Running Tests](assets/workbench-editor-tests.png)
+  <figcaption>Running tests with expected values</figcaption>
+</figure>
+
 ### Multiple Reindeer
 
 Download and manage multiple backend implementations from within the app. Switch between them instantly to test your solutions against different interpreters and compilers.
+
+<figure markdown="span">
+  ![Reindeer Management](assets/workbench-settings-reindeer.png)
+  <figcaption>Managing installed reindeer versions</figcaption>
+</figure>
 
 ### AoC Integration
 
 Auto-detects `read("aoc://YEAR/DAY")` patterns in your code and fetches puzzle descriptions and inputs using your session token.
 
+<figure markdown="span">
+  ![Puzzle Integration](assets/workbench-editor-puzzle.png)
+  <figcaption>Integrated Advent of Code puzzle descriptions</figcaption>
+</figure>
+
 ### Comparative Testing
 
 Run the same code on multiple reindeer simultaneously, comparing execution times side-by-side with performance charts.
+
+<figure markdown="span">
+  ![Performance Comparison](assets/workbench-comparison-graph.png)
+  <figcaption>Comparing performance across different reindeer</figcaption>
+</figure>
 
 ### Code Formatting
 
@@ -58,7 +91,7 @@ Monaco editor with syntax highlighting, multiple tabs, autosave, and dark themes
 | `Cmd + Enter`         | Run solution |
 | `Cmd + Shift + Enter` | Run tests    |
 | `Cmd + S`             | Save file    |
-| `Cmd + K`             | Format code  |
+| `Cmd + Shift + F`     | Format code  |
 
 ## Reindeer Support
 
