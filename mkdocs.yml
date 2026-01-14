@@ -17,11 +17,11 @@ nav:
   - Workbench: workbench.md
   - Reindeer:
       - Overview: reindeer/index.md
-      - Comet (Rust): reindeer/comet.md
-      - Blitzen (Rust): reindeer/blitzen.md
-      - Dasher (Rust): reindeer/dasher.md
-      - Donner (Kotlin): reindeer/donner.md
-      - Prancer (TypeScript): reindeer/prancer.md
+      - Comet (Interpreter): reindeer/comet.md
+      - Blitzen (VM): reindeer/blitzen.md
+      - Dasher (LLVM): reindeer/dasher.md
+      - Donner (JVM): reindeer/donner.md
+      - Prancer (Interpreter): reindeer/prancer.md
   - Runtimes:
       - CLI: cli.md
       - Web: web.md
