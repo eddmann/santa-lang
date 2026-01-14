@@ -51,7 +51,7 @@ Define test cases with expected values and run them to validate your solutions.
 
 ### Multiple Reindeer
 
-Download and manage multiple backend implementations from within the app. Switch between them instantly to test your solutions against different interpreters and compilers.
+Download and manage multiple backend implementations from within the app. Switch between them to test your solutions against different interpreters and compilers.
 
 <figure markdown="span">
   ![Reindeer Management](../assets/workbench-settings-reindeer.png)
@@ -80,9 +80,9 @@ Run the same code on multiple reindeer simultaneously, comparing execution times
 
 Built-in formatting via [Tinsel](formatter.md), accessible through the toolbar or keyboard shortcut.
 
-### Modern Editor
+### Editor
 
-Monaco editor with syntax highlighting, multiple tabs, autosave, and dark themes.
+Monaco editor with syntax highlighting, multiple tabs, and dark themes.
 
 ## Keyboard Shortcuts
 
@@ -99,8 +99,8 @@ The Workbench can download and manage the following implementations:
 
 | Codename | Type                   | Description                                                  |
 | -------- | ---------------------- | ------------------------------------------------------------ |
-| Comet    | Rust interpreter       | Tree-walking interpreter, good balance of speed and features |
-| Blitzen  | Rust bytecode VM       | High-performance bytecode compilation                        |
-| Dasher   | Rust LLVM compiler     | Native compilation via LLVM for maximum performance          |
+| Comet    | Rust interpreter       | Tree-walking interpreter                                     |
+| Blitzen  | Rust bytecode VM       | Bytecode compilation                                         |
+| Dasher   | Rust LLVM compiler     | Native compilation via LLVM                                  |
 | Donner   | Kotlin JVM compiler    | JVM bytecode generation, requires Java runtime               |
 | Prancer  | TypeScript interpreter | JavaScript-based, useful for debugging and web compatibility |
