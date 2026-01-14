@@ -97,10 +97,10 @@ Monaco editor with syntax highlighting, multiple tabs, and dark themes.
 
 The Workbench can download and manage the following implementations:
 
-| Codename | Type                   | Description                                                  |
-| -------- | ---------------------- | ------------------------------------------------------------ |
-| Comet    | Rust interpreter       | Tree-walking interpreter                                     |
-| Blitzen  | Rust bytecode VM       | Bytecode compilation                                         |
-| Dasher   | Rust LLVM compiler     | Native compilation via LLVM                                  |
-| Donner   | Kotlin JVM compiler    | JVM bytecode generation, requires Java runtime               |
-| Prancer  | TypeScript interpreter | JavaScript-based, useful for debugging and web compatibility |
+| Codename | Type       | Description              |
+| -------- | ---------- | ------------------------ |
+| Comet    | Rust       | Tree-walking interpreter |
+| Blitzen  | Rust       | Bytecode VM              |
+| Dasher   | Rust       | LLVM native compiler     |
+| Donner   | Kotlin     | JVM bytecode compiler    |
+| Prancer  | TypeScript | Tree-walking interpreter |
