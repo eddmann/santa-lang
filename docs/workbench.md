@@ -1,8 +1,8 @@
 # Workbench
 
-<p align="center">
-  <img src="../assets/workbench-logo.png" alt="santa-lang Workbench" width="150">
-</p>
+<figure markdown="span">
+  ![santa-lang Workbench](../assets/workbench-logo.png){ width="150" }
+</figure>
 
 A cross-platform desktop IDE for santa-lang, designed to write and test Advent of Code solutions.
 
