@@ -69,13 +69,18 @@ test: {
 
 The language has multiple implementations (affectionately called "reindeer") exploring different execution models and technologies.
 
-| Codename | Description                         | Repository                                                          |
-| -------- | ----------------------------------- | ------------------------------------------------------------------- |
-| Comet    | Rust tree-walking interpreter       | [santa-lang-comet](https://github.com/eddmann/santa-lang-comet)     |
-| Blitzen  | Rust bytecode VM                    | [santa-lang-blitzen](https://github.com/eddmann/santa-lang-blitzen) |
-| Dasher   | Rust LLVM-based native compiler     | [santa-lang-dasher](https://github.com/eddmann/santa-lang-dasher)   |
-| Donner   | Kotlin JVM bytecode compiler        | [santa-lang-donner](https://github.com/eddmann/santa-lang-donner)   |
-| Vixen    | C embedded bytecode VM              | [santa-lang-vixen](https://github.com/eddmann/santa-lang-vixen)     |
-| Prancer  | TypeScript tree-walking interpreter | [santa-lang-prancer](https://github.com/eddmann/santa-lang-prancer) |
+| Codename                                                 | Type                     | Language   |
+| -------------------------------------------------------- | ------------------------ | ---------- |
+| [Comet](https://github.com/eddmann/santa-lang-comet)     | Tree-walking interpreter | Rust       |
+| [Blitzen](https://github.com/eddmann/santa-lang-blitzen) | Bytecode VM              | Rust       |
+| [Dasher](https://github.com/eddmann/santa-lang-dasher)   | LLVM native compiler     | Rust       |
+| [Donner](https://github.com/eddmann/santa-lang-donner)   | JVM bytecode compiler    | Kotlin     |
+| [Vixen](https://github.com/eddmann/santa-lang-vixen)     | Embedded bytecode VM     | C          |
+| [Prancer](https://github.com/eddmann/santa-lang-prancer) | Tree-walking interpreter | TypeScript |
 
-There is also a [web-based editor](https://github.com/eddmann/santa-lang-editor) available to try santa-lang in the browser.
+## Tooling
+
+| Name                                                         | Description    | Language    |
+| ------------------------------------------------------------ | -------------- | ----------- |
+| [Workbench](https://github.com/eddmann/santa-lang-workbench) | Desktop IDE    | Tauri/React |
+| [Tinsel](https://github.com/eddmann/santa-lang-tinsel)       | Code formatter | Zig         |
